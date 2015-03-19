@@ -14,6 +14,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Threading;
 using Microsoft.Xna.Framework;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace Recorder
 {
@@ -93,13 +95,20 @@ namespace Recorder
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             //launching状态，一瞬间
+
+            IsolatedStorageFile file = IsolatedStorageFile.GetUserStoreForApplication();
+            var steam = file.CreateFile("test.txt");
+            StreamWriter steam2 = new StreamWriter(steam);
+            steam2.WriteLine("131313131");
+            steam.Close();
+            steam2.Close();
         }
 
         // 激活应用程序(置于前台)时执行的代码
         // 此代码在首次启动应用程序时不执行
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-          
+
         }
 
         // 停用应用程序(发送到后台)时执行的代码
@@ -112,7 +121,7 @@ namespace Recorder
         // 此代码在停用应用程序时不执行
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            
+
         }
 
         // 导航失败时执行的代码
@@ -128,6 +137,7 @@ namespace Recorder
         // 出现未处理的异常时执行的代码
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+
             MessageBox.Show(e.ExceptionObject.Message);
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -155,8 +165,38 @@ namespace Recorder
             // 处理导航故障
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
+            RootFrame.Navigating += RootFrame_Navigating;
+
+            RootFrame.Navigated += RootFrame_Navigated;
+
+
             // 确保我们未再次初始化
             phoneApplicationInitialized = true;
+        }
+
+        void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            //快速恢复会调用2次RootFrame_Navigating
+            //第一次是到休眠页面，第二次是到首页，不过这里给cancel掉了，就依然是休眠页面，实现了快速恢复
+            if (e.NavigationMode == NavigationMode.Reset)
+            {
+                Reset = true;
+                return;
+            }
+            if (Reset && e.NavigationMode == NavigationMode.New && e.IsCancelable)
+            {
+                e.Cancel = true;
+                Reset = false;
+                return;
+            }
+            throw new NotImplementedException();
+        }
+
+        bool Reset = false;
+        void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+
+            throw new NotImplementedException();
         }
 
         // 请勿向此方法中添加任何其他代码
