@@ -18,7 +18,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-
+Thumbs.db
 # Roslyn cache directories
 *.ide/
 
