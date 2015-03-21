@@ -109,6 +109,7 @@ namespace Recorder
         private void onNew(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/RecPage.xaml", UriKind.Relative));
+            
         }
 
         /// <summary>
