@@ -25,11 +25,10 @@
             <TextBlock Text="我的应用程序" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Text="页面名称" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-        
+
         <!--ContentPanel - 在此处放置其他内容-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Canvas>
-                <Image Source="/rdadio4.png" Height="198" Width="157" Canvas.Left="179" Canvas.Top="78"></Image>
                 <Ellipse Height="30" Name="EP"   Width="30" Stroke="White" Canvas.Left="179" Canvas.Top="124" StrokeThickness="2">
                     <Ellipse.RenderTransform>
                         <ScaleTransform  CenterY="15"  x:Name="STF">
@@ -50,6 +49,13 @@
                     </Ellipse.RenderTransform>
 
                 </Ellipse>
+                <TextBox Height="72" TextWrapping="Wrap" Text="TextBox" Canvas.Top="189" Width="456"/>
+                <ListBox Width="426" Canvas.Left="10" Canvas.Top="261">
+                    <ListBoxItem Content="1"/>
+                    <ListBoxItem Content="1"/>
+                    <ListBoxItem Content="1"/>
+
+                </ListBox>
             </Canvas>
 
         </Grid>
@@ -99,7 +105,7 @@
 
                 </DoubleAnimation>
             </Storyboard>
-           
+
         </Grid.Resources>
     </Grid>
 
