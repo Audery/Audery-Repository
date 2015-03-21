@@ -54,6 +54,9 @@ namespace Recorder
         /// </summary>
         public App()
         {
+
+           
+
             // 未捕获的异常的全局处理程序。 
             UnhandledException += Application_UnhandledException;
 
