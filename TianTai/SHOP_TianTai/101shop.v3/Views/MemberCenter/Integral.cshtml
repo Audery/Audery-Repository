@@ -1,0 +1,135 @@
+﻿@model PagedList<System.Data.DataRow>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "积分兑换";
+    var Per = new SOSOshop.BLL.MemberPermission().GetModel(_101shop.v3.Controllers.BaseController.GetUserId());
+    
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanagerDetail.css" />
+    <link href="/Content/cart_look.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".zhengjia_btn").click(function () {
+                var val = $(this).parent().parent().find(".numbers").val();
+                if (isNaN(val)) {
+                    $(this).parent().parent().find(".numbers").val(1);
+                }
+                else {
+                    $(this).parent().parent().find(".numbers").val(parseInt(val) + 1);
+                }
+            });
+
+            $(".jianshao_btn").click(function () {
+                var val = $(this).parent().parent().find(".numbers").val();
+                if (isNaN(val)) {
+                    $(this).parent().parent().find(".numbers").val(1);
+                }
+                else {
+                    if (val == "1") return;
+                    $(this).parent().parent().find(".numbers").val(parseInt(val) - 1);
+                }
+            });
+            $(".bti_3").click(function () {
+                var o = $(this).parent().parent();
+                var n = parseInt($(o).find(".numbers").val());
+                var id = parseInt($(o).find(".id").val());
+                var Number = parseInt($(o).find(".Number").text());
+                var Integral = parseInt($(o).find(".Integral").text());
+                var realityIntegral = parseInt($(".realityIntegral").text());
+                if (n > Number) {
+                    alert("对不起，您的兑换数量大于礼品的可兑换数量！");
+                    return;
+                }
+                if (n * Integral > realityIntegral) {
+                    alert("对不起，您的可用积分不足！");
+                    return;
+                }
+                $(".Integral input[name=id]").val(id);
+                $(".Integral input[name=Number]").val(n);
+                $(".Integral").submit();
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<form action="/MemberCenter/IntegralExchange" method="post" class="Integral" style="display: none">
+<input type="text" name="id" />
+<input type="text" name="Number" />
+</form>
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>积分兑换</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 150px; float: left;">
+            我现有积分：<span style="color: Red" class="realityIntegral">@(new SOSOshop.BLL.Integral.MemberIntegral().GetRealityIntegral(_101shop.v3.Controllers.BaseController.GetUserId()))</span></div>
+        <div class="search_01">
+            <input type="button" onclick="location='IntegralHistory'" value="兑换历史" class="bti_2 cancelall" />
+        </div>
+    </div>
+    <div class="qdh_tz">        
+        <span style="color:Red">积分来源：会员注册并建档通过送积分，每日签到送积分，完成订单后按比例折算积累积分</span>
+    </div>
+    <div class="mc">
+        <dl>
+            <dd class="p-list">
+                <table cellpadding="0" cellspacing="0" width="828">
+                    <tr>
+                        <th>
+                            礼品名称
+                        </th>
+                        <th>
+                            可兑换数量
+                        </th>
+                        <th>
+                            兑换说明
+                        </th>
+                        <th>
+                            需用积分
+                        </th>
+                        <th>
+                            兑换数量
+                        </th>
+                        <th style="width: 100px">
+                            操作
+                        </th>
+                    </tr>
+                    @foreach (System.Data.DataRow item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item["name"]<input type="hidden" name="name" value="@item["id"]" class="id" />
+                            </td>
+                            <td>
+                                <span class="Number">@((int)(decimal)item["Number"])</span>
+                            </td>
+                            <td>
+                                @item["detail"]
+                            </td>
+                            <td>
+                                <span class="Integral">@((int)(decimal)item["Integral"])/个</span>
+                            </td>
+                            <td class="center" width="120">
+                                <a class="jianshao_btn"></a>
+                                <input type="text" class="numbers" style="width: 50px; float: left; text-align: right;
+                                    margin: 0 4px; border: 1px solid #ccc;" value="1" />
+                                <a class="zhengjia_btn"></a>
+                            </td>
+                            <td>
+                                <a class="bti_3" style="cursor: pointer">兑换礼品</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })
+    </div>
+</div>

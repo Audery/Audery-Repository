@@ -1,0 +1,191 @@
+﻿@model PagedList<System.Data.DataRow>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "积分兑换";
+    var Per = new SOSOshop.BLL.MemberPermission().GetModel(_101shop.v3.Controllers.BaseController.GetUserId());
+    
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanagerDetail.css" />
+    <link href="/Content/cart_look.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_address.css" />
+    <script src="/scripts/LocationJson.js" type="text/javascript"></script>
+    <script src="/scripts/YlChinaArea.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".but_sure").click(function () {
+                if ($("#recievePersonNameNew").val() == "") {
+                    alert("收货人不能为空!");
+                    $("#recievePersonNameNew").focus();
+                    return;
+                }
+                if ($("#province").val() == "" || $("#city").val() == "" || $("#county").val() == "") {
+                    alert("请选择收货地区!");
+                    $("#province").focus();
+                    return;
+                }
+                if ($("#detailAddrNew").val() == "") {
+                    alert("详细地址不能为空!");
+                    $("#detailAddrNew").focus();
+                    return;
+                }
+                if ($("#mobileNew").val() == "") {
+                    alert("联系电话不能为空!");
+                    $("#mobileNew").focus();
+                    return;
+                }
+                $(this).attr("disabled", "disabled");
+                var s = "&province1=" + $("#province").find("option:selected").text()
+                s += "&city1=" + $("#city").find("option:selected").text()
+                s += "&county1=" + $("#county").find("option:selected").text()
+                $.post("/MemberCenter/IntegralExchangeAdd", $("#formNew").serialize() + s, function (data) {
+                    alert(data);
+                    location = "/MemberCenter/IntegralHistory";
+                });
+
+            });
+            jQuery("#ChinaArea").jChinaArea();
+            $(".flradio").click(function () {
+                var o = $(this).parent();
+                $("#province option").each(function () {
+                    if ($(this).text() == $(o).find(".p_province").text()) {
+                        $(this).attr("selected", true);
+                        $("#province").change();
+                    }
+                });
+                $("#city option").each(function () {
+                    if ($(this).text() == $(o).find(".p_city").text()) {
+                        $(this).attr("selected", true);
+                        $("#city").change();
+                    }
+                });
+                $("#county option").each(function () {
+                    if ($(this).text() == $(o).find(".p_borough").text()) {
+                        $(this).attr("selected", true);
+                    }
+                });
+                $("input[name='ConsigneeName']").val($(o).find(".p_username").text());
+                $("input[name='ConsigneePhone']").val($(o).find(".mobile").text());
+                $("input[name='ConsigneeAddress']").val($(o).find(".p_address").text());
+            });
+            $(".cancelall").click(function () {
+                history.go(-1);
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>积分兑换</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 350px; float: left;">
+            <span>您选择用<span style="color: Red">@ViewBag.Count</span>积分兑换<span style="color: Red">@Request.Form["Number"]</span>个<span>@ViewBag.name</span></span>
+        </div>
+        <div class="search_01">
+            <input type="button" value="返回" class="bti cancelall" />
+        </div>
+    </div>
+    <div id="addrInfo" class="new_add_edit" style="float: left">
+        <span class="thispdn3">
+            <img src="/images/add_button.png" alt="">填写礼品收货地址 </span>
+        <form id="formNew" action="" method="post">
+        <input type="hidden" name="id" value="@Request.Form["id"]"/>
+        <input type="hidden" name="Number" value="@Request.Form["Number"]"/>
+        <div id="detailAddressNew" class="rcv_add" style="clear: both;">
+            <div class="list">
+                <span class="label"><em>*</em> 收货人：</span>
+                <div class="field">
+                    <input type="text" id="recievePersonNameNew" name="ConsigneeName" class="textbox">
+                </div>
+            </div>
+            <div class="list">
+                <span class="label"><em>*</em>地区：</span> <span id="ChinaArea" class="ChinaArea">
+                    <select id="province" name="province" style="width: 64px">
+                        <option value="">请选择</option>
+                        <option value="2">上海</option>
+                        <option value="3">天津</option>
+                        <option value="4">重庆</option>
+                        <option value="5">浙江省</option>
+                        <option value="6">广东省</option>
+                        <option value="7">江苏省</option>
+                        <option value="8">河北省</option>
+                        <option value="9">山西省</option>
+                        <option value="10">云南省</option>
+                        <option value="11">河南省</option>
+                        <option value="12">辽宁省</option>
+                        <option value="13">吉林省</option>
+                        <option value="14">黑龙江省</option>
+                        <option value="15">山东省</option>
+                        <option value="16">安徽省</option>
+                        <option value="17">福建省</option>
+                        <option value="18">湖北省</option>
+                        <option value="19">湖南省</option>
+                        <option value="20">海南省</option>
+                        <option value="21">江西省</option>
+                        <option value="22">贵州省</option>
+                        <option value="23">云南省</option>
+                        <option value="24">陕西省</option>
+                        <option value="25">甘肃省</option>
+                        <option value="26">广西省</option>
+                        <option value="27">宁夏省</option>
+                        <option value="28">青海省</option>
+                        <option value="29">新疆省</option>
+                        <option value="30">西藏</option>
+                        <option value="31">内蒙古</option>
+                        <option value="3277">北京</option>
+                        <option value="3278">澳门</option>
+                        <option value="3279">香港</option>
+                    </select>
+                    <select id="city" name="city" style="width: 94px">
+                        <option value="">请选择</option>
+                    </select>
+                    <select id="county" name="county" style="width: 158px;">
+                        <option value="">请选择</option>
+                    </select>
+                </span>
+            </div>
+            <div class="list">
+                <span class="label"><em>*</em> 详细地址：</span>
+                <div class="field">
+                    <input type="text" id="detailAddrNew" name="ConsigneeAddress" class="textbox wdh1">
+                    <span class="t_s_2">请填写详细信息，以便准确到达</span>
+                </div>
+            </div>
+            <div class="list">
+                <span class="label"><em>*</em> 联系电话：</span>
+                <div class="field">
+                    <input type="text" id="mobileNew" name="ConsigneePhone" class="textbox wdh2">
+                </div>
+            </div>
+            <div class="btn">
+                <span>&nbsp;</span>
+                <input class="but_sure" type="button" style="cursor: pointer" value="兑换" />
+                <input class="but_lev" type="reset" style="cursor: pointer" value="重置" />
+            </div>
+        </div>
+        @if (ViewBag.address.Count > 0)
+        {
+            <text>选择常用地址：</text>
+        }
+        @foreach (System.Data.DataRow item in ViewBag.address)
+        {
+            <div style="clear: both">
+                <input type="radio" id="radio-138" name="radio" class="hookbox fl flradio" />
+                <p class="rcv_add fl">
+                    <span class="p_username">@item["username"]</span> &nbsp;&nbsp;<span class="mobile">@item["mobile"]</span>&nbsp;&nbsp;
+                    <span class="p_province">@item["province"]</span> <span class="p_city">@item["city"]</span>
+                    <span class="p_borough">@item["borough"]</span> <span class="p_address">@item["address"]</span>
+                </p>
+            </div>
+        }
+        </form>
+    </div>
+    <div class="mc">
+    </div>
+</div>

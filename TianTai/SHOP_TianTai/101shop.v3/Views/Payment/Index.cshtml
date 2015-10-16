@@ -1,0 +1,132 @@
+﻿@using System.Data;
+@using System.Collections.Specialized;
+@using SOSOshop.Model.Order;
+@{
+    SOSOshop.Model.Order.Orders orders = ViewBag.orders as SOSOshop.Model.Order.Orders;
+    string ErrorMessage = ViewBag.ErrorMessage as string;
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/order_sure.css" />
+    <script type="text/javascript" src="/Scripts/tab.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/jquery.jcarousellite.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript">        /*Ajax*/function SendAjax(data, complete_function) { jQuery.ajax({ url: "/Payment/Bank/Default.aspx", type: "post", dataType: "text", data: data, async: false, complete: complete_function }); }</script>
+    <style type="text/css">
+    label img{vertical-align:middle; width:130px; height:45px; cursor:pointer;}
+    label input{display:none;}
+    td ul{margin:3px;}
+    #idTransOnline td label.hookbox{display:block;width:165px;border:2px solid #ffffff;}
+    .order_mey_sure .oney_tog_p{padding-top:6px;padding-left:30px;}
+    .hookbox { margin:0px;}
+    .hookbox *{ cursor:pointer;}
+    .hookboxSelected, #idTransOnline td label.hookboxSelected { border:2px solid #00a539;}
+    .hookbox input { display:none;}
+    button{display:inline-block;height:22px;min-width:24px;line-height:22px;line-height:23px\9\0;*line-height:24px;font-family:Simsun\9;_overflow-y:hidden;padding:0 12px;margin:0;text-align:center;text-decoration:none;vertical-align:middle;cursor:default;-moz-user-select:none;-webkit-user-select:none;border-radius:3px;border-radius:0\9\0;}
+    button{border:1px solid #888;color:#000000;color:#000000!important;background:#F3F3F3;background:-moz-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);background:-webkit-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);background:-o-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);background:-ms-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',endColorstr='#d7d7d7',GradientType=0 );background:linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);}
+    button:active{outline:none;box-shadow:inset 0 1px 2px rgba(0,0,0,0.2);border-color:#7e7e7e;background:#F3F3F3;background:-moz-linear-gradient(top,#ebebeb,#F3F3F3);background:-webkit-linear-gradient(top,#ebebeb,#F3F3F3);background:-o-linear-gradient(top,#ebebeb,#F3F3F3);background:-ms-linear-gradient(top,#ebebeb,#F3F3F3);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb',endColorstr='#F3F3F3',GradientType=0 );background:linear-gradient(top,#ebebeb,#F3F3F3);}
+    button:focus{border-color:#0074bc;}
+    .productName{font-weight:bold;}
+    .tips{color:#f00;}
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".topC0").hover(function () {
+                $(".topC0").removeClass("topC1");
+                $(this).addClass("topC1");
+                $(".NewsTop_cnt_product .d_01_product").hide();
+                $(".NewsTop_cnt_product .d_01_product").eq($(this).index()).show();
+            });
+        });
+        function showpic() {
+            $("#showbigpic").attr("href", $('#lb_img').attr("src"));
+        }
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+@if (string.IsNullOrEmpty(ErrorMessage) && orders != null)
+{
+    <form name='payOrderForm' id="payOrderForm" method='post' action='https://epay.cmbc.com.cn/ipad/service.html'
+    accept-charset='utf-8'>
+    <div class="order_sure">
+        <div class="o_s_01">
+            <div class="radio_left">
+                <div class="radio_right">
+                    <h2>
+                        订单 &gt; 在线支付</h2>
+                </div>
+            </div>
+            <div class="ifo_border">
+            </div>
+        </div>
+        <div class="Receive_buy">
+            <div class="order_mey_sure">
+                <h2 style="padding: 5px 5px 2px 35px; font-size: 14px;">
+                    尊敬的@(orders.UserName)（@(orders.parentCorpName)），您的订单已经提交成功；<br />
+                    配送至 @(orders.ConsigneeProvince + "" + orders.ConsigneeCity + "" + orders.ConsigneeBorough)
+                    预计2~3天送达，请留意收货，预祝合作愉快！
+                </h2>
+                <p class="oney_tog_p">
+                    订单号：<span class="allprice"> @orders.OrderId </span>
+                </p>
+                <p class="oney_tog_p">
+                    应付金额：<span class="allprice"> @((orders.TotalPrice + orders.TradeFees).ToString("f2"))
+                        元</span></p>
+                
+                <table cellpadding="0" cellspacing="0" style="width: 900px; display: block; margin-left: 28px;">
+                    <tr>
+                        <td style="padding: 30px 0 30px 350px; text-align: left;">
+                            <input type="submit" id="SubmitOnline" value=" " onclick="onSubmit(this)" style="background: url(/images/pay_now.jpg) no-repeat;
+                                border: 0 none; width: 97px; height: 38px; cursor: pointer;" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </form>
+}
+else
+{
+    <link rel="stylesheet" type="text/css" href="/Content/error.css" />
+    <style type="text/css">
+        .o_s_right .order_money
+        {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+        .radio_left
+        {
+            border-bottom: 1px solid #DDDDDD;
+        }
+    </style>
+    <div class="order_sure">
+        <div class="o_s_01">
+            <div class="radio_left">
+                <div class="radio_right">
+                    <h2>
+                        订单 &gt; 在线支付（异常）</h2>
+                </div>
+            </div>
+            <div class="ifo_border">
+            </div>
+        </div>
+        <div class="o_s_con">
+            <div class="o_s_left">
+            </div>
+            <div class="o_s_right">
+                <h2>@Html.Raw(ErrorMessage)</h2>
+                <p style="padding-top: 10px;">
+                    <span style="padding-left: 10px;">您可以 </span><a href="/" class="order_money">返回首页</a>
+                    <span>或者进入 <a href="/MemberCenter" class="order_money">会员中心</a> &gt; <a href="/MemberCenter/Orders"
+                        class="order_money">我的订单</a></span></p>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <!--payment_submit-->
+}

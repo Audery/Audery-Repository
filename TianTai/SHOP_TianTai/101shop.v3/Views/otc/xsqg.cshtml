@@ -1,0 +1,26 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@using System.Linq
+@using SOSOshop.BLL.Common;
+@{
+    Layout = null;    
+}
+@foreach (DataRow item in Model.Rows)
+{
+<li  inde="@ViewBag.Index">
+        <p class="imgbox">
+            <a href="@{@item["Product_ID"]}.html" target="_blank">
+                <img src="@Public.RawImage(item["Image"])" width="150px" height="150px" style="display: inline;"></a></p>
+        <p class="item-tx">
+            <a href="@{@item["Product_ID"]}.html" target="_blank">@Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")
+                规格：@Public.GetSpecificationAndS(item) @item["DrugsBase_Manufacturer"]</a></p>
+        <p class="item-num-box">
+            @*<span>库存</span> <span class="num-all"><b style="width: 50%;"></b></span>*@
+        </p>
+        <div class="price-box">
+            <span class="price"><em>@string.Format("{0:f2}", item["showPrice"])</em></span>
+            <span class="price1">原价:<s>@string.Format("¥{0:f2}", item["OrigPrice"])</s></span>
+        </div>
+        <a href="@{@item["Product_ID"]}.html" target="_blank" class="addcart">立即抢购</a>
+</li>    
+}

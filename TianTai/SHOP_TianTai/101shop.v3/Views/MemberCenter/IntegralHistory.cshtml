@@ -1,0 +1,117 @@
+﻿@model PagedList<System.Data.DataRow>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "积分兑换";
+    var Per = new SOSOshop.BLL.MemberPermission().GetModel(_101shop.v3.Controllers.BaseController.GetUserId());
+    
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanagerDetail.css" />
+    <link href="/Content/cart_look.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".cancelall").click(function () {
+                history.go(-1);
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<form action="/MemberCenter/IntegralExchange" method="post" class="Integral" style="display: none">
+<input type="text" name="id" />
+<input type="text" name="Number" />
+</form>
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>积分兑换</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 150px; float: left;">
+            <span>兑换历史：</span></div>
+        <div class="search_01">
+            <input type="button" value="返回" class="bti cancelall" />
+        </div>
+    </div>
+    <div class="mc">
+        <dl>
+            <dd class="p-list">
+                <table cellpadding="0" cellspacing="0" width="828">
+                    <tr>
+                        <th>
+                            礼品名称
+                        </th>
+                        <th>
+                            兑换数量
+                        </th>
+                        <th>
+                            收货信息
+                        </th>
+                        <th>
+                            礼品状态
+                        </th>
+                        <th>
+                            兑换日期
+                        </th>
+                    </tr>
+                    @foreach (System.Data.DataRow item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item["gname"]
+                            </td>
+                            <td>
+                                @((int)(decimal)item["Gift_Number"])
+                            </td>
+                            <td>
+                                @item["ConsigneeName"]
+                                &nbsp;&nbsp;
+                                @item["ConsigneePhone"]
+                                &nbsp;&nbsp;
+                                @item["ConsigneeAddress"]
+                            </td>
+                            <td>
+                                @State((int)item["State"])
+                            </td>
+                            <td>
+                                @(((DateTime)item["ontime"]).ToString("yyyy-MM-dd"))
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })
+    </div>
+</div>
+@helper State(int s)
+    {
+        switch (s)
+        {
+            case 0:
+                {
+    <text>已取消</text>
+                    break;
+                }
+            case 1:
+                {
+    <text>待处理</text>
+                    break;
+                }
+            case 2:
+                {
+    <text>已处理</text>
+                    break;
+                }
+            case 3:
+                {
+    <text>已邮寄</text>
+                    break;
+                }
+        }
+}

@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+
+.jf-cont-box{ background:#f23939 repeat; width:100%; height:100%; margin:0; padding:0;}
+.jf-cont{ margin:0 auto; width:1000px;}
+.jf-cont-ms{ background:#FFF repeat; border-radius: 6px; width:960px; margin:0 auto; padding:10px;}
+.jf-shop{ width:220px; border:1px solid #ddd; margin:4px;_margin:2px;_padding:0px; padding:5px; float:left;}
+.jf-shop-img{ position:relative;}
+.jf-ico{ position:absolute; left:5px; top:0px;}
+.jf-shop-title{ background:#fff; width:210px; white-space:nowrap; text-overflow: ellipsis; overflow:hidden; padding:5px; color:#888; font-weight:bold; margin:2px;}
+.jf-shop-fz{ color:#fff; width:220px; margin:2px;}
+.jf-shop-fz span{ background:#f23939; padding: 5px 2px 5px 5px; color:#fff; float:left; display:block;}
+.jf-shop-fz strong{ background:#333; color:#fff; font-size:14px;  padding:3px 6px 4px; _padding:4px 6px 4px; float:left; display:block;}
+.jfgz{ margin-top:20px;}
+.jfgz p{ font-size:18px; font-weight:bold; color:#f23939;}
+.jf-link-1{ position:relative; float:left; width:234px; height:100px; margin:10px 6px 20px 0px;}
+.jf-link-1 a{ background: url(/AdImage/jf-link.jpg) left bottom; color:#fff; position:absolute; top:76px; left:0px;; display:none; padding:3px 86px;}
+.jf-link-1:hover a{ display:block;}
+.jf-link-1 a:hover{ text-decoration:underline;}
+
+
+

@@ -1,0 +1,166 @@
+﻿<script type="text/javascript">
+
+    function toggleMenu(obj) {
+        var myMenu = document.getElementById("myMenu");
+        var parentMenu = myMenu.getElementsByTagName("b");
+        var childMenu = myMenu.getElementsByTagName("dd");
+
+        for (var i = 0; i < parentMenu.length; i++) {
+            if (parentMenu[i].id == obj.id) {
+                if (childMenu[i].style.display == "") {
+                    parentMenu[i].style.backgroundImage = "url(../images/mc_bg_left_collapse_selected.jpg)";
+                    childMenu[i].style.display = "none";
+                }
+                else {
+                    parentMenu[i].style.backgroundImage = "url(../images/mc_bg_left_unfold_selected.jpg)";
+                    childMenu[i].style.display = "";
+                }
+            }
+        }
+    }
+
+    //鼠标焦点在单位上时
+    function showBgPic(obj) {
+        var myMenu = document.getElementById("myMenu");
+        var titleBarLeft = myMenu.getElementsByTagName("dt");
+        var titleBarRight = myMenu.getElementsByTagName("b");
+        var childMenu = myMenu.getElementsByTagName("dd");
+
+        for (var i = 0; i < titleBarLeft.length; i++) {
+            if (titleBarLeft[i] == obj) {
+
+                if (childMenu[i].style.display == "none") {
+                    titleBarRight[i].style.backgroundImage = "url(/images/mc_bg_left_collapse_selected.jpg)";
+                    break;
+                }
+                else {
+                    titleBarRight[i].style.backgroundImage = "url(/images/mc_bg_left_unfold_selected.jpg)";
+                    break;
+                }
+            }
+        }
+    }
+
+    //鼠标焦点不在单位上时
+    function showBgPicEx(obj) {
+        var myMenu = document.getElementById("myMenu");
+        var titleBarLeft = myMenu.getElementsByTagName("dt");
+        var titleBarRight = myMenu.getElementsByTagName("b");
+        var childMenu = myMenu.getElementsByTagName("dd");
+
+        for (var i = 0; i < titleBarLeft.length; i++) {
+            if (titleBarLeft[i] == obj) {
+                if (childMenu[i].style.display == "none") {
+                    titleBarRight[i].style.background = "url(/images/mc_bg_left_collapse_unselected.jpg) no-repeat";
+                    break;
+                }
+                else {
+                    titleBarRight[i].style.background = "url(/images/mc_bg_left_unfold_unselected.jpg) no-repeat";
+                    break;
+                }
+            }
+        }
+    }
+</script>
+<div class="mc_left">
+    <div class="m" id="myMenu">
+        <div class="mt">
+            <h2>
+                <a href="/MemberCenter/">会员中心</a></h2>
+            <div class="extra" id="menus-setting">
+                常用设置</div>
+        </div>
+        <div class="mc" id="mc">
+            <dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">账户管理<b id="accountManage"
+                    onclick="toggleMenu(this)"></b></dt>
+                <dd id="accountManageItem">
+                    <div class="item">
+                        <a href="/MemberCenter/Info">账户信息</a></div>
+                    <div class="item">
+                        <a href="/MemberCenter/SafetyCenter">账户安全</a></div>@*   <div class="item">
+                        <a href="/MemberCenter/Consume">我的往来帐</a>
+                        <img src="/images/icon_new.png" alt="" style="position: absolute; margin-top: 2px; margin-left: 3px" />
+                    </div>*@
+                    <div class="item">
+                        <a href="/MemberCenter/ReceAddress">收货地址</a></div>
+                    @*<div class="item">
+                        <a href="/MemberCenter/Qualifications">增票资质</a></div>*@
+                </dd>
+            </dl>
+            <dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">交易管理<b id="transactionManage"
+                    onclick="toggleMenu(this)"></b></dt>
+                <dd id="transactionManageItem">
+                    <div class="item">
+                        <a href="/MemberCenter/Orders?orderdate=3">我的订单</a></div>
+                    <div class="item">
+                        <a href="/MemberCenter/CartPro">快捷下单</a>
+                        <img src="/images/icon_new.png" alt="" style="position: absolute; margin-top: 2px;
+                            margin-left: 3px" />
+                    </div>
+                    @*<div class="item"><a href="#">在线支付</a></div>*@
+                    <div class="item">
+                        <a href="/MemberCenter/Follow">我的关注</a></div>
+                    @*<div class="item">
+                        <a href="/MemberCenter/StockOutInfo">缺货到货通知</a></div>*@ @*<div class="item"><a href="#">邮件订阅</a></div>*@
+                    <div class="item">
+                        <a href="/MemberCenter/TradingIntention">交易意向</a></div>
+                    @*<div class="item">
+                        <a href="/MemberCenter/CartProManage">管理模板</a></div>*@
+                </dd>
+            </dl>
+            @* <dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">药检报告<b id="transactionManage"
+                    onclick="toggleMenu(this)"></b> </dt>
+                <dd id="transactionManageItem">
+                    <div class="item">
+                        <a href="/MemberCenter/InspectionReport_Orders">药检报告下载</a>
+                    </div>                   
+                </dd>
+            </dl>*@
+            <dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">药品资质下载<b id="transactionManage"
+                    onclick="toggleMenu(this)"></b> </dt>
+                <dd id="transactionManageItem">
+                 <div class="item">
+                        <a href="/MemberCenter/InspectionReport_All">资质下载</a>
+                    </div>
+                    <div class="item">
+                        <a href="/MemberCenter/InspectionReport_Orders">按成交品种下载</a>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">客户服务<b id="customerService"
+                    onclick="toggleMenu(this)"></b></dt>
+                <dd id="customerServiceItem">
+                    <div class="item">
+                        <a href="/MemberCenter/Integral">积分兑换</a>
+                        <img src="/images/icon_new.png" alt="" style="position: absolute; margin-top: 2px;
+                            margin-left: 3px" />
+                    </div>
+                    <div class="item">
+                        <a href="/MemberCenter/Integraldetail">积分明细</a>
+                    </div>
+                    @*   <div class="item"><a href="#">退换货</a></div>
+                    <div class="item"><a href="#">意见反馈及投诉</a></div>*@
+                    <div class="item">
+                        <a href="/help/111.html">帮助中心</a></div>
+                    @*<div class="item"><a href="#">资信信贷申请</a></div>*@
+                </dd>
+            </dl>
+            @*<dl>
+                <dt onmouseover="showBgPic(this)" onmouseout="showBgPicEx(this)">促销优惠<b id="promotions" onclick="toggleMenu(this)"></b></dt>
+                <dd id="promotionsItem">
+                    <div class="item"><a href="#">我的积分</a></div>
+                    <div class="item"><a href="#">我的优惠劵</a></div>
+                    <div class="item">
+                        <a href="#">为我精选</a>
+                        <img src="/images/icon_new.png" alt="" style="position: absolute; margin-top: 2px; margin-left: 3px" />
+                    </div>
+                </dd>
+            </dl>*@
+        </div>
+    </div>
+</div>

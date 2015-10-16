@@ -1,0 +1,378 @@
+﻿@using System.Linq
+@using SOSOshop.BLL
+@using System.Data
+@using SOSOshop.BLL.DrugsBase
+@using _101shop.v3.Controllers
+@{ Layout = null;}
+<style type="text/css">
+    
+</style>
+<div class="box">
+    <div class="allsort">
+        <div class="mc">
+            @{
+                //中西药品 
+                SOSOshop.BLL.DrugsBase.Tag_PharmAttribute bll = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute();
+                var dt_otc = bll.GetList(71).AsEnumerable().Where(a => a.Field<int>("ParentId") == 0);    
+            
+                <div class="item">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico1 font">中西药品(@(bll.GetTotalCount(1) + bll.GetTotalCount(583)))</a>
+                            <p class="cate2">
+                                @foreach (var item in dt_otc.Where(x => x.Field<int>("id") == 16 || x.Field<int>("id") == 19))
+                                {
+                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)">
+                                        @{@item["name"]}
+                                        (@item["count"])</a>
+                                }
+                            </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            <dl class="fore">
+                                <dd>
+                                    @foreach (var item in dt_otc)
+                                    {<em> <a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)">
+                                        @{@item["name"]}
+                                        (@item["count"])</a></em>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+           
+                //进口药品
+                SOSOshop.BLL.Category.Menu menu = new SOSOshop.BLL.Category.Menu();
+                var m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.进口药品);
+                <div class="item">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico2 font">进口药品(@m.Sum(x => x.Count))</a>
+                            <p class="cate2">
+                                @foreach (var item in m.Where(x => x.Pharm_ID == 1821 || x.Pharm_ID == 1838))
+                                {
+                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 9)">
+                                        @{@item.Title}
+                                    </a>
+                                }
+                            </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            <dl class="fore">
+                                <dd>
+                                    @foreach (var item in m.Where(x => x.Count > 0 && x.parentId != "0"))
+                                    {
+                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 9)">
+                                            @{@item.Title}
+                                            (@item.Count)</a></em>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            
+                //中药饮片                                 
+                m = menu.GetList_Zyyp("2973");
+                <div class="item">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico3 font">中药饮片(@{@m.Sum(x => x.Count)}
+                                )</a><p class="cate2">
+                                    @foreach (var item in m.Take(2))
+                                    {
+                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 8)">
+                                            @{@item.Title}
+                                            (@item.Count)</a>
+                                    }
+                                </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            <dl class="fore">
+                                <dd>
+                                    @foreach (var item in m)
+                                    {
+                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 8)">
+                                            @{@item.Title}
+                                            (@item.Count)</a></em>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                //医疗器械
+                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.医疗器械);
+                <div class="item">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico4 font">医疗器械(@{@m.Where(x => x.parentId == "0").Sum(x => x.Count)}
+                                )</a><p class="cate2">
+                                    @foreach (var item2 in m.Where(x => x.Pharm_ID == 3018 || x.Pharm_ID == 3022))
+                                    {
+                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                            (@item2.Count)</a>
+                                    }
+                                </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            @foreach (var item in m.Where(x => x.parentId == "0"))
+                            {
+                                <dl class="fore">
+                                    <dt><em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)">@item.Title
+                                        (@m.Where(x => x.parentId == item.Pharm_ID.ToString()).Sum(x => x.Count))</a></em></dt>
+                                    <dd>
+                                        @foreach (var item2 in m.Where(x => x.parentId == item.Pharm_ID.ToString()))
+                                        {
+                                            <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                (@item2.Count)</a></em>
+                                        }
+                                    </dd>
+                                </dl>          
+                            }
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                //保健品
+                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.保健品);
+                <div class="item ">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico5 font">保健品(@{@m.Sum(x => x.Count)}
+                                )</a><p class="cate2">
+                                    @foreach (var item2 in m.Where(x => x.Pharm_ID == 3074 || x.Pharm_ID == 3071))
+                                    {
+                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                            (@item2.Count)</a>
+                                    }
+                                </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            <dl class="fore">
+                                <dd>
+                                    @foreach (var item2 in m)
+                                    {
+                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                            (@item2.Count)</a></em>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                //计生用品
+                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.计生用品);
+                <div class="item fore">
+                    <span>
+                        <h3>
+                            <a class="title h3-ico6 font">计生用品(@{@m.Sum(x => x.Count)}
+                                ) </a>
+                            <p class="cate2">
+                                @foreach (var item2 in m.Where(x => x.Pharm_ID == 3076 || x.Pharm_ID == 3077))
+                                {
+                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                        (@item2.Count)</a>
+                                }
+                            </p>
+                        </h3>
+                    </span>
+                    <div class="i-mc">
+                        <div class="subitem">
+                            <dl class="fore">
+                                <dd>
+                                    @foreach (var item2 in m)
+                                    {
+                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                            (@item2.Count)</a></em>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--预留分类广告(暂时不用)-->
+                        <div class="cat-right-con">
+                            <p>
+                                <strong>推荐品牌</strong></p>
+                            <ul>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjhl.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bjtrt.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_gdjb.jpg"></a></li>
+                                <li><a href="#">
+                                    <img src="/images/101_cjlogo_bcyy.jpg"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">广州白云山</a></li>
+                                <li><a href="#">广州白云山制药</a></li>
+                                <li><a href="#">昆明一零一</a></li>
+                                <li><a href="#">昆明荣景</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#">昆明东昌</a></li>
+                                <li><a href="#">昆明金仁医药</a></li>
+                                <li><a href="#">广州天齐医药</a></li>
+                                <li><a href="#">广州本草堂</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="extra">
+                    <a href="#">全部商品分类</a></div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".allsort").hoverForIE6({ current: "allsorthover", delay: 200 });
+    $(".allsort .item").hoverForIE6({ delay: 150 });
+</script>

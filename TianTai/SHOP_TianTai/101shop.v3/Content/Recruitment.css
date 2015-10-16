@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+.contentbox{ width:1280px; margin:0 auto;}
+.z-p-title{font-size: 22px;color: #222;font-weight: bold; padding-left: 36px;margin: 7px 0;}
+.z-p-cont{font-size: 15px;color: #888;}
+.zz-title{float: left;font-size: 14px;color: #333;font-weight: bold;}
+.zz-detail{float: left;margin-left: 20px; color: #333;font-size: 13px;}
+.gwzz{ margin-top:10px;}
+.z-Position{ margin-top:30px; margin-left:47px;}
+.zp-f-1{ font-size:18px;}
+.menuBar-1{ width:100px; background:#fff;position: fixed;right:0; top:0;_position: absolute; margin-right:50px;}
+.menuBar-1 p{ padding:5px; background:#333; color:#fff; font-weight:bold; }
+.menuBar-1 a{ display:block; border-bottom:1px dashed #ddd; padding:5px;}
+.menuBar-1 a:hover{ background:#ca1a1a; color:#fff !important; }
+.zp-f-1{ margin: 20px 0 10px 20px;}
+
+.zt-1{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -17px;}
+.zt-2{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -63px;}
+.zt-3{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -110px;}
+.zt-4{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -157px;}
+.zt-5{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -205px;}
+.zt-6{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -252px;}
+.zt-7{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -298px;}
+.zt-8{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -344px;}
+.zt-9{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -396px;}
+.zt-10{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -449px;}
+.zt-11{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -500px;}
+.zt-12{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -554px;}
+.zt-13{ background:url(/AdImage/zp-list-bg.jpg) no-repeat -16px -606px;}

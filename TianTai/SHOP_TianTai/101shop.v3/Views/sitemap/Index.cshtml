@@ -1,0 +1,99 @@
+﻿@using System.Linq
+@using SOSOshop.BLL
+@using System.Data
+@using SOSOshop.BLL.DrugsBase
+@using _101shop.v3.Controllers
+@{ViewBag.Title = "";}
+@section head
+{
+<link rel="stylesheet" type="text/css" href="/Content/101yy_index.css" />
+<style type="text/css">
+.list_nav { border-bottom:0 none;}
+ul,li,dt,dl{list-style-type:none}
+.cplb{width:980px; margin:10px auto 5px auto; overflow:hidden}
+.cplb h3{line-height:28px; color:#FFF; text-indent:10px; background:url(/images/cplbh3.jpg) no-repeat; font-size:18px}
+.cplb h3 span{color:#999999; font-size:12px; font-weight:100; float:right; margin-right:10px; line-height:30px}
+.cplb h3 span a{color:#999999;}
+.cplb h3 span a:link,.cplb h3 span a:visited{color:#999999;}
+.cplb h3 span a:hover{color:#999999;}
+.cplb_cp{float:left; width:721px; height:220px; overflow:hidden}
+.cplb_cp li{float:left; margin:10px 12px; _margin:10px 8px; line-height:18px}
+.cplb_cp li p{width:156px;}
+.cplb_cpscj{color:#919191;display: none;}
+.cplb_cpssj{font-size:14px; color:#ff4e00; }
+.cplb_wz{float:right; width:257px; height:209px; padding-top:8px; background:url(/images/cplb_wz.jpg) left no-repeat; overflow:hidden}
+.cplb_wz li{margin-left:14px; line-height:27px; background:url(/images/cplb_wzli.jpg) no-repeat left; text-indent:15px}
+.cplb_wz li span{float:right; margin-right:10px; color:#b4b4b4}
+.cplb_wz { float: left; width: 190px}
+</style>
+}
+<div class="content">
+    @{Html.RenderPartial("Nav");}
+    <ul class="list_nav">
+        <li><a href="/">首页</a> &gt; <span>网站地图</span></li>
+    </ul>
+    <div class="clear">
+    </div>
+    @foreach (var item in SearchModel.GetList(SearchModelEnum.药理一级))
+    {
+        int i = 0;
+    <div class="cplb">
+        <h3>
+            <span></span>@item.name</h3><ul class="cplb_wz">
+        @foreach (var item2 in SearchModel.GetList(SearchModelEnum.药理二级).Where(x => x.ParentID == item.id))
+        {
+            if (i % 7 == 6)
+            {
+                @Html.Raw("</ul><ul class=\"cplb_wz\">");
+            }
+            @Html.Raw("<li><a href="+HomeController.SearchUrl(item2.id, 0)+" target=\"_blank\" title="+item2.name+">"+item2.name+"</a></li>");
+            i++;
+        }</ul>
+    </div>
+    }
+    <div class="cplb">
+        <h3>
+            <span></span>厂家数量</h3><ul class="cplb_wz" style="background:none; width:90%; height: 50px;">
+    @foreach (var item in SearchModel.GetList(SearchModelEnum.厂家数量))
+    {
+        <li style="float:left;"><a href="@HomeController.SearchUrl(item.id, 2)" target="_blank" title="2家">@item.name</a></li>
+    }</ul>
+    </div>
+    <div class="cplb">
+        <h3>
+            <span></span>价格区间</h3><ul class="cplb_wz" style="background:none; width:90%; height: 50px;">
+    @foreach (var item in SearchModel.GetList(SearchModelEnum.价格区间))
+    {
+        <li style="float:left;"><a href="@HomeController.SearchUrl(item.id, 2)" target="_blank" title="2家">@item.name</a></li>
+    }</ul>
+    </div>
+    <div class="cplb">
+        <h3>
+            <span></span>剂    型</h3>
+        <ul class="cplb_wz" style="background:none; width:90%;">
+    @{
+        var jxlist = SearchModel.GetList(SearchModelEnum.剂型二级);
+        foreach (var item in SearchModel.GetList(SearchModelEnum.剂型一级))
+        {
+            int i = 0;
+            <li style="float:left;width:68px;background:none;">@item.name</li>
+            foreach (var item2 in jxlist.Where(x => x.ParentID == item.id))
+            {
+            <li style='float:left;@(i++ == 12 ? "margin-left: 96px;" : "")'><a href="@HomeController.SearchUrl(item2.id, 4)" target="_blank" title="@item2.name">@item2.name</a></li>
+            }
+            <li style="float:left; clear:both;"></li>
+        }
+    }
+        </ul>
+    </div>
+    <div class="cplb">
+        <h3>
+            <span></span>热门标签</h3><ul class="cplb_wz" style="background:none; width:90%; height: 50px;">
+    @foreach (var item in SearchModel.GetList(SearchModelEnum.热门标签))
+    {
+        <li style="float:left;"><a href="@HomeController.SearchUrl(item.id, 2)" target="_blank" title="2家">@item.name</a></li>
+    }</ul>
+    </div>
+    <br style="clear:both" />
+    <br style="clear:both" />
+</div>

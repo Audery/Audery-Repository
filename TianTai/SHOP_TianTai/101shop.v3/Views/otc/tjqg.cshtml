@@ -1,0 +1,29 @@
+﻿@model System.Data.DataRow
+@using System.Data
+@using System.Linq
+@using SOSOshop.BLL.Common;
+@{
+    Layout = null;
+    var item = Model;
+}
+<tr class="tjqgIndex" inde="@ViewBag.Index">
+        <td>
+            <a href="@{@item["Product_ID"]}.html" target="_blank">@Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")</a>
+        </td>
+        <td>
+            <div class="item-guige1">@Public.GetSpecificationAndS(item)
+            </div>
+        </td>
+        <td>
+            <div class="item-icd1">@item["DrugsBase_Manufacturer"]</div>
+        </td>
+        <td>
+            <span class="wrap-list-price"><em>@item["showPrice"].ToString()</em></span>
+        </td>
+        <td>
+            <s>@string.Format("¥{0:f2}", item["OrigPrice"])</s>
+        </td>
+        <td>
+            <a class="buynow" href="@{@item["Product_ID"]}.html" target="_blank">立即购买</a>
+        </td>
+</tr>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!--如果重写shtml扩展名，需要在IIS里，调整应用程序映射，把shtml扩展名映射到C:WINDOWSMicrosoft.NETFramework 1.1.4322aspnet_isapi.dll，注意取消检查文件是否存在-->
+<SiteUrls>
+  <rewrite name="default" path="/default.html" pattern="/default.html" page="/default.aspx" querystring="" />
+  <rewrite name="productlist" path="/product/productlist-{0}.html" pattern="/product/productlist-(\d+)*.html" page="/product/productlist.aspx" querystring="q_cid=$1" />
+  <rewrite name="productclass" path="/product/productclass.html" pattern="/product/productclass.html" page="/product/productclass.aspx" querystring="" />
+  <rewrite name="special" path="/product/special.html" pattern="/product/special.html" page="/product/special.aspx" querystring="" />
+</SiteUrls>

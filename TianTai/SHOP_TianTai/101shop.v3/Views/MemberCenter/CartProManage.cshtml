@@ -1,0 +1,441 @@
+﻿@model PagedList<System.Data.DataRow>
+@using System.Data;
+@using SOSOshop.Model.Order;
+@using Webdiyer.WebControls.Mvc
+@using _101shop.v3.Controllers
+@{
+    ViewBag.Title = "我的采购模板";
+    DataTable list = ViewBag.List;//当前模板商品列表
+    IEnumerable<SOSOshop.Model.Order.OrderProductCart> Carts = ViewBag.Carts;//选择模板
+}
+  <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_CartPro.css" />
+  <style type="text/css"> 
+.xstooltip 
+{ 
+    background:#efefef;
+visibility: hidden; 
+position: absolute; 
+top: 0; 
+left: 20; 
+z-index: 2; 
+padding-left:2px;
+padding-top:2px;
+display:none;
+}
+.xstooltip th
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+    text-align:center;
+} 
+.xstooltip td
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+}
+.xstooltip .right
+{   
+    text-align:right;
+}
+.xstooltip .center
+{   
+    text-align:center;
+}
+.zk_info_1 {
+    width: 130px;
+}
+.zk_info_2 {
+    width: 190px;
+}
+.zk_info_3 {
+    width: 150px;
+}
+.zk_info_4 {
+    width: 85px;
+}
+.zk_info_5 {
+    width: 90px;
+}
+.zk_info_6 {
+    width: 85px;
+}
+.zk_info_7 {
+    width: 90px;
+}
+.list_shop_title .ls_01 {
+    width: 120px;
+}
+.list_shop_title .ls_02 {
+    width: 180px;
+}
+.list_shop_title .ls_03 {
+    width: 140px;
+}
+.list_shop_title .ls_04 {
+    width: 75px;
+}
+.list_shop_title .ls_05 {
+    width: 80px;
+}
+.list_shop_title .ls_06 
+{
+    width: 75px;
+}
+.list_shop_title .ls_07 {
+    width: 80px;
+    border-right:0 none;
+}
+.zk_info a {
+    color: #0077BD;
+}
+.zhb{color:#3344EE;}
+input, button { font-size: 13px; padding: 2px;}
+.zk_info li { height:40px;padding:8px 0 0;}
+.zk_info li span.liner{ display: block; cursor: default; line-height: 100%; height: 18px;}
+.zk_info_input_box{
+	margin:4px 0;
+	_margin:2px 0;
+	color:#666;
+	float:left;
+	font-weight:normal;
+	width:99px;
+	_width:104px;
+	white-space:nowrap;
+	overflow:hidden;
+	padding:3px 0 0 0;
+	}
+.zk_info_input{
+	border:1px solid #999;
+	height:22px;
+	width:75px;
+	position:relative;
+	float:left;
+	margin-right:5px;
+	margin-left:5px;
+	_margin-left:0px;
+	margin-top:-3px;
+}
+.zk_info_input input{
+	border:none;
+	width:34px;
+	text-align:center;
+	margin-top:2px;
+	float:left;
+				
+}
+.zk_info_input .jianshao{
+	position:static;
+	padding:1px 2px;
+	width:15px;
+	height:15px;
+	float:left;
+	cursor: pointer;
+				
+}
+.zk_info_input .zhengjia{
+	position:static;
+	float:right;
+	padding-top:1px;
+	padding-right:2px;
+	cursor: pointer;
+					
+}
+.zk_info_8 span { padding:0;}
+.step1,.step2,.step3 { clear:both;}
+.search_01 { width:400px;}
+.wBox_content input { border:1px solid #AAAAAA;}
+select { padding:1px;}
+</style> 
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript">
+        /*买家*/var member = { uid: @ViewBag.UID, name: '@ViewBag.TrueName', mobilePhone: '@ViewBag.MobilePhone' };
+    </script>
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>管理模板</span></li>
+</ul>
+ <div class="mc_left">
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind"><div>我的模板</div>
+    </div>
+    <div class="search_01" style="float:left; font-size:14px;">&nbsp;&nbsp;操作 > 
+    <button id="step1Btn" onclick="step1(this)" style="margin-left:10px">添加模板</button>
+    <br />
+      <span class="step3" style="color:Red;display:none">请选择需要保存的商品（如果不选择，则表示不保存）</span>
+    </div>
+      <div class="search_01" style="text-align: right;">
+        筛选：
+      <select id="selectCarts" onchange="onselectcart(this)">
+      <option value="">已购所有品种</option>
+      @if(Carts != null){
+      foreach (SOSOshop.Model.Order.OrderProductCart item in Carts)
+      {
+          <option value="@item.CartId"@(Request["id"]!=null && Request["id"].Equals(@item.CartId.ToString())?" selected":"")> @item.Name </option>
+      }}
+      </select>
+    <button id="step11Btn" onclick="got(@(Request["id"]))" style="margin-left:10px; display:none;">快捷下单</button>
+    <button id="step12Btn" onclick="canel(@(Request["id"]))" style="margin-left:10px; display:none;">删除当前选择</button>
+      </div>
+    
+    <form action="/shoppingcart/checkorders" method="post" id="form1">
+    <div class="list_shop_title">
+  <ul>
+      <li class="ls_01">通用名</li>
+      <li class="ls_02">规格</li>
+      <li class="ls_03">生产企业</li>
+      <li class="ls_04">批准文号</li>
+      <li class="ls_05">最新价格</li>
+      <li class="ls_06">累计购买数量</li>
+      <li class="ls_07">状态</li>
+  </ul>
+  </div>
+  @{
+      foreach (DataRow dv in list.Rows)
+      {        
+        <ul class="zk_info">
+        <li class="zk_info_1">
+            <span><a href="/@{@dv["Product_ID"]}.html" target="_blank">@dv["DrugsBase_DrugName"]</a></span>
+        </li>
+        <li class="zk_info_2">
+        @Html.Raw(string.Format("{0} x <span class=zhb>{1}</span>/{2}", dv["DrugsBase_Specification"], dv["Goods_ConveRatio"], dv["Goods_Unit"]))
+        <samp>&nbsp;(</samp>
+        @if ((int)dv["Goods_Pcs"] >= 1) 
+        {
+            <span>@dv["Goods_Pcs"]</span><span>@dv["Goods_Unit"]/件</span>
+        }
+        <samp> )&nbsp;</samp>
+        @dv["DrugsBase_Formulation"]
+        </li>
+        <li class="zk_info_3">@dv["DrugsBase_Manufacturer"]</li>
+        <li class="zk_info_4">@dv["DrugsBase_ApprovalNumber"]</li>
+        <li class="zk_info_5"><span id="pr-@(dv["Product_ID"])">@dv["showPrice"]</span></li>
+        <li class="zk_info_6">@dv["ProNumBought"]</li>
+        <li class="zk_info_7">
+        @if ((string)dv["showPrice"] == "已下架")
+        {
+          <span class="step1" style="color:Red;">已下架</span>
+          <span class="step2" style="color:Red;display:none">已下架</span>
+        }
+        else if (!System.Text.RegularExpressions.Regex.IsMatch((string)dv["showPrice"], "^¥[0-9\\.]+$"))
+        {
+          <span class="step1" style="color:Red;">@dv["showPrice"]</span>
+          <span class="step2" style="color:Red;display:none">@dv["showPrice"]</span>
+        }
+        else if ((int)dv["Stock"] > 0)
+        {
+           bool is_cl = ((string)dv["is_cl"] == "是" || (int)dv["Goods_Pcs"] <= 1);
+           <span class="step1">现货</span>
+            <span class="step2" style="display:none">
+                <div class="zk_info_input_box" style="margin:0;">
+                    <div class="zk_info_input">
+                        <span class="jianshao">
+                            <img style="padding:2px 0;" src="/images/jianshao_bg.jpg" width="16" height="16" onclick="sub(@(dv["Product_ID"]))" />
+                        </span>
+                        <input type="text" id="h-@(dv["Product_ID"])" onblur="henum(@(dv["Product_ID"]))" class="numbers" value="" minsell="@(is_cl ? dv["minsell"] : 1)" maxsell="@(is_cl ? dv["maxsell"] : (int)((int)dv["Stock"] / (int)dv["Goods_Pcs"]))"/>
+                        <span class="zhengjia">
+                            <img style="padding:2px 0;" src="/images/zhengjia_bg.jpg" width="16" height="16" onclick="add(@(dv["Product_ID"]))"/>
+                        </span>
+                    </div>@(is_cl ? dv["Goods_Unit"] : "件")
+                </div>
+                <div id="msg-@(dv["Product_ID"])" style="display:block; clear:both; float:none; color:Green; padding-left:5px;"></div>
+            </span>
+        }
+        else
+        {
+          <span class="step1" style="color:Red;">可预定</span>
+          <span class="step2" style="color:Red;display:none">可预定</span>
+        }
+         <span class="step3" style="display:none"><input type="checkbox" value="@(dv["Product_ID"])" class="numberc" onclick="step1CheckOk(this)" /></span>
+        </li>
+        </ul>
+      }
+    
+    }
+    </form>
+    <div id="step1AddDiv" style="display:none">
+    <table border="0" cellpadding="3" cellspacing="5">
+    <tr><td>模板名称：</td><td style="height:35px;"><input name="Name" style="width:180px; padding:3px;" /></td></tr>
+    <tr><td valign="top">模板描述：</td><td><textarea name="Description" style="border:1 solid #aaa; width:180px; height:50px; padding:3px;"></textarea></td></tr>
+    <tr><td>&nbsp;</td><td valign="bottom" style="height:35px;"><button onclick="step1Add(this)">确认</button></td></tr>
+    </table>
+    </div>
+    <div>
+   @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })           
+    </div>
+     </div>
+<!--content---------content------>
+
+<script language="javascript" type="text/javascript">
+    function got(id) {
+        window.location = "/MemberCenter/CartPro?id="+id;
+    }
+    function canel(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/MemberCenter/CartProCancel',
+            data: { id: id },
+            dataType: "json",
+            success: function (msg, textStatus) {
+                switch (msg["state"]) {
+                    case 1:
+                        alert(msg["message"]);
+                        window.location = "/MemberCenter/CartProManage";
+                        break;
+                    default:
+                        alert(msg["message"]);
+                        break;
+                }
+            }
+        });
+    }
+
+    function onselectcart(c) {
+        var id = $(c).val();
+        if (id == "") {
+            window.location = "/MemberCenter/CartProManage";
+        }
+        else {
+            window.location = "/MemberCenter/CartProManage?id=" + id;
+        }
+    }
+
+    function step1CheckOkGetPid() {
+        var nss = $(".numberc"), pids = "", nssc = nss.length, nssi = 0;
+        nss.each(function () { var o = $(this), proid = parseInt(o.val()); if (this.checked && !isNaN(proid) && proid > 0) pids += proid + ","; });
+        return pids;
+    }
+    var txt0 = "等待选择商品..", txt1 = "添加模板", txt2 = "确认添加为模板";
+    var wBox = 0;
+    function step1CheckOk(b) {
+        if (b.checked) {
+            var pids = step1CheckOkGetPid();
+            if (pids.length) {
+                $("#step1Btn").text(txt2);
+            }
+        }
+    }
+    function step1Check(b) {
+        var txt = $(b).text();
+        if (txt == txt1) {
+            setTimeout(function () { $(b).text(txt2); }, 2000);
+        }
+    }
+    function step1(b) {
+        var txt = $(b).text();
+        if (txt == txt0) { return alert(txt0); }
+        if (txt == txt1) {
+            $(".step1").hide();
+            $(".step2").hide();
+            $(".step3").show();
+            $(b).text(txt0);
+            step1Check(b);
+            return;
+        }
+        var pids = step1CheckOkGetPid();
+        if (pids.length == 0) { $(b).text(txt0); return alert(txt0); }
+        if (txt == txt2) {
+                wBox = $("#wbox1").wBox({
+                    title: "请填写模板的名称等信息",
+                    html: "<div style='display:block;width:270px;height:130px;margin:5px auto;'>" + $("#step1AddDiv").html() + "</div>",
+                    timeout: 10000000000
+                });
+                wBox.showBox();                
+        }
+    }
+    function step1Add(b) {
+        var pids = step1CheckOkGetPid(), inputs = $(b).parent().parent().parent().find("input");
+    if (pids.length) {
+        var Name = inputs.eq(0).val();
+        if ($.trim(Name) == "") {
+            return alert("请填写模板名称");
+        }
+        $(b).attr('disabled', 'disabled');
+        var Description = inputs.eq(1).val();
+        $.ajax({
+            type: 'POST',
+            url: '/MemberCenter/CartProAdd',
+            data: { pids: pids, Name: Name, Description: Description },
+            dataType: "json",
+            success: function (msg, textStatus) {                
+                if (msg["state"] > 0) {
+                    alert(msg["message"]);
+                    window.location = "/MemberCenter/CartProManage?id=" + msg["state"];
+                } else {
+                    alert(msg["message"]);
+                    window.location = "/MemberCenter/CartProManage";
+                }
+                
+            }
+        });
+    }
+    }
+
+    $(".numbers").val(''); $(".numberc").attr('checked', false);
+    if ($("#selectCarts")[0].selectedIndex > 0) { $("#step11Btn").show(); $("#step12Btn").show(); }
+</script>
+
+<script language="javascript" type="text/javascript">
+    function xstooltip_findPosX(obj) {
+        var curleft = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curleft += obj.offsetLeft
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.x)
+            curleft += obj.x;
+        return curleft;
+    }
+    function xstooltip_findPosY(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curtop += obj.offsetTop
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.y)
+            curtop += obj.y;
+        return curtop;
+    }
+    function xstooltip_show(tooltipId, parentId, posX, posY) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "";
+            }
+        }
+        it = document.getElementById(tooltipId);
+        if ((it.style.top == '' || it.style.top == 0) && (it.style.left == '' || it.style.left == 0)) {
+            // need to fixate default size (MSIE problem) 
+            it.style.width = it.offsetWidth + 'px';
+            it.style.height = it.offsetHeight + 'px';
+            img = document.getElementById(parentId);
+            // if tooltip is too wide, shift left to be within parent 
+            if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
+            if (posX < 0) posX = 0;
+            x = xstooltip_findPosX(img) + posX;
+            y = xstooltip_findPosY(img) + posY;
+            it.style.top = y + 'px';
+            it.style.left = x + 'px';
+        }
+        it.style.visibility = 'visible';
+	it.style.display = 'block';
+    }
+    function xstooltip_hide(id) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "none";
+            }
+        }
+        it = document.getElementById(id);
+        it.style.visibility = 'hidden';
+	it.style.display = 'none';
+    } 
+</script> 
+<script language="javascript" type="text/javascript" src="/Scripts/shopcart-num.js"></script>

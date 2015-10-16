@@ -31,6 +31,7 @@ namespace Recorder
             myMicrophone = Microphone.Default;
             myMicrophone.BufferDuration = TimeSpan.FromMilliseconds(1000);
             msBuffer = new byte[myMicrophone.GetSampleSizeInBytes(myMicrophone.BufferDuration)];
+        
         }
 
         void myMicrophone_BufferReady(object sender, EventArgs e)

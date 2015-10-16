@@ -1,0 +1,57 @@
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+.login_jy{
+	
+	width:1000px;
+	height:288px;
+	margin-top:14px;
+	border:1px solid #ddd;
+}
+.login_jy h2{
+	text-align:center;
+	padding:10px 0 10px 20px;
+	background:url(/images/login_suc.jpg) no-repeat 380px center;
+	margin-top:20px;
+	color:#bd0000;
+}
+.login_jy p{
+	text-align:center;
+}
+.login_jy a{
+	padding-right:10px;
+	color:#bd0000;
+	padding-left:500px;
+}
+.login_jy ul{
+	width:580px;
+	margin:0 auto;
+}
+.login_jy li{
+	float:left;
+	padding:10px 20px;
+	width:150px;
+}
+.login_jy strong{
+	float:left;
+}
+.login_jy .ico_i{
+	float:left;
+	margin:0 5px;
+}
+.login_jy .ico_c{
+	float:left;
+	padding:3px 0;
+	cursor:pointer;
+}

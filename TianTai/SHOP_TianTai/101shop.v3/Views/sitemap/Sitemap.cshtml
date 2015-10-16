@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+<?xml version="1.0" encoding="utf-8" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9/">
+        <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/Home/Index.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>1.0</priority>
+        </url>       
+        <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/jy</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/jy/Index.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.8</priority>
+        </url>
+         <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/otc</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/otc/Index.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.8</priority>
+        </url>    
+        <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/Promotions/C158AABC_005E</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/Promotions/C158AABC_005E.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.8</priority>
+        </url>  
+          <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/products/0-0-0-0-0-0-0-0-0-0-1.html</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/List/Index.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.8</priority>
+        </url>  
+        <url>
+        <loc>http://factory.99dcyy.com/</loc>
+        <lastmod>@System.IO.File.GetLastWriteTimeUtc(Server.MapPath("/Views/List/Index.cshtml"))</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.8</priority>
+        </url> 
+        @foreach (System.Data.DataRow item in new SOSOshop.BLL.Db().ExecuteTable("SELECT Product_ID,created FROM dbo.product_online_v").Rows)
+        {
+        <url>
+        <loc>http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/@{@item["Product_ID"]}.html</loc>
+        <lastmod>@item["created"]</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.6</priority>
+        </url> 
+        }
+</urlset>

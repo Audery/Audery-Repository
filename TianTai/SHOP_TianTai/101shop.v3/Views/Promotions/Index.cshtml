@@ -1,0 +1,211 @@
+﻿@using System.Data
+@using System.Linq
+@using _101shop.v3.Controllers
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["Promotions_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["Promotions_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["Promotions_Key"];  
+}
+@using SOSOshop.BLL.Common;
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/summer_sale.css" />
+}
+@{Html.RenderPartial("Nav");}
+<div class="containner">
+    <div class="banner">
+        <img alt="" src="../../images/promotions_Main.jpg" />
+    </div>
+    <div class="lm">
+        <div class="lm_tt">
+            <p class="lm_tt_nm">
+                <span>1F</span>中暑</p>
+            <div class="more">
+                <span>本类共有</span><span style="color: #bd0000; font-weight: bold;">@ViewBag.HeatstrokeCount</span><span>个商品</span><span
+                    style="padding-left: 12px;"><a href="@HomeController.SearchUrl(1066, 1)">查看更多>></a></span></div>
+        </div>
+        <ul class="lm_sp">
+            <li class="sp_frist">
+                <div>
+                    <a href="683.html">
+                        <img src="/images/promotions_heatstroke.jpg" width="194px" height="293px" /></a></div>
+            </li>
+            @{
+                DataTable heatstroke = (DataTable)ViewBag.中暑;
+                if (heatstroke.Rows.Count > 0)
+                {
+                    foreach (DataRow item in heatstroke.Rows)
+                    {
+                <li>
+                    <div style="position: relative; float: left;">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <div class="detail_img_ico">
+                                <span class="bkcl_ico">可拆零</span></div>
+                            <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="194px" height="194px" />
+                        </a>
+                    </div>
+                    <div class="shop_dsp" style="float: left;">
+                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                            <span>
+                                @Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")<br />
+                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"], 14, "...")<br />
+                            </span></a>
+                    </div>
+                    <div class="shop_price" style="float: left;">
+                        <span>
+                            @{@Price.GetPriceShowString()}
+                            ：@Html.Raw((string)item["showPrice"])</span>
+                    </div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="lm">
+        <div class="lm_tt">
+            <p class="lm_tt_nm">
+                <span>2F</span>暑湿感冒</p>
+            <div class="more">
+                <span>本类共有</span><span style="color: #bd0000; font-weight: bold;">@ViewBag.Heatstroke_CodeCount</span><span>个商品</span><span
+                    style="padding-left: 12px;"><a href="@HomeController.SearchUrl(1065, 0)">查看更多>></a></span></div>
+        </div>
+        <ul class="lm_sp">
+            <li class="sp_frist">
+                <div>
+                    <a href="594.html">
+                        <img src="/images/promotions_heatstroke_Code_Add.jpg" width="194px" height="293px" /></a></div>
+            </li>
+            @{
+                DataTable heatstroke_Code = (DataTable)ViewBag.暑湿感冒;
+                if (heatstroke_Code.Rows.Count > 0)
+                {
+                    foreach (DataRow item in heatstroke_Code.Rows)
+                    {
+                <li>
+                    <div style="position: relative; float: left;">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <div class="detail_img_ico">
+                                <span class="bkcl_ico">可拆零</span></div>
+                            <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="194px" height="194px" />
+                        </a>
+                    </div>
+                    <div class="shop_dsp" style="float: left;">
+                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                            <span>
+                                @Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")<br />
+                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"], 14, "...")<br />
+                            </span></a>
+                    </div>
+                    <div class="shop_price" style="float: left;">
+                        <span>
+                            @{@Price.GetPriceShowString()}
+                            ：@Html.Raw((string)item["showPrice"])</span>
+                    </div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="lm">
+        <div class="lm_tt">
+            <p class="lm_tt_nm">
+                <span>3F</span>胃肠感冒</p>
+            <div class="more">
+                <span>本类共有</span><span style="color: #bd0000; font-weight: bold;">@ViewBag.Stomach_FluCount</span><span>个商品</span><span
+                    style="padding-left: 12px;"><a href="@HomeController.SearchUrl(15, 1)">查看更多>></a></span></div>
+        </div>
+        <ul class="lm_sp">
+            <li class="sp_frist">
+                <div>
+                    <a href="703.html">
+                        <img src="/images/promotions_stomach_Flu.jpg" width="194px" height="293px" /></a></div>
+            </li>
+            @{
+                DataTable stomach_Flu = (DataTable)ViewBag.胃肠感冒;
+                if (stomach_Flu.Rows.Count > 0)
+                {
+                    foreach (DataRow item in stomach_Flu.Rows)
+                    {
+                <li>
+                    <div style="position: relative; float: left;">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <div class="detail_img_ico">
+                                <span class="bkcl_ico">可拆零</span></div>
+                            <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="194px" height="194px" />
+                        </a>
+                    </div>
+                    <div class="shop_dsp" style="float: left;">
+                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                            <span>
+                                @Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")<br />
+                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"], 14, "...")<br />
+                            </span></a>
+                    </div>
+                    <div class="shop_price" style="float: left;">
+                        <span>
+                            @{@Price.GetPriceShowString()}
+                            ：@Html.Raw((string)item["showPrice"])</span>
+                    </div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="lm">
+        <div class="lm_tt">
+            <p class="lm_tt_nm">
+                <span>4F</span>风热感冒</p>
+            <div class="more">
+                <span>本类共有</span><span style="color: #bd0000; font-weight: bold;">@ViewBag.Windheat_Code</span><span>个商品</span><span
+                    style="padding-left: 12px;"><a href="@HomeController.SearchUrl(13, 1)">查看更多>></a></span></div>
+        </div>
+        <ul class="lm_sp">
+            <li class="sp_frist">
+                <div>
+                    <a href="165.html">
+                        <img src="/images/promotions_windheat_Code.jpg" width="194px" height="293px" /></a></div>
+            </li>
+            @{
+                DataTable windheat_Code = (DataTable)ViewBag.风热感冒;
+                if (windheat_Code.Rows.Count > 0)
+                {
+                    foreach (DataRow item in windheat_Code.Rows)
+                    {
+                <li>
+                    <div style="position: relative;">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <div class="detail_img_ico">
+                                <span class="bkcl_ico">可拆零</span></div>
+                            <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="194px" height="194px" />
+                        </a>
+                    </div>
+                    <div class="shop_dsp">
+                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                            <span>
+                                @Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")<br />
+                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"], 14, "...")<br />
+                            </span></a>
+                    </div>
+                    <div class="shop_price">
+                        <span>
+                            @{@SOSOshop.BLL.Common.Price.GetPriceShowString()}
+                            ：@Html.Raw((string)item["showPrice"])</span>
+                    </div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div style="clear: both;">
+    </div>
+</div>

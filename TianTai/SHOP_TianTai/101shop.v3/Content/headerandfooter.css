@@ -1,0 +1,446 @@
+
+
+.otc_category{
+	width:257px;
+	height:362px;
+	border:2px solid #bd0000;
+	float:left;
+	margin-bottom:17px;
+}
+.otc_category ul{
+	width:257px;
+	height:362px;
+}
+.otc_category li{
+	 border-bottom: 1px solid #F7DBDB;
+    border-right: 1px solid #F7DBDB;
+    float: left;
+    font-size: 13px;
+    height: 22px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-top: 7px;
+    position: relative;
+    width: 117px;
+}
+.otc_category li span{
+	    float: right;
+    padding-right: 10px;
+}
+.otc_category li a:hover{
+	border:1px solid #ddd;
+	
+}
+.category_show{
+	  background: none repeat scroll 0 0 #f9f9f9;
+    border: 1px solid #DDDDDD;
+    height: 100px;
+    left: 126px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width:298px;
+    z-index: 1;
+	
+}
+.category_show ul{
+	width:280px;
+	margin:0 auto;
+	background:#f9f9f9;
+	
+}
+.category_show ul li{
+	
+float: left;
+display: inline;
+position: static;
+width: auto;
+border:none;
+	
+}
+.category_show ul li a{
+	display: block;
+border-right: 1px #C4C4C4 solid;
+height: 14px;
+line-height: 14px;
+padding-right:10px;
+}
+.category_show ul li a:hover{
+	display: block;
+border-right: 1px #C4C4C4 solid;
+height: 14px;
+line-height: 14px;
+padding-right:10px;
+color:#f00;
+text-decoration:underline;
+border-left:none;
+border-bottom:none;
+border-top: none;
+}
+.otc_ad{
+   border: 1px solid #DDDDDD;
+    float: left;
+    height: 365px;
+    margin-left: 6px;
+    width: 730px;
+}
+.m1_01{
+	position:relative;
+}
+.otc_djrx , .otc_xytj{
+	width:1000px;
+	height:350px;
+	
+}
+.otc_pptj{
+	width:693px;
+	float:left;
+}
+.otc_rqpp{
+float: left;
+    margin-left: 15px;
+    width: 292px;
+	
+}
+.otc_gmlzq{
+    width: 1000px;
+	margin-top:20px;
+	
+}
+.otc_hdzq{
+    width: 1000px;
+	margin-top:20px;
+	
+}
+
+.djrx_title{
+
+	border-bottom:2px solid #bd0000;
+	
+	}
+ .djrx_title01{
+			font-size:16px;
+	color:#bd0000;
+	font-weight:bold;
+	font-family:  "微软雅黑", "黑体"; 
+	width:100px;
+
+	float:left;
+	}
+	.gmlzq_title{
+
+	border-bottom:2px solid #bd0000;
+	
+	}
+	.hdzq_title{
+
+	border-bottom:2px solid #bd0000;
+	
+	}
+ .gmlzq_title01{
+			font-size:16px;
+	color:#bd0000;
+	font-weight:bold;
+	font-family:  "微软雅黑", "黑体"; 
+	width:100px;
+
+	float:left;
+	}
+	.hdzq_title01{
+			font-size:16px;
+	color:#bd0000;
+	font-weight:bold;
+	font-family:  "微软雅黑", "黑体"; 
+	width:100px;
+
+	float:left;
+	}
+	.lable_maidian{
+	float:right;
+	width:280px;
+	
+}
+
+.lable_maidian li{
+	float:left;
+	font-size:14px;
+	color:#666;	
+}
+	.lable_maidian li a{
+	color:#666;	
+}
+	.lable_maidian li a:hover{
+	color:#bd0000;
+	text-decoration:none;
+}
+.lable_maidian .md{
+	padding-top:4px;
+	padding-right:30px;
+}
+.lable_maidian .md_03{
+	padding-right:50px;
+}
+.lable_maidian .md_04{
+	padding-right:0;
+}
+.lable_num{
+		float:right;
+		width: 110px;
+}
+.lable_num li{
+	float:left;
+	font-size:14px;
+	color:#666;
+}
+	.lable_num li a{
+	color:#666;	
+	background:#eee;
+	border:1px solid #e4d0d0;
+	padding:0 4px;
+}
+	.lable_num li a:hover{
+	color:#666;
+	text-decoration:none;
+	background:#eee;
+	border:1px solid #957e7e;
+}
+.lable_num li a:link{
+}
+ .lable_num li a:visited {
+
+}
+.lable_num .md{
+	   margin: 0 4px;
+}
+
+.shop_dsp{
+	margin-top:22px;
+}
+.shop_dsp1{
+	margin-top:4px;
+}
+.shop_price{
+	margin-top:4px;
+	padding-left:3px;
+	color:#999;
+}
+.shop_price01{
+	margin-top:12px;
+	color:#999;
+}
+.shop_price1{
+	margin-top:7px;
+}
+.djrx_shopimg{
+	
+}
+.djrx_shopimg li{
+   float: left;
+    padding: 0 10px;
+    width: 180px;
+}
+.gmlzq_shopimg li{
+   float: left;
+    padding: 0 10px;
+    width: 180px;
+}
+.gml_cart{
+	height:35px;
+	margin-top: 6px;
+	
+}
+.gml_cart p{
+  background: url("/images/otc_addtocart.jpg") no-repeat scroll 0 0 transparent;
+    color: #BD0000;
+    font-size: 14px;
+    font-weight: bold;
+    height: 35px;
+    padding-left: 50px;
+    padding-top: 7px;
+	width:40px;
+	float:left;
+	
+}
+.gml_cart span{
+  background: url("/images/otc_addtocart.jpg") no-repeat  right top;
+    color: #BD0000;
+    font-size: 14px;
+    font-weight: bold;
+    height: 35px;
+    padding-left: 50px;
+    padding-top: 7px;
+	width:40px;
+	float:left;
+	 cursor: pointer;
+	
+}
+.hdzq_shopimg li{
+   float: left;
+    padding: 0 10px;
+    width: 180px;
+}
+.shop_price strong {
+	color:#bd0000;
+	font-weight: bold;
+	padding-left:6px;
+}
+.shop_price01 strong {
+	color:#666;
+	font-weight: bold;
+	padding-left:6px;
+}
+.xytj_shopimg{
+	padding:0 10px;
+}
+.xytj_shopimg li{
+   float: left;
+    padding: 0 5px;
+    width: 180px;
+}
+.hdzq_shopimg{
+}
+.hdzq_shopimg .tjqg{
+	float: left;
+     margin: 10px 10px 0 0;
+    width: 306px;
+	height:388px;
+	background:#f6f1f1;
+	position:relative;
+}
+.label_tj {
+	  background: url("/images/tj.png") no-repeat scroll 0 0 transparent;
+    height: 100px;
+       position: absolute;
+    right: -3px;
+    top: -5px;
+    width: 100px;
+}
+.label_zk {
+	  background: url("/images/zk.png") no-repeat scroll 0 0 transparent;
+    height: 100px;
+       position: absolute;
+    right: -3px;
+    top: -5px;
+    width: 100px;
+}
+.label_th{
+	  background: url("/images/th.png") no-repeat scroll 0 0 transparent;
+    height: 100px;
+       position: absolute;
+    right: -3px;
+    top: -5px;
+    width: 100px;
+}
+.label_tj span , .label_zk span , .label_th span{ display:none;}
+.hdzq_shopimg .zhekouqu{
+	float: left;
+     margin: 10px 10px 0 0;
+    width: 306px;
+	height:388px;
+	background:#f6f1f1;
+	position:relative;
+}
+.hdzq_shopimg .tehuiqu{
+	float: left;
+   
+    width: 306px;
+	height:388px;
+	background:#f6f1f1;
+	margin-top:10px;
+	position:relative;
+}
+.s_1{
+	display:block;
+}
+.d_01 ul {
+	width:770px;
+}
+.d_02 ul , .d_03 ul{
+	width:594px;
+}
+.d_01 li {
+	float:left;
+	width:180px;
+	padding:0 5px;
+}
+.d_02 li , .d_03 li{
+	  float: left;
+    padding: 0 4px 8px;
+    width: 164px;
+}
+.shop_img{
+	width:120px;
+	margin:0 auto;
+}
+.shop_dsp1{
+	margin-top:4px;
+}
+.Factory_logo{
+	border:2px solid #bd0000;
+	background-color:#f7dbdb;
+}
+.Factory_logo ul{
+	height: 448px;
+	
+}
+.Factory_logo li{
+	 background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    height: 55px;
+    margin-right: 1px;
+    margin-top: 1px;
+    width: 143px;
+}
+.djrx_title01{
+	border:none;
+}
+.Factory_logo li img{
+	padding: 0 25px 0 12px;
+
+}
+.tjqg h3{
+	margin-top:13px;
+	font-size:16px;
+	color:#bd0000;
+	font-family: "微软雅黑", "黑体";
+	 margin-left: 14px;
+}
+.zhekouqu h3{
+	margin-top:13px;
+	font-size:16px;
+	color:#bd0000;
+	font-family: "微软雅黑", "黑体";
+	 margin-left: 14px;
+}
+.tehuiqu h3{
+	margin-top:13px;
+	font-size:16px;
+	color:#bd0000;
+	font-family: "微软雅黑", "黑体";
+	 margin-left: 14px;
+}
+.hdzq_ad{
+	width:265px;
+	height:260px;
+	border:9px solid #fff;
+	margin-top:12px;
+	 margin-left: 12px;
+}
+.tjqg p{
+	margin-top:4px;
+	font-size:13px;
+	width:258px;
+	margin-left:10px;
+}
+.zhekouqu p{
+	margin-top:4px;
+	font-size:13px;
+	width:258px;
+	margin-left:10px;
+}
+.tehuiqu p{
+	margin-top:4px;
+	font-size:13px;
+	width:258px;
+	margin-left:10px;
+}

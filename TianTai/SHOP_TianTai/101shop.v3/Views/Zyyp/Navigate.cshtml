@@ -1,0 +1,68 @@
+﻿@using System.Linq
+@using SOSOshop.BLL
+@using System.Data
+@using SOSOshop.BLL.DrugsBase
+@using SOSOshop.BLL.Common;
+@using _101shop.v3.Controllers
+@{ Layout = null;}
+<div class="cate">
+    <ul>
+        @mc("2974", "常规饮片")
+        @mc("2985", "精品饮片")
+        @mc("2991", "药食同源")
+        @mc("2990", "特殊饮片")
+        @mc("2995", "中药相关")
+    </ul>
+</div>
+@helper mc(string parentId, string parentName)
+{
+    SOSOshop.BLL.Product.Product bll = new SOSOshop.BLL.Product.Product();
+    SOSOshop.BLL.Category.Menu menu = new SOSOshop.BLL.Category.Menu();
+    var m = menu.GetList_Zyyp(parentId);
+    int id = 0; int.TryParse(parentId, out id);
+    int count = 0; try { count = menu.GetList(SOSOshop.BLL.Category.MenuEnum.中药饮片药理分类).Where(x => x.Pharm_ID == int.Parse(parentId)).First().Count; } catch { }
+    <li class="item">
+        <div class="zy-cate-w zy-cate-h">
+            <a class="hide-h hide-v" href="@_101shop.v3.Controllers.HomeController.SearchUrl(id, 0)?show=1" style="@(m.Count == 0 ? "line-height:43px;height:43px;" : "")">@(parentName) (@(count))</a>
+            @foreach (var item in m.Take(2))
+            {
+                <a class="title hide-z" href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)?show=1">@{@item.Title} (@item.Count)</a>
+            }
+        </div>
+        @if (m.Count > 0) {
+            DataTable dt = bll.Get_ZYYPHomeList(3, parentId, 1).GetPriceTable();
+        <div class="cateCon i-mc">
+            <ul class="zyyp-cate-con-1">
+                @foreach (var item in m)
+                {
+                    <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)?show=1">@{@item.Title} (@item.Count)</a></li>
+                }
+            </ul>
+            <div class="clear"></div>
+            <ul class="zyyp-cate-ship">
+                @foreach (DataRow item in dt.Rows)
+                {
+                <li>
+                    <div class="shop-list-1 cur">
+                        <div class="shop-img-1">
+                            <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <img class="pImage" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" /></a></div>
+                        <div class="shop-info-box-2">
+                            <div class="shop-info-2"><a href="@{@item["Product_ID"]}.html" target="_blank">@item["Product_Name"]</a><span>@item["ProductionAddress"]</span><span>@item["ProductionMethodName"]</span></div>
+                            <div class="shop-info-2">@Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)</div>
+                            <div class="shop-price-1"><p class="sale-price-1"><span>@Html.Raw((string)item["showPrice"])</span>/@(item["Goods_Unit"])</p></div>
+                            <div class="shop-cz-1"><a href="@{@item["Product_ID"]}.html" target="_blank" class="addtocart">加入购物车</a></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </li>
+                }
+            </ul>
+        </div>
+        }
+    </li>
+}
+<script type="text/javascript">
+    $(".cate").hoverForIE6({ current: "allsorthover", delay: 200 });
+    $(".cate .item").hoverForIE6({ delay: 150 });
+</script>

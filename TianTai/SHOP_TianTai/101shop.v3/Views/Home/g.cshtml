@@ -1,0 +1,232 @@
+﻿@using System.Data
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_common.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_index.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <link rel="stylesheet" type="text/css" href="/Content/category.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <style type="text/css">
+        body
+        {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-left: auto; margin-right: auto;">
+        <div class="oy_ct_tf jydt_y2">
+            <div class="radio_left">
+                <div class="radio_right">
+                    <h2>
+                        交易大厅</h2>
+                </div>
+            </div>
+            <div class="ifo_border" style="height: 390px">
+                <ul class="oy_ct_tf_title">
+                    <li style="width: 259px; border-left: none;">药品名称 </li>
+                    <li style="width: 176px;">规格</li>
+                    <li style="width: 247px;">生产企业</li>
+                    @*<li style="width: 247px;">采购药店</li>*@
+                    <li style="width: 120px;">购买地市 </li>
+                    <li style="width: 101px;">成交金额 </li>
+                    <li style="width: 90px;">成交日期 </li>
+                </ul>
+                <ul class="jygd ul2" id="ul1" style="height: 438px">
+                    @{
+                        DataTable transactionData = ViewBag.交易大厅;
+                        if (transactionData.Rows.Count > 0)
+                        {
+                            foreach (DataRow row in transactionData.Rows)
+                            {
+                                string addTime = row["rq"].ToString() + row["ontime"].ToString();
+                        <li class="jygd_info"><span class="jygd_info01"><a id="@row["Id"]|@addTime" title="@row["Product_Name"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["Product_Name"].ToString().TrimEnd(), 18, "...")</a></span>
+                            <span class="jygd_info02" title="@row["shpgg"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["shpgg"].ToString().TrimEnd(), 20, "...")</span>
+                            <span class="jygd_info03" title="@row["DrugsBase_Manufacturer"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(@row["DrugsBase_Manufacturer"].ToString().TrimEnd(), 17, "...")</span>
+                            @*<span class="jygd_info03" title="@row["dywldwname"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(@row["dywldwname"].ToString().TrimEnd(), 17, "...")</span>*@
+                            <span class="jygd_info04">@row["ConsigneeCity"].ToString().TrimEnd() @row["ConsigneeBorough"].ToString().TrimEnd()</span>
+                            <span class="jygd_info05">@string.Format("{0:C2}", row["TotalPrice"]) </span><span
+                                class="jygd_info06">@row["rq"].ToString().TrimEnd()</span> </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //交易平台滑动效果
+    var t = setInterval(function () {
+        createDom();
+    }, 5000);
+
+    //获取浏览器类型
+    var browserType = getBrowserType();
+
+    function startMove(obj, attr, iTarget, fnMoveEnd) {
+        if (obj.timer) {
+            clearInterval(obj.timer);
+        }
+        obj.timer = setInterval(function () {
+            doMove(obj, attr, iTarget, fnMoveEnd);
+        }, 30)
+    };
+
+    function getAttr(obj, attr) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[attr];
+        }
+        else {
+            return document.defaultView.getComputedStyle(obj, false)[attr];
+        }
+    }
+
+    function doMove(obj, attr, iTarget, fnMoveEnd) {
+        var iSpeed = 0;
+        var position = 0;
+        if (attr == "opacity") {
+            position = parseFloat(getAttr(obj, "opacity"));
+        }
+        else {
+            position = parseFloat(getAttr(obj, attr));
+        }
+        if (Math.abs(iTarget - position) < 1 / 100) {
+            clearInterval(obj.timer);
+            obj.timer = null;
+            if (fnMoveEnd) {
+                fnMoveEnd();
+            }
+        }
+        else {
+            switch (browserType) {
+                case "IE":
+                    iSpeed = (iTarget - position) / 8;
+                    break;
+                case "Firefox":
+                case "Chrome":
+                default:
+                    iSpeed = (iTarget - position) / 16;
+                    break;
+            }
+            if (attr == "opacity") {
+                switch (browserType) {
+                    case "IE":
+                        obj.style.filter = "alpha(opacity:" + (position + iSpeed) * 100 + ")";
+                        obj.style.opacity = position + iSpeed;
+                        break;
+                    case "Firefox":
+                    case "Chrome":
+                    default:
+                        obj.style.opacity = position + iSpeed;
+                        break;
+                }
+            }
+            else {
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                obj.style[attr] = position + iSpeed + "px";
+            }
+        }
+    };
+
+    function createDom() {
+        var oUl = document.getElementById("ul1");
+        var aLi = oUl.getElementsByTagName("li");
+        var childUl = $("#ul1 li:last a");
+        var childUlId = childUl[0].id;
+        var id = 0;
+        if ((childUlId.split("|")[0] != undefined) && (childUlId.split("|")[0] != "")) {
+            id = childUlId.split("|")[0];
+        }
+        var time = "";
+        if ((childUlId.split("|")[1] != undefined) && (childUlId.split("|")[1] != "")) {
+            time = childUlId.split("|")[1];
+        }
+        var oLi = document.createElement("li");
+
+        oLi.innerHTML = getTransactionRecord(id, time);
+        oLi.setAttribute("class", "jygd_info");
+        oLi.style.color = "#00a539";
+
+        var drugName = oLi.getElementsByTagName("a");
+        drugName[0].style.color = "#00a539";
+
+        var iHeight = 0;
+        switch (browserType) {
+            case "IE":
+                oLi.style.filter = "alpha(opacity:0)";
+                oLi.style.opacity = 0;
+                break;
+            case "Firefox":
+            case "Chrome":
+            default:
+                oLi.style.opacity = 0;
+                break;
+        }
+        aLi[aLi.length - 1].style.color = "black";
+        var drugNameOld = aLi[aLi.length - 1].getElementsByTagName("a");
+        drugNameOld[0].style.color = "black";
+
+        oUl.appendChild(oLi);
+
+        //开始运动
+        iHeight = oLi.offsetHeight;
+        switch (browserType) {
+            case "IE":
+                oLi.style.height = "0px";
+                oLi.style.overflow = 'hidden';
+                break;
+            case "Firefox":
+            case "Chrome":
+            default:
+                break;
+        }
+        startMove(oLi, "height", iHeight, function () {
+            startMove(oLi, "opacity", 1);
+        });
+        if (aLi.length > 6) {
+            oUl.removeChild(aLi[0]);
+        }
+    };
+
+    function getTransactionRecord(id, time) {
+        var data = "type=0&id=" + id + "&time=" + time;
+        var txt = $.ajax({
+            url: "/Home/TransactionPlatformData",
+            data: data,
+            async: false
+        }).responseText;
+        if (txt == "") {
+            location.reload();
+        }
+        return txt;
+    }
+
+    //获取浏览器类型
+    function getBrowserType() {
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        window.ActiveXObject ? Sys.ie = ua.match(/msie ([\d.]+)/)[1] :
+            document.getBoxObjectFor ? Sys.firefox = ua.match(/firefox\/([\d.]+)/)[1] :
+            window.MessageEvent && !document.getBoxObjectFor ? Sys.chrome = ua.match(/chrome\/([\d.]+)/)[1] :
+            window.opera ? Sys.opera = ua.match(/opera.([\d.]+)/)[1] :
+            window.openDatabase ? Sys.safari = ua.match(/version\/([\d.]+)/)[1] : 0;
+
+        if (Sys.ie != undefined) {
+            return "IE";
+        }
+        else if (Sys.firefox != undefined) {
+            return "FireFox";
+        }
+        else if (Sys.chrome != undefined) {
+            return "Chrome";
+        }
+        else {
+            return "Other";
+        }
+    }
+</script>
+</html>

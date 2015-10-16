@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LoginOK";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="/Content/login_success.css" />
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="#">邮箱验证</a></li>
+</ul>
+<div class="login_jy">
+    <h2>
+        恭喜，邮箱验证成功！</h2>
+    @if (ViewBag.MemberAccount != null)
+    {
+    <h5 style="text-align: center;">
+        邮箱地址：@ViewBag.MemberAccount.Email</h5>}
+</div>

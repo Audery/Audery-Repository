@@ -1,0 +1,273 @@
+﻿@using System.Data;
+@using System.Collections;
+@using System.Collections.Generic;
+@using System.Collections.Specialized;
+@using SOSOshop.Model;
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) + "的会员中心";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+  <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_zpzz.css" />
+    <script type="text/javascript" src="/Scripts/tab.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".topC0").click(function () {
+                $(".topC0").removeClass("topC1");
+                $(this).addClass("topC1");
+                $(".NewsTop_cnt .d_01").hide();
+                $(".NewsTop_cnt .d_01").eq($(this).index()).show();
+            });
+        });
+
+        function CheckForm() {
+            var DrugsBase_Enterprise = $.trim($('#DrugsBase_Enterprise').val());
+            if (DrugsBase_Enterprise == '') {
+                alert($('#DrugsBase_Enterprise').attr('title'));
+                return false;
+            }
+            var TaxpayerID = $.trim($('#TaxpayerID').val());
+            if (TaxpayerID == '') {
+                alert($('#TaxpayerID').attr('title'));
+                return false;
+            }
+            var Address = $.trim($('#Address').val());
+            if (Address == '') {
+                alert($('#Address').attr('title'));
+                return false;
+            }
+            var TelPhone = $.trim($('#TelPhone').val());
+            if (TelPhone == '') {
+                alert($('#TelPhone').attr('title'));
+                return false;
+            }
+            var BankName = $.trim($('#BankName').val());
+            if (BankName == '') {
+                alert($('#BankName').attr('title'));
+                return false;
+            }
+            var BankAccount = $.trim($('#BankAccount').val());
+            if (BankAccount == '') {
+                alert($('#BankAccount').attr('title'));
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>账户管理</span> &gt; <span>增票资质</span></li>
+</ul>
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+
+@helper ShowItem(string Name)
+    {
+        DataTable dt = ViewBag.Qualifications as DataTable;
+        bool exists = dt != null && dt.Select("wldwwdmch='" + Name + "'").Length > 0;
+        string src = "/images/zz_bg.jpg";
+        if (exists)
+        {
+            DataRow dr = dt.Select("wldwwdmch='" + Name + "'")[0];
+            src = "/include/Image.ashx?wldwwdid=" + dr["wldwwdid"];
+            DateTime jdrq = new DateTime(); DateTime.TryParse(dr["jdrq"].ToString(), out jdrq);
+            DateTime wdyxq = new DateTime(); DateTime.TryParse(dr["wdyxq"].ToString(), out wdyxq);
+            if (wdyxq != new DateTime() && wdyxq > DateTime.Now && wdyxq.Year >= DateTime.Now.Year && wdyxq.Month > 1 + DateTime.Now.Month)
+            { 
+         <li>
+        <div class="zz_img">
+        <img style="margin:20px;" src="@src" width="208" height="153" alt="@Name" />
+        <p style="text-align:center; color:#999;">暂无资质，请尽快提交</p>
+        </div>
+         <div class="zz_cnt">
+         <p><span>资质名称：</span>@Name</p>
+         <p><span>资质状态：</span>已提交</p>
+         <p><span>有效期：</span>@(wdyxq.ToString("yyyy-MM-dd"))</p>
+           <p><span>建档日期：</span>@(jdrq == new DateTime() ? "---" : jdrq.ToString("yyyy-MM-dd"))</p>
+         </div>
+        </li>
+            }
+            else if (wdyxq != new DateTime() && wdyxq > DateTime.Now && wdyxq.Year <= DateTime.Now.Year && wdyxq.Month <= 1 + DateTime.Now.Month)
+            { 
+         <li>
+        <div class="zz_img">
+        <img style="margin:20px;" src="@src" width="208" height="153" alt="@Name" />
+        <p style="text-align:center; color:#999;">暂无资质，请尽快提交</p>
+        </div>
+         <div class="zz_cnt">
+         <p><span>资质名称：</span>@Name</p>
+         <p><span>资质状态：</span>已提交</p>
+         <p><span>有效期：</span>@(wdyxq.ToString("yyyy-MM-dd"))</p>
+         <div class="zz_gqtx">此资质将于<strong style="padding:0 4px; color:#bd0000;">@(wdyxq.ToString("yyyy年MM月dd日"))</strong>过期，请尽快提交新资质，以免影响你的采购业务！</div>
+           <p><span>建档日期：</span>@(jdrq == new DateTime() ? "---" : jdrq.ToString("yyyy-MM-dd"))</p>
+         </div>
+        </li>
+            }
+            else if (wdyxq != new DateTime() && wdyxq <= DateTime.Now.AddDays(1))
+            {
+         <li>
+        <div class="zz_img">
+        <img style="margin:20px;" src="@src" width="208" height="153" alt="@Name" />
+        <p style="text-align:center; color:#999;">暂无资质，请尽快提交</p>
+        </div>
+         <div class="zz_cnt">
+         <p><span>资质名称：</span>@Name</p>
+         <p><span>资质状态：</span>已过期</p>
+         <p><span>有效期：</span>@(wdyxq.ToString("yyyy-MM-dd"))</p>
+           <p><span>建档日期：</span>@(jdrq == new DateTime() ? "---" : jdrq.ToString("yyyy-MM-dd"))</p>
+         </div>
+        </li>
+            }
+            else
+            {
+         <li>
+        <div class="zz_img">
+        <img style="margin:20px;" src="@src" width="208" height="153" alt="@Name" />
+        <p style="text-align:center; color:#999;">暂无资质，请尽快提交</p>
+        </div>
+         <div class="zz_cnt">
+         <p><span>资质名称：</span>@Name</p>
+         <p><span>资质状态：</span>未提交</p>
+         <p><span>有效期：</span>---</p>
+           <p><span>建档日期：</span>---</p>
+         </div>
+        </li>
+            }
+        }
+        else
+        {
+         <li>
+        <div class="zz_img">
+        <img style="margin:20px;" src="@src" width="208" height="153" alt="@Name" />
+        <p style="text-align:center; color:#999;">暂无资质，请尽快提交</p>
+        </div>
+         <div class="zz_cnt">
+         <p><span>资质名称：</span>@Name</p>
+         <p><span>资质状态：</span>未提交</p>
+         <p><span>有效期：</span>---</p>
+           <p><span>建档日期：</span>---</p>         
+         </div>
+        </li>
+        }
+}
+<form action="/MemberCenter/QualificationsUpdate" method="post" onsubmit="return CheckForm(this)">
+<div class="mc_right">
+  <div class="Remind">增票资质管理</div>
+    <div class="order_sure">
+      <div class="Receive_address">
+      <div class="now_add2">
+      <span style="float:left;">
+      <strong>你的增票资质：</strong></span>
+      <span class="nodd_info" style="float:left; padding-left:5px; width:auto;">
+      @if (ViewBag.IncreatedQualifications == null)
+      {
+      <span>暂无</span>
+      }
+      else
+      {
+          if (Request.RequestType.Equals("GET"))
+          { <span style="color:Green;">已添加</span> }
+          else
+          { <span style="color:#f66;">@Html.ValidationSummary()</span> }
+      }
+      </span>
+      </div>
+        <div class="now_add2">
+          <p class="rcv_add">
+      @{SOSOshop.Model.IncreatedQualifications IncreatedQualifications = new SOSOshop.Model.IncreatedQualifications();}
+      @if (ViewBag.IncreatedQualifications == null)
+      {
+          <span class="pdn3" style="cursor:pointer;" onclick="$('#IncreatedQualificationsEditDiv').toggle()">添加增票资质</span>
+      }
+      else
+      {
+          IncreatedQualifications = (SOSOshop.Model.IncreatedQualifications)ViewBag.IncreatedQualifications;
+          <span class="pdn3" style="cursor:pointer;" onclick="$('#IncreatedQualificationsEditDiv').toggle()">管理增票资质</span>
+      }
+          </p>
+            <div id="IncreatedQualificationsEditDiv" class="new_add_edit" style="display:none">
+              <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  单位名称：
+                  </span>
+                <div class="field">
+                  <input type="text" id="DrugsBase_Enterprise" name="DrugsBase_Enterprise" value="@IncreatedQualifications.DrugsBase_Enterprise" title="请填写单位名称" class="textbox wdh1" maxlength="50" />
+                  </div>
+                </div><!--list-->  <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  纳税人识别码：
+                  </span>
+                <div class="field">
+                  <input type="text" id="TaxpayerID" name="TaxpayerID" value="@IncreatedQualifications.TaxpayerID" title="请填写纳税人识别码" class="textbox wdh1" maxlength="50" />
+                  </div>
+                </div><!--list-->
+                  <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  注册地址：
+                  </span>
+                <div class="field">
+                  <input type="text" id="Address" name="Address" value="@IncreatedQualifications.Address" title="请填写注册地址" class="textbox wdh1" maxlength="100" />
+                  </div>
+                </div><!--list-->
+                  <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  注册电话：
+                  </span>
+                <div class="field">
+                  <input type="text" id="TelPhone" name="TelPhone" value="@IncreatedQualifications.TelPhone" title="请填写注册电话" class="textbox wdh1" maxlength="50" />
+                  </div>
+                </div><!--list-->
+                  <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  开户银行：
+                  </span>
+                <div class="field">
+                  <input type="text" id="BankName" name="BankName" value="@IncreatedQualifications.BankName" title="请填写开户银行" class="textbox wdh1" maxlength="50" />
+                  </div>
+                </div><!--list-->
+                  <div class="list">
+                <span class="label">
+                  <em>*</em>
+                  银行账户：
+                  </span>
+                <div class="field">
+                  <input type="text" id="BankAccount" name="BankAccount" value="@IncreatedQualifications.BankAccount" title="请填写银行账户" class="textbox wdh1" maxlength="50" />
+                  </div>
+                </div><!--list-->             
+              <div class="btn"><input class="but_sure" type="submit" value="提交" />
+              <input class="but_lev" type="reset" value="重置" /></div>
+              </div>
+          </div>
+        </div>
+      <div class="m7">
+  <div class="mt"><h3>温馨提示</h3></div>
+      <div class="mc">
+<p>1.确认您登录的是@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]网址<a href="http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]">http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]</a>
+注意防范进入钓鱼网站，不要轻信各种即时通讯工具发送的商品或支付链接，谨防网购诈骗。</p>
+2.建议您安装杀毒软件，并定期更新操作系统等软件补丁，确保账户及交易安全。
+          </div>
+    </div>
+        <ul class="zz_list" style="height:1600px;">
+        <div class="zzlist_title">资质认证情况</div>
+@ShowItem("委托人身份证复印件(正反面、公章)")
+@ShowItem("变更书")
+@ShowItem("法人身份证复印件(正反面、公章)")
+@ShowItem("药品经营许可证")
+@ShowItem("企业法人营业执照")
+@ShowItem("GMP认证证书")
+@ShowItem("GSP认证证书")
+@ShowItem("组织机构代码证")
+@ShowItem("法人授权委托书(法人签字，公章)")
+@ShowItem("销售人员身份证")
+        </ul>
+        <div class="clear"></div>
+    </div>
+  </div><!---------mc_right------------>
+</form>

@@ -1,0 +1,663 @@
+﻿@using System.Data
+@using System.Linq
+@using SOSOshop.BLL.Common;
+@using _101shop.v3.Controllers
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["OTC_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["OTC_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["OTC_Key"];
+    System.Data.DataTable dt = ViewBag.PharmAttribute;
+    SOSOshop.BLL.Product.Product pbll = new SOSOshop.BLL.Product.Product();
+    Dictionary<string, string> c1 = HomeController.GetADID("OTC_1");
+    Dictionary<string, string> c2 = HomeController.GetADID("OTC_2");
+    Dictionary<string, string> c3 = HomeController.GetADID("OTC_3");
+    Dictionary<string, string> c4 = HomeController.GetADID("OTC_4");
+
+    //一排
+    ViewBag.当季热销 = pbll.GetOtcPageList(c1["pid"]).GetPriceTable();
+    //二排
+    ViewBag.新药推荐 = pbll.GetOtcPageList(c2["pid"]).GetPriceTable();
+    //三排
+    ViewBag.品牌推荐 = pbll.GetOtcPageList(c3["pid"]).GetPriceTable();
+    //四排
+    ViewBag.高毛利专区 = pbll.GetOtcPageList(c4["pid"]).GetPriceTable();
+
+
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/otc.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <link rel="stylesheet" type="text/css" href="/Content/slide.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/shopcart-num.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/101shoplist.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript">
+        var t1, t2;
+        $(document).ready(function () {
+            $(".otclist").hover(function () {
+                $(".category_show").hide();
+                $(this).find(".category_show").show();
+            },
+            function () {
+                $(this).find(".category_show").hide();
+            });
+
+        });
+
+        function t1Interval() {
+            t1 = setInterval(function () {
+                var p = $(".panic-buy-cont_1").attr("inde");
+                if (p == "") {
+                    p = "0";
+                }
+                $.post("/otc/xsqg", "Index=" + p, function (data) {
+                    if (data == "") return "";
+                    $(".panic-buy-cont_1 li").remove();
+                    $(".panic-buy-cont_1").append(data);
+                    $(".panic-buy-cont_1").attr("inde", $(data).eq(0).attr("inde"));
+                });
+            }, 7000);
+        }
+        function parseISO8601(dateStringInRange) {
+            var isoExp = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
+       date = new Date(NaN), month,
+       parts = isoExp.exec(dateStringInRange);
+
+            if (parts) {
+                month = +parts[2];
+                date.setFullYear(parts[1], month - 1, parts[3]);
+                if (month != date.getMonth() + 1) {
+                    date.setTime(NaN);
+                }
+            }
+            return date;
+        }
+        function lxfEndtime() {
+            var endtime = parseISO8601("@ViewBag.lxfEndtime");
+            var nowtime = new Date().getTime();
+            var youtime = endtime - nowtime;
+            var seconds = youtime / 1000;
+            var minutes = Math.floor(seconds / 60);
+            var hours = Math.floor(minutes / 60);
+            var days = Math.floor(hours / 24);
+            var CDay = days;
+            var CHour = hours % 24;
+            var CMinute = minutes % 60;
+            var CSecond = Math.floor(seconds % 60);
+            if (endtime <= nowtime) {
+                $(".time_item").eq(0).text("00");
+                $(".time_item").eq(1).text("00");
+                $(".time_item").eq(2).text("00");
+            } else {
+                $(".time_item").eq(0).text(hours);
+                $(".time_item").eq(1).text(CMinute);
+                $(".time_item").eq(2).text(CSecond);
+                setTimeout(lxfEndtime, 1000);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            var zIndexNumber = 10000;
+            $('div').each(function () {
+                $(this).css('zIndex', zIndexNumber);
+                zIndexNumber -= 10;
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<div class="otc_category">
+    <div>
+        @{
+            SOSOshop.BLL.DrugsBase.Tag_PharmAttribute bll = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute();
+        }
+        @foreach (DataRow item in dt.AsEnumerable().Where(a => a.Field<int>("ParentId") == 0))
+        {
+            <div style="cursor: pointer" class="otclist">
+                <a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)">
+                    @{@item["name"]}
+                    (@item["count"]) </a><span class="ico_right">></span>
+                <div style="display: none" class="category_show">
+                    <ul>
+                        @foreach (DataRow item1 in dt.AsEnumerable().Where(a => a.Field<int>("ParentId") == (int)item["id"]))
+                        {
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item1["id"], 1)">
+                                @{@item1["name"]}
+                                (@item1["count"]) </a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        <div class="otc_category_show2_1">
+            化学药品和生物制品<span>（@bll.GetTotalCount(1)）</span>个<br />
+            中成药<span>（@bll.GetTotalCount(583)）</span>个
+        </div>
+    </div>
+</div>
+<div class="otc_ad">
+    <div class="oy_ct_slide_itemwrap">
+        <span class="slide" style="z-index: 101; display: block;"><span id="idContainer2"
+            class="containerSlider2" style="z-index: 100; display: block;">
+            <table id="idSlider2" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td class="td_f" id="ad_54">
+                        </td>
+                        <td class="td_f" id="ad_55">
+                        </td>
+                        <td class="td_f" id="ad_56">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul id="idNum" class="num">
+            </ul>
+        </span>
+            <script type="text/javascript" src="/Scripts/otc_slide.js"></script>
+        </span>
+        <div class="slide2">
+            <ul>
+                <li>
+                    <img src="/images/otc-R-1.jpg"></li>
+                <li id="ad_58"><a href="/1792.html" target="_blank">
+                    <img src="/AdImage/otc-R-2.jpg"></a></li>
+                <li>
+                    <div class="otc-sale-gg">
+                        <span>促销公告</span></div>
+                    <div class="otc-sale-gg-list">
+                        @foreach (var item in ViewBag.促销公告.Rows)
+                        {
+                            if (string.IsNullOrEmpty(item["LinkUrl"] as string))
+                            { 
+                            <a href="/article/@{@item["id"]}.html" target="_blank" title="@item["Title"]">@item["Title"]</a>   
+                            }
+                            else
+                            { 
+                            <a href="@item["LinkUrl"]" target="_blank" title="@item["Title"]">@item["Title"]</a>   
+                            }
+
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--slide2-----end---------->
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="panic-buy" style="display: none">
+    <div class="title-box">
+        <div class="title">
+            <b class="br"></b>
+            <div class="day-buy-title">
+                <p class="title-tx">
+                    限时抢购，全网最低</p>
+                <div class="timeBox">
+                    <span class="tx">还剩</span>
+                    <div class="time_item">
+                        00</div>
+                    <i></i>
+                    <div class="time_item time_item-1">
+                        00</div>
+                    <i></i>
+                    <div class="time_item time_item-1">
+                        00</div>
+                    <span class="tx">结束</span>
+                </div>
+            </div>
+        </div>
+        <span class="next-btn">下期预告</span>
+    </div>
+    <div class="panic-buy-cont panic-buy-cont_1" id="panic-buy-cont" inde="0">
+        <ul>
+            @foreach (DataRow item in pbll.GetOtcPageList2("1532,1586,1803,1820,1851,542,562,644,1886,391,2058,2258,2075,2223,428,339,1980,643,240,1480,1040,2117,1380,631,6819,340,228,811,2275,2063,653,1059,961,820,1184,1903,1584,2455,1822,1649,1585,1556,1572,1641,1699,1517,1651,1531,1821,1668,1671,1535,1711,1683,1535,1711,1683,1665,4970,3917,1690,3568,2163,373,325,1575,1894,1173,2077,1743,2289,2055,253,1924,1907,1530,1163,214,1166").GetPriceTable().AsEnumerable().Where(x => x.Field<int>("Stock") > 0).Take(5))
+            {
+                <li>
+                    <p class="imgbox">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <img src="@Public.RawImage(item["Image"])" width="150px" height="150px" style="display: inline;"></a></p>
+                    <p class="item-tx">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">@Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")
+                            规格：@Public.GetSpecificationAndS(item) @item["DrugsBase_Manufacturer"]</a></p>
+                    <p class="item-num-box">
+                        @*<span>库存</span> <span class="num-all"><b style="width: 50%;"></b></span>*@
+                    </p>
+                    <div class="price-box">
+                        <span class="price"><em>@string.Format("{0:f2}", item["showPrice"])</em></span>
+                        @*<span class="price1">原价:<s>@string.Format("¥{0:f2}", item["OrigPrice"])</s></span>*@
+                    </div>
+                    <a href="@{@item["Product_ID"]}.html" target="_blank" class="addcart">立即抢购</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="title-box" style="display: none">
+        <div class="title">
+            <b class="br"></b>
+            <div class="day-buy-title">
+                <p class="title-tx">
+                    下期预告，敬请期待</p>
+            </div>
+        </div>
+        <span class="next-btn">返回抢购</span>
+    </div>
+    <div class="panic-buy-cont" id="panic-buy-cont" style="display: none">
+        <ul>
+            @foreach (DataRow item in pbll.GetOtcPageList2("1652,1862,1516,1864,1655").GetPriceTable().Rows)
+            {
+                <li>
+                    <p class="imgbox">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                            <img src="@Public.RawImage(item["Image"])" width="150px" height="150px" style="display: inline;"></a></p>
+                    <p class="item-tx">
+                        <a href="@{@item["Product_ID"]}.html" target="_blank">@Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")
+                            规格：@Public.GetSpecificationAndS(item) @item["DrugsBase_Manufacturer"]</a></p>
+                    <p class="item-num-box">
+                        <span>库存</span> <span class="num-all"><b style="width: 100%;"></b></span>
+                    </p>
+                    <div class="price-box">
+                        @*<span class="price"><em>待定</em></span> <span class="price1">原价:<s>@string.Format("¥{0:f2}", item["OrigPrice"])</s></span>*@
+                    </div>
+                    <a class="addcart addcart_delay">立即抢购</a> </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="clear">
+</div>
+@*<div class="warp-list">
+    <div class="warp-list-title">
+        <h3>
+            <span>1F</span><span>特价专区</span></h3>
+    </div>
+    <table width="1000" border="1" class="tjqg" inde="0">
+        <tr style="border-bottom: 1px solid #ddd;">
+            <th width="25%">
+                药品名称
+            </th>
+            <th width="20%">
+                规格
+            </th>
+            <th width="25%">
+                生产企业
+            </th>
+            <th width="10%">
+                现价
+            </th>
+            <th width="10%">
+                原价
+            </th>
+            <th width="10%">
+                购买
+            </th>
+        </tr>
+    </table>
+    <div class="tjqg t_tjqgIndexBox">
+        <table width="1000" border="1" class="tjqg t_tjqgIndex" inde="0">
+                   
+        </table>
+    </div>
+</div>
+<div class="clear">
+</div>*@
+<div class="otc_djrx">
+    <div class="djrx_top">
+        <p class="djrx_title01">
+            1F 当季热销
+        </p>
+        <div class="lable_maidian">
+            <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(8, 1)">抗菌类</a>
+            <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(10, 1)">感冒发烧</a>
+            <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(58, 1)">保肝护肝</a>
+            <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)" style="border:none;">
+                更多>> </a>
+        </div>
+    </div>
+    <ul class="djrx_shopimg">
+        @{
+            DataTable _当季热销 = (DataTable)ViewBag.当季热销;
+            if (_当季热销.Rows.Count > 0)
+            {
+                foreach (DataRow item in _当季热销.Rows)
+                {
+            <li>
+                <div class="otc_list_img_con">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        @Html.Raw(Public.Tag(item))
+                        <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" alt="@item["Product_Name"]包装盒" alt="@item["Product_Name"]包装盒" width="168px" height="168px" />
+                    </a>
+                </div>
+                <div class="shop_dspEx">
+                    <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                        <span>
+                            @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                            @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(@item["Product_Name"], 7, "...")
+                    </a>
+                </div>
+                <div class="shop_price">
+                    @{@Price.GetPriceShowString()}
+                    :<strong>@Html.Raw((string)item["showPrice"])</strong>
+                </div>
+            </li>
+                }
+            }
+        }
+    </ul>
+</div>
+<div style="clear: both">
+</div>
+<!--otc_djrx---------otc_djrx--------otc_djrx----当季热销结束-->
+<div class="otc_xytj">
+    <div class="xytj_title01">
+        2F 新药推荐
+    </div>
+    <div class="lable_maidian">
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(25, 1)">咽喉炎</a>
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(45, 1)">消化不良</a>
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(256, 1)">解热镇痛
+        </a><a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)" style="border:none;">
+            更多>> </a>
+    </div>
+    <div class="xytj_top">
+    </div>
+    <ul class="djrx_shopimg">
+        @{
+            DataTable 新药推荐 = (DataTable)ViewBag.新药推荐;
+            if (新药推荐.Rows.Count > 0)
+            {
+                foreach (DataRow item in 新药推荐.Rows)
+                {
+            <li>
+                <div class="otc_list_img_con">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        @Html.Raw(Public.Tag(item))
+                        <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" alt="@item["Product_Name"]包装盒" alt="@item["Product_Name"]包装盒" width="168px" height="168px" />
+                    </a>
+                </div>
+                <div class="shop_dspEx">
+                    <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                        <span>
+                            @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                            @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                        </span>&nbsp;&nbsp;@item["Product_Name"]
+                    </a>
+                </div>
+                <div class="shop_price">
+                    @{@Price.GetPriceShowString()}
+                    :<strong>@Html.Raw((string)item["showPrice"])</strong>
+                </div>
+            </li>
+                }
+            }
+        }
+    </ul>
+</div>
+<div class="clear">
+</div>
+<!---------------------------------------------------------------------------->
+<div class="otc_pptj">
+    <div class="pptj_title01">
+        3F 品牌推荐
+    </div>
+    <div class="lable_maidian">
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(33, 1)">气血亏虚</a>
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(77, 1)">高血压</a>
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(125, 1)">跌打损伤</a>
+        <a class="md" href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)" style="border:none;">
+            更多>> </a>
+    </div>
+    <div class="pptj_top">
+    </div>
+    <ul class="pptj_d_02">
+        @{
+            DataTable 品牌推荐 = (DataTable)ViewBag.品牌推荐;
+            if (品牌推荐.Rows.Count > 0)
+            {
+                foreach (DataRow item in 品牌推荐.Rows)
+                {
+            <li>
+                <div class="otc_list_img_con2">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        @Html.Raw(Public.Tag(item))
+                        <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" alt="@item["Product_Name"]包装盒" alt="@item["Product_Name"]包装盒" width="120px" height="120px" />
+                    </a>
+                </div>
+                <div class="shop_dspExx">
+                    <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                        <span>
+                            @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                        </span>&nbsp;&nbsp;@item["Product_Name"]
+                    </a>
+                </div>
+                <div class="shop_price">
+                    @{@Price.GetPriceShowString()}
+                    :<strong>@Html.Raw((string)item["showPrice"])</strong>
+                </div>
+            </li>
+                }
+            }
+        }
+    </ul>
+</div>
+<!--otc_djrx----end-----otc_djrx----end----otc_xytj----品牌推荐-->
+<div class="otc_rqpp">
+    <div class="rqpp_title01">
+        人气品牌
+    </div>
+    <div class="clear">
+    </div>
+    <table class="Factory_logo">
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=江苏晨牌">
+                    <img src="/images/101_cjlogo_jscp.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=北京同仁堂">
+                    <img src="/images/101_cjlogo_bjtrt.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=迪诺制药">
+                    <img src="/images/101_cjlogo_dlzy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=花红药业">
+                    <img src="/images/101_cjlogo_hhyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=湖南新汇">
+                    <img src="/images/101_cjlogo_hnxh.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=桂龙药业">
+                    <img src="/images/101_cjlogo_glyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=广州白云山制药">
+                    <img src="/images/101_cjlogo_gzbys.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=江西民济">
+                    <img src="/images/101_cjlogo_jxmj.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=济南利民">
+                    <img src="/images/101_cjlogo_jnlm.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=Bayer">
+                    <img src="/images/101_cjlogo_bayer.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=中新药业">
+                    <img src="/images/101_cjlogo_zxyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=云南白药">
+                    <img src="/images/101_cjlogo_ynby.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=悦康药业">
+                    <img src="/images/101_cjlogo_ykyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=亚宝药业">
+                    <img src="/images/101_cjlogo_ybyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=修正药业">
+                    <img src="/images/101_cjlogo_xzyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+            <td>
+                <a href="@HomeController.SearchUrl(0, 0)?q=先声药业">
+                    <img src="/images/101_cjlogo_xsyy.jpg" width="105px" height="50px" />
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<!--otc_djrx---end------otc_djrx---end-----otc_xytj----人气品牌-->
+<div class="clear">
+</div>
+<div class="otc_gmlzq">
+    <!--高毛利专区-->
+    <div class="gmlzq_title01">
+        4F 高毛利专区
+    </div>
+    <div class="gml_lable_maidian">
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(242, 1)">肝癌</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(219, 1)">神经衰弱</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(189, 1)">不孕症</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)" style="border:none;">
+            更多>> </a>
+    </div>
+    <div class="gmlzq_top">
+    </div>
+    <div class="clear">
+    </div>
+    <ul class="gmlzq_shopimg">
+        @{
+            DataTable 高毛利专区 = (DataTable)ViewBag.高毛利专区;
+            if (高毛利专区.Rows.Count > 0)
+            {
+                foreach (DataRow item in 高毛利专区.Rows)
+                {
+                    string grossProfit = string.Empty;
+                    string productName = item["Product_Name"].ToString().Trim();
+
+                    switch (productName)
+                    {
+                        case "阿法骨化醇软胶囊": grossProfit = "46%";
+                            break;
+                        case "感冒清热软胶囊": grossProfit = "42%";
+                            break;
+                        case "黄藤素分散片": grossProfit = "45%";
+                            break;
+                        case "二维钙赖氨酸片": grossProfit = "40%";
+                            break;
+                        case "胆舒软胶囊": grossProfit = "48%";
+                            break;
+                        default:
+                            break;
+                    }
+            <li>
+                <div class="otc_list_img_con">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        @Html.Raw(Public.Tag(item))
+                        <img class="pImage" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" alt="@item["Product_Name"]包装盒" alt="@item["Product_Name"]包装盒" width="168px" height="168px" />
+                    </a>
+                </div>
+                <div class="shop_dspEx">
+                    <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                        <span>
+                            @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                            @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                        </span>&nbsp;&nbsp;@item["Product_Name"]
+                    </a>
+                </div>
+                <div class="shop_price">
+                    @{@Price.GetPriceShowString()}
+                    :<strong>@Html.Raw((string)item["showPrice"])</strong>
+                </div>
+                <div class="gml_cart">
+                    <p>@grossProfit</p>
+                    @{int minsell = (int)item["minsell"]; if (2 == (int)item["sellType"]) { minsell = Math.Max((int)item["Goods_Pcs_Small"], minsell); }}
+                    <span onclick="otc_AddShopCar('@item["Product_ID"]',@(minsell),@(item["Goods_Pcs"]),@(item["Goods_Pcs_Small"]),@(item["sellType"]))">
+                    </span>
+                </div>
+            </li>
+                }
+            }
+        }
+    </ul>
+</div>
+<div class="clear">
+</div>
+<!--otc_djrx---------otc_djrx--------otc_xytj----高毛利专区-->
+<div class="otc_hdzq">
+    <!--活动专区-->
+    <div class="gmlzq_title01">
+        活动专区
+    </div>
+    <div class="lable_maidian">
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(9, 1)">感冒药</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(81, 1)">妇科用药</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(101, 1)">儿童用药</a>
+        <a class=" md " href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)" style="border:none;">
+            更多>> </a>
+    </div>
+    <div class="hdzq_top">
+    </div>
+    <div class="clear">
+    </div>
+    <ul class="hdzq_shopimg">
+        <li class="tjqg" style="margin-left: 0px;"><a href="/2435.html">
+            <img src="/adimage/otc_hdzq_ad-01.jpg" />
+        </a></li>
+        <li class="zhekouqu"><a href="/2010.html">
+            <img src="/adimage/otc_hdzq_ad-02.jpg" />
+        </a></li>
+        <li class="tehuiqu"><a href="/1506.html">
+            <img src="/adimage/otc_hdzq_ad-03.jpg" />
+        </a></li>
+    </ul>
+</div>
+<script language="javascript" type="text/javascript">
+    //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+    getAdContent("54,55,56,58");
+</script>
+<script type="text/javascript" src="/Scripts/slide.js"></script>

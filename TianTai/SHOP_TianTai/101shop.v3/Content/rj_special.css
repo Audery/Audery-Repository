@@ -1,0 +1,65 @@
+/*
+* name:rj_special.css
+* author:liqs
+* update:2014/12/12
+*/
+
+.thzt_banner {width: 1000px;margin: 0 auto;height: 275px;}
+.panic-buy{ width:998px; margin:10px auto; height:auto; border-color:#ddd; border-style:solid; border-width:0px;}
+.panic-buy .title-box {height: 40px;background-color: #00a539;position: relative; }
+.panic-buy .title-box .title {width: 840px;background-color: #00a539;height: 40px;}
+.panic-buy .title-box .br {height: 1px;border-top: 1px solid #000;position: absolute;top: 50%;left: 48%;width: 820px;margin-left: -470px;}
+.panic-buy .day-buy-title, .panic-buy .day-buy-title-back {padding: 0 10px;height: 40px;position: relative;}
+.panic-buy .day-buy-title .title-tx {float: left;}
+.panic-buy .title-tx {/*background: url(/images/clock.png) 0 11px no-repeat;*/font-family: "microsoft yahei";font-size: 16px;line-height: 40px;font-weight: 700; color:#fff;}
+.panic-buy .timeBox {padding-left: 10px;float: left;width: 240px;}
+.panic-buy .timeBox .tx { display:block; white-space:nowrap;padding: 0 8px;color: #777;float: left;font: 700 14px/40px "\5FAE\8F6F\96C5\9ED1",tahoma;}
+.panic-buy .time_item {float: left;height: 32px;font-size: 24px;line-height: 32px;-moz-border-radius: 3px;
+-webkit-border-radius: 3px;border-radius: 3px;background-color: #2a333d;color: #fff;text-align: center;overflow: hidden;
+font-family: impact;margin-top: 3px;padding: 1px 5px;}
+.panic-buy .time_item-1 {float: left; width:27px;height: 32px;font-size: 24px;line-height: 32px;-moz-border-radius: 3px;
+-webkit-border-radius: 3px;border-radius: 3px;background-color: #2a333d;color: #fff;text-align: center;overflow: hidden;
+font-family: impact;margin-top: 3px;padding: 1px 4px;}
+.panic-buy .timeBox i {float: left;width: 14px;height: 32px;margin-top: 3px;background: url(/images/clock.png) 0 -116px no-repeat;margin: 0 0 0 3px;}
+.panic-buy .day-buy-title-back {width: 180px;display: none;padding: 0 15px;height: 40px;background-color: #f4f4f4;margin-left: 100px;position: relative;}
+.panic-buy .next-btn {position: absolute;height: 40px;right: 0;top: 0;}
+.panic-buy .next-btn a {text-align: right;font-size: 13px;line-height: 45px; padding: 0px 20px; color:#fff; font-size:13px;}
+.panic-buy-cont {overflow: hidden;height: auto; border-color: #ddd; border-style:solid; border-width:0px 1px 1px 1px; width:796px; float:left;}
+.panic-buy-cont li {float: left;background-color: #fff;border-left: 1px dashed #ddd;width: 179px;padding: 0 10px;margin-left: -1px; height:242px;}
+.panic-buy-cont .imgbox {text-align: center;padding-top: 5px;height: 150px;overflow: hidden;}
+.panic-buy-cont .item-tx {height: 36px;overflow: hidden;line-height: 18px;}
+.panic-buy-cont .item-num-box {height: 1px;line-height: 20px;margin-top: 0px;}
+.panic-buy-cont .item-num-box span {float: left;}
+.panic-buy-cont .item-num-box .num-all {width: 130px;position: relative;background-color: #e4e4e4;height: 6px;margin-top: 7px;margin-left: 8px;overflow: hidden;}
+.panic-buy-cont .item-num-box .num-all b {background-color: #bd0000;float: left;height: 6px;}
+.panic-buy-cont .price-box {height: 30px;margin-top: 5px; background:#eee; padding: 5px 5px 0px;}
+.panic-buy-cont .price-box .price {font-family: "microsoft yahei";color: #00a539;font-size: 14px; padding-right:10px;}
+.panic-buy-cont .price-box .price1 s {font-family: "microsoft yahei";font-size: 13px;}
+ .addcart { display:none;}
+.panic-buy-cont .price-box em {font-size: 16px;color: #00a539;}
+.panic-buy-cont .price-box em a {font-size: 13px;color: #00a539;}
+.addcart_delay {background-color: #999; color:#fff !important;}
+.addcart_delay:hover {background-color: #999 !important; color:#fff !important;}
+
+
+/*---------------------------------------------------------------------*/
+
+.grid-c1-cont-right{ float:left; width:199px;*width:197px; height:242px; border-width:0px 1px 1px 1px; border-style:solid; border-color: #ddd; margin-left:-1px;}
+.irf {float: left;}
+.info_Retrieval3 h3 {color: #333;padding: 8px 7px 8px 6px; background:#eee;}
+.Retrieval3_gghu li {width: 186px;margin: 1px 6px;border-bottom: 1px dashed #e1e1e1;}
+.gght-list-title {padding: 8px 0;padding: 7px 0\9;}
+.gght-list-2{ padding-bottom:4px;}
+.gght-list-title span {background: url(../images/101yao-ico-index.png) -57px -310px;padding: 2px 7px 3px 5px;}
+.gght-list-title a {font-size: 13px;padding-left: 6px;}
+.Retrieval3_gghu a {width: 72px;_width: 50px;white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;
+                    overflow: hidden;}
+.Retrieval3_gghu .pic {float: left;}	
+.Retrieval3_gghu .title {float: left;}
+.Retrieval3_gghu .guige2 {width: 130px;white-space: nowrap;overflow: hidden;}		
+
+
+
+
+
+

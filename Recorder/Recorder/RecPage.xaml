@@ -11,6 +11,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    xmlns:local="clr-namespace:ViewModelLibary"
     shell:SystemTray.IsVisible="True">
 
     <Grid>
@@ -108,7 +109,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
             <Button Grid.Row="1" Name="BtnStop" HorizontalAlignment="Right" Content="停   止" Click="onStopRec"/>
-            <Button Grid.Row="1" Name="BtnStart" Content="开  始" Click="onSartRec" Margin="255,0,116,0"/>
+            <Button Grid.Row="1" Command="{Binding StartCommand}" Name="BtnStart" Content="开  始" Click="onSartRec" Margin="255,0,116,0"/>
         </Grid>
         <Grid x:Name="svPan" Canvas.ZIndex="1" Visibility="Collapsed">
             <Rectangle Fill="Black" Opacity="0.5"/>

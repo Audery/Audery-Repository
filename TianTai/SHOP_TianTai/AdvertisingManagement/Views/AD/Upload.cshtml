@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+@section Header{
+    <link href="@Url.Content("~/Scripts/Uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Uploadify/jquery.uploadify.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#file_upload').uploadify({
+                'buttonText': '请选择上传图片',
+                'swf': '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                'uploader': '/Ad/Upload',
+                'onUploadComplete' : function(file) {
+                    alert('The file ' + file.name + ' finished processing.');
+                }
+            });
+        });
+    </script>
+    <style type="text/css">
+        body
+        {
+            font-size: 12px;
+        }
+        .tip
+        {
+            height: 20px;
+            border-bottom: 1px solid #CCC;
+            margin-bottom: 10px;
+        }
+    </style>
+}
+<div class="tip">
+    jQuey Uploadify上传文件示例：
+</div>
+<input type="file" id="file_upload" name="file_upload" />

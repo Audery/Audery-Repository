@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+    </div>
+</body>
+</html>
+@model System.Data.DataTable
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/Content/header.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/footer.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/jf-index.css" />
+    <title>药品批发积分商城积分兑换采购享豪礼__【东昌医药商城】</title>
+    <meta name="keywords" content="积分商城,兑换礼品,药品批发,热卖促销,促销药品,折扣药品,特价药品,药品限时秒杀,药品团购,促销信息,品牌药品,折扣网站" />
+    <meta name="description" content="【东昌医药商城】__积分商城，为全体101会员提供积分兑换豪礼：注册会员赠送1000积分，资质建档通过赠送2000积分，每日签到赠送100积分，采购药品赠送订单金额等额积分，100万积分豪礼尽在101（网址：www.101yao.com）" />
+</head>
+<body>
+    <div class="jf-cont-box">
+        <div class="jf-cont">
+            <div class="jf-banner">
+                <img src="/images/images/jf-banner.jpg" usemap="#Map" alt="" border="0"/>
+                <map name="Map" id="Map">
+                    <area alt="" shape="poly" coords="590,316,569,375,880,375,927,287,601,286" href="http://www.101yao.com/"
+                        target="_blank" />
+                </map>
+            </div>
+            <div class="jf-cont-ms">
+                @foreach (System.Data.DataRow item in Model.Rows)
+                {
+
+                    <div class="jf-shop">
+                        <div class="jf-shop-img">
+                           @* @if (item.Attribute == "豪礼")
+                            {
+                                <div class="jf-ico">
+                                    <img src="/images/images/jfsc-icon-1.gif" title="@item.name"  alt="@item.name" /></div>
+                            }*@
+                            <img alt=" " src="/JFimages/@{@item["id"]}.jpg" width="220" height="220"/>
+                        </div>
+                        <div class="jf-shop-title">@item["name"]</div>
+                        <div class="jf-shop-fz">
+                            <span>兑换分值：</span><strong>@item["Integral"]</strong></div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                  
+                }
+                <div class="clear">
+                </div>
+                <div class="jfgz">
+                    <p>
+                        积分规则</p>
+                    <!--<img src="/AdImage/jfgz-bg.jpg">-->
+                    <div class="jf-link-1">
+                        <img src="/images/images/jf-link-1.jpg" />
+                        <a class="" href="/account/register" target="_blank">立即注册&gt;&gt;</a>
+                    </div>
+                    <div class="jf-link-1">
+                        <img src="/images/images/jf-link-2.jpg" />
+                        <a class="" href="/MemberCenter/" target="_blank">如何建档？</a>
+                    </div>
+                    <div class="jf-link-1">
+                        <img src="/images/images/jf-link-3.jpg" />
+                        <a class="" href="/signin" target="_blank">立即签到&gt;&gt;</a>
+                    </div>
+                    <div class="jf-link-1">
+                        <img src="/images/images/jf-link-4.jpg" />
+                        <a class="" href="/" target="_blank">立即下单&gt;&gt;</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@{
+    ViewBag.Title = "Index";
+}

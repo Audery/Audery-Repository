@@ -1,0 +1,674 @@
+﻿@using System.Data;
+@using _101shop.v3.Controllers;
+@using SOSOshop.BLL.Common;
+@{    
+    double countPrice = 0;//总价合计
+    ViewBag.Title = "我的购物车-东昌批发商城";
+    int UID = _101shop.v3.Controllers.BaseController.GetUserId();
+    SOSOshop.BLL.Member_Class member_Class = new SOSOshop.BLL.MemberInfo().GetMember_Class(UID);
+    DataTable Delpro = null;
+    Dictionary<string, string> dellist = null;
+    if (Session[UID.ToString()] != null)
+    {
+        dellist = Session[UID.ToString()] as Dictionary<string, string>;
+    }
+    if (ViewBag.DelPro != null)
+    {
+        Delpro = ViewBag.DelPro;
+    }
+    DataTable product = ViewBag.product;
+    string ext = ".html";
+}
+<link rel="stylesheet" type="text/css" href="/scripts/jquery.confirm/jquery.confirm.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+<link rel="stylesheet" type="text/css" href="/Content/cart_look.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+<link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+<script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+<script type="text/javascript" src="/scripts/jquery.confirm/jquery.confirm.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+@{Html.RenderPartial("Nav");}
+<form action="/shoppingcart/checkorders" method="post" id="form1">
+<div class="clear">
+</div>
+<h2>
+    我的购物车</h2>
+<div id="cart">
+    <div style="font-size: 18px; color: Red; font-weight: bold;">
+        @if (ViewBag.error != null)
+        {
+            @Html.Raw(ViewBag.error) <a href='/MemberCenter/Upgrade' style='color: red;'>点击这里去升级为企业会员</a>
+            <script type="text/javascript" language="javascript">
+
+                var wBox = $("#wbox1").wBox({
+                    title: "提示",
+                    html: "<div class='demo' style='width:240px;height:90px;padding-top:10px;margin-left:20px;'>@ViewBag.error<br><div style='margin-top:10px;'>请您<a href='/MemberCenter/Upgrade' style='color:red;'>点击这里</a>去升级为企业会员</div><div style='margin-top:10px;'>我们将为您提供更全面的服务</div></div>"
+                });
+                wBox.showBox();
+            </script>
+        }
+    </div>
+    <table width="100%">
+        <tr style="background-color: #efefef; height: 32px;">
+            <th>
+                <input type="checkbox" id="chk_all" value="" checked="checked" /><label>全选</label>
+            </th>
+            <th>
+                商品
+            </th>
+            <th>
+                生产企业
+            </th>
+            <th>
+                规格
+            </th>
+            <th>
+                件装
+            </th>
+            <th>
+                单价
+            </th>
+            <th>
+                购买数量
+            </th>
+            <th>
+                小计
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @if (product != null)
+        {
+            if (product.Rows.Count > 0)
+            {
+                int pro_count = 0;
+                DataTable dtProLimitNum = ViewBag.ShoppingCarLimitProNum;
+
+                foreach (DataRow item in product.Rows)
+                {
+                    pro_count++;
+            <tr>
+                <td id="@item["Product_ID"]" class="center">
+                    <input type="hidden" id="pro-@item["id"]" value="@item["Product_ID"]" />
+                    <input type="hidden" id="s-@item["id"]" value="@item["sl"]" />
+                    @if (ViewBag.Memberclass == 1)
+                    {
+                        <input type="hidden" id="j-@item["id"]" value="@item["sl"]" />
+                    }
+                    else
+                    {
+                        <input type="hidden" id="j-@item["id"]" value="@item["jz"]" />
+                    }
+                    <input type="hidden" id="p-@item["id"]" value="@Math.Round((decimal)item["Price"], 2)" />
+                    @if (Convert.ToDouble(item["Price"].ToString()) > 0)
+                    {
+                        <input class="checkbox" type="checkbox" name="cid" value="@item["id"]" onclick="countPrice()" checked="checked" />
+                    }
+                </td>
+                <td>
+                    <a href="/@item["product_id"]@ext">@Html.Raw((bool)item["iscu"] ? "<span style='color:red'>[促]</span>" : "")
+                        @item["name"]</a>
+                </td>
+                <td title="@item["cj"]">@item["cj"]
+                </td>
+                <td>@Public.GetSpecificationAndS(item)
+                </td>
+                <td class="center">@item["jz"]@item["dw"]/件
+                </td>
+                <td class="right">@Html.Raw(item["showPrice"].ToString())
+                    <input class="productCount" type="hidden" value="@item["sl"]" />
+                </td>
+                @{
+                   
+                    string stock = null;//库存
+
+                    if (!string.IsNullOrEmpty(item["stock"].ToString()))
+                    {
+                        decimal stock0 = 0; decimal.TryParse(item["stock"].ToString(), out stock0);//实际库存
+                        decimal stock1 = 0; if (!item.IsNull("stock1"))
+                        {
+                            decimal.TryParse(item["stock1"].ToString(), out stock1);
+                        }
+                        //锁库
+                        stock = (stock0 - stock1).ToString();
+                    }
+                    else
+                    {
+                        stock = "0";
+                    }
+
+
+                    //处理购买数量【库存取整】
+                    bool okSL = true;
+                    string tipSL = "";
+                    decimal sl = Convert.ToDecimal(item["sl"]);
+                    decimal jz = Convert.ToDecimal(item["jz"]);
+                    decimal zbz = Convert.ToDecimal(item["zbz"]);
+                    int sellType = (int)item["sellType"];
+
+                    //最大购买数量
+                    decimal maxsell = 0;
+                    //最小购买数量
+                    decimal minsell = Convert.ToDecimal(item["BagCapacity"]);
+                    if ((bool)item["iscu"])
+                    {
+                        //促销商品每会员每天最多购买数量
+                        maxsell = (int)item["minsell"];
+                    }
+                    if (sellType == 2)
+                    {
+                        minsell = zbz;
+                    }
+                    else if (sellType == 3)
+                    {
+                        minsell = jz;
+                    }
+                }
+                <td class="center" width="120">
+                    <a class="jianshao_btn" onclick="diminish(@item["id"]);checksubmitOk=1;"></a>
+                    <input type="text" class="numbers" style="width:50px; float:left; text-align:right; margin:0 4px; border:1px solid #ccc;" pid="@item["Product_ID"]"
+                           onblur="if(checkStock(this)){henum(@item["ID"])}" proname="@item["name"]" dw="@item["dw"]"
+                            oid="@item["id"]" minsell="@minsell" maxsell="@maxsell" id="is-@item["id"]" value="@item["sl"]" oldvalue="@item["sl"]" 
+                            memberclass="@ViewBag.Memberclass"
+                           iscl="@item["is_cl"]" jz="@item["jz"]" zbz="@item["zbz"]" selltype="@item["sellType"]" stock="@stock" />
+                    <a class="zhengjia_btn" onclick="addcart1(@item["id"],@item["BagCapacity"]);checksubmitOk=1;">
+                    </a><span style="float: left; padding-left: 4px;">@item["dw"]</span>
+                    @if (!okSL)
+                    {
+                        <span style="display: block; color: red; clear: both">@tipSL</span>
+                    }
+                </td>
+                <td class="right">
+                    @{
+                    double price = Convert.ToDouble(item["Price"].ToString()) * Convert.ToInt32(item["sl"]);
+                    countPrice += price; 
+                        <span  id="c-@item["id"]">@string.Format("{0:C}", price)</span>
+                    }
+                </td>
+                <td class="center">
+                    <span style="cursor:pointer;" onclick="DelProduct('@item["Product_ID"]','@item["sl"]')">
+                        删除</span>
+                </td>
+            </tr>
+                }
+            }
+        }
+    </table>
+</div>
+<!--cart-thead_box--end---->
+<div class="control fl">
+    <span class="delete_clear"><a href="javascript:DelCart()">清空购物车</a></span> <span
+        class="delete"><a href="javascript:DelCart(1)">删除选中的商品</a></span>
+    <div class="clear">
+    </div>
+    <div class="shop_close">
+        <div class="amout fl">
+            选中采购品种<span class="shuliang">@(product != null ? product.Rows.Count : 0)</span>个</div>
+        <!--div class="amout1 fl">共优惠<span>￥123,32</span></div-->
+        <div class="amout2 fl">
+            商品金额<span class="myshoppingcar_allprice">@string.Format("{0:C}", countPrice)</span></div>
+        <div class="amout3 fl" style="display: none">
+            应付金额<span class="myshoppingcar_allprice">@string.Format("{0:C}", countPrice)</span></div>
+    </div>
+    <div class="cart-button">
+        <a class="stm_shop" style="cursor: pointer;" onclick="if(checkStocks()){checksubmit()}">
+        </a><a class="ctn_shop" href="javascript:window.location.href='/'"></a>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="delete_shop_box">
+        @if (Delpro != null)
+        {
+            if (Delpro.Rows.Count > 0)
+            {  
+            <p style="padding: 4px 0">
+                已删除商品，你可以重新购买或者加关注</p>
+            <div class="delete_shop_title">
+                <div class="d_s_1 fl">
+                    商品/优惠包</div>
+                <div class="d_s_2 fl">
+                    单价</div>
+                <div class="d_s_3 fl">
+                    数量</div>
+                <div class="d_s_4 fl">
+                    操作</div>
+            </div>
+   
+            <div class="delete_shop_content">
+                @foreach (DataRow row in Delpro.Rows)
+                {
+                    <div class="dsc_cc">
+                        <p class="d_s_1 fl">
+                            <span>@row["cj"]</span><span>@row["name"]</span><span>@row["gg"]</span></p>
+                        <p class="d_s_2 fl">
+                            <span>@Html.Raw(row["showPrice"].ToString())</span></p>
+                        <p class="d_s_3 fl">
+                            @if (dellist != null)
+                            {
+                                <span class="DelCount" id="del-@row["pid"]">@dellist[row["pid"].ToString()]</span>
+                            }</p>
+                        <p class="d_s_4 fl">
+                            <span style="border-right: 1px solid #ddd; padding-right: 10px;cursor:pointer;" onclick="AgainBuy(@row["pid"],@(dellist != null ? dellist[row["pid"].ToString()] : ((int)row["sellType"] != 2 ? 1 : row["zbz"])),@row["IsExpirationProduct"])">
+                                重新购买 </span><span style="padding-left: 10px;cursor:pointer;" onclick="AddFavorites(@row["pid"])">
+                                    关注</span></p>
+                        <div class="clear">
+                        </div>
+                    </div>             
+                }
+            </div>
+       
+            }
+        }
+    </div>
+</div>
+<div id="wbox1">
+</div>
+</form>
+<div style="height: 1px; clear: both;">
+</div>
+<!---结束-->
+<script language="javascript" type="text/javascript">
+
+    //默认全部选中
+    $(function () {
+
+        $("#chk_all").click(function () {
+            $("input[name='cid']").attr("checked", $(this).attr("checked"));
+            countPrice();
+        });
+        countPrice();
+    });
+
+    //只输入数字
+    $.fn.numeral = function () {
+        $(this).css("ime-mode", "disabled");
+        this.bind("keypress", function () {
+            if (event.keyCode == 46) {
+                //if (this.value.indexOf(".") != -1) {
+                return false;
+                //}
+            } else {
+
+                return event.keyCode >= 47 && event.keyCode <= 57;
+            }
+        });
+        this.bind("focus", function () {
+            $(this).attr("oldvalue", $(this).val());
+        });
+        this.bind("blur", function () {
+            if (this.value.lastIndexOf(".") == (this.value.length - 1)) {
+                this.value = this.value.substr(0, this.value.length - 1);
+            }
+
+            //检查购买数量
+            var err = checkSellType(this); if (err) { alert(err); return false; }
+
+            //提交
+            var oid = $(this).attr("oid");
+            submitadd(oid, val);
+        });
+        this.bind("paste", function () {
+            var s = clipboardData.getData('text');
+            if (!/\D/.test(s));
+            value = s.replace(/^0*/, '');
+            return false;
+        });
+        this.bind("dragenter", function () {
+            return false;
+        });
+        this.bind("keyup", function () {
+
+            if (/(^0+)/.test(this.value)) {
+                this.value = this.value.replace(/^0*/, '');
+            }
+        });
+    };
+    //限制为输入的内容为数字
+    $(".numbers").numeral();
+
+    //检查购买数量
+    function checkSellType(input) {
+        var input = $(input);
+        var val = parseFloat(input.val());
+        if (isNaN(val) || val <= 0) {
+            input.val(input.attr("oldvalue"));
+            return "请填写大于零的购买数量";
+        }
+        var maxsell = parseFloat(input.attr("maxsell"));
+        if (!isNaN(maxsell) && maxsell > 0 && maxsell < val) {
+            input.val(input.attr("oldvalue"));
+            //return "不能超过最大购买数量【" + maxsell + "】"; 
+        }
+        var selltype = parseInt(input.attr("selltype"));
+        var jz = parseFloat(input.attr("jz"));
+        var zbz = parseFloat(input.attr("zbz"));
+        if (selltype == 3 && val % jz > 0) {
+            input.val(input.attr("oldvalue"));
+            return "购买数量必须是件装量【" + jz + "】的整数倍";
+        }
+        else if (selltype == 2 && zbz > 0 && val % zbz > 0) {
+            input.val(input.attr("oldvalue"));
+            return "购买数量必须是中包装【" + zbz + "】的整数倍";
+        }
+        return "";
+    }
+
+    //超库存上限提示修改
+    checksubmitOk = 1;
+
+    function checkStock(input) {
+        checksubmitOk = 0;
+        var memberclass = input.getAttribute("memberclass");
+        if (memberclass != '1') {
+            checksubmitOk = 1;
+            return true;
+        }
+        var val = parseFloat(input.value);
+
+        var stock = parseFloat(input.getAttribute("stock"));
+        if (isNaN(val) || val <= 0) {
+            alert("请填写购买数量");
+            $("input[name='cid'][value='" + input.getAttribute("oid") + "']").attr("checked", false);
+            $("$c-" + input.getAttribute("oid")).value = "¥0.00";
+            countPrice();
+            return false;
+        }
+        checksubmitOk = 1;
+        return true;
+        if (!isNaN(stock) && val > stock) {
+            $.confirm({
+                'title': '温馨提示',
+                'message': '尊敬的会员<br /><br />[' + input.getAttribute("proname") + ']品种库存已经变动<br />最新库存是<font color=red>' + stock + '</font>，下单数量是<font color=red>' + val + '</font>。<br />确认按照库存数量调整？<br /><br />温馨提示，东昌商城商品价格和库存是随市场变动实时变动，请及时采购！',
+                'buttons': {
+                    'Yes': {
+                        'class': 'blue',
+                        'action': function () {
+                            if (stock > 0) {
+                                input.value = stock;
+                                submitadd(input.getAttribute("oid"), stock);
+                                countPrice();
+                            }
+                            else {
+                                input.value = 0;
+                                $("input[name='cid'][value='" + input.getAttribute("oid") + "']").attr("checked", false);
+                            }
+                            checksubmitOk = 1;
+                        }
+                    },
+                    'No': {
+                        'class': 'gray',
+                        'action': function () { } // Nothing to do in this case. You can as well omit the action property.
+                    }
+                }
+            });
+
+            return false;
+        }
+        checksubmitOk = 1;
+        return true;
+    }
+    function checkStocks() {
+        if (!checksubmitOk) {
+            return false;
+        }
+        var input = $(".numbers");
+        for (var i = 0; i < input.length; i++) {
+            if ($("input[name='cid'][value='" + input[i].getAttribute("oid") + "']").attr("checked")) {
+                if (!checkStock(input[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    //计算价格
+    function countPrice() {
+        var sum = 0;
+        //品种数量
+        var CategoryQuantity = 0;
+        $("input[name='cid']:checkbox").each(function () {
+            if ($(this).attr("checked")) {
+                $("#is-" + $(this).val()).removeAttr("disabled");
+                var id = $(this).val();
+                count = parseFloat($("#p-" + id).val()) * parseFloat($("#s-" + id).val());
+                //金额小计
+                $("#c-" + id).html("¥" + count.toFixed(2));
+                sum += count;
+                CategoryQuantity += 1;
+                henum(id);
+            }
+            else {
+                var input = $("#is-" + $(this).val());
+                input.attr("disabled", true);
+            }
+        })
+
+        //所有品种数量
+        $(".shuliang").html(CategoryQuantity);
+        //所有选中商品价格
+        $(".myshoppingcar_allprice").html("¥" + sum.toFixed(2));
+    }
+
+    //删除选中商品
+    function DelProduct(pid, count) {
+        if (window.confirm("您确定要删除您购物车中的该商品吗？")) {
+            var pram = "pid=" + pid + "&count=" + count;
+            $.post("/Shoppingcart/DelShoppingCartProduct", pram, function (data) {
+                switch (data) {
+                    case "login":
+                        alert("您还没有登陆，转向登陆页面！");
+                        window.location.href = "/Account/LogOn";
+                        break;
+                    case "ok":
+                        alert("删除成功！,您可以在已删除的商品中重新购买或关注该商品！");
+                        window.location.href = "/Shoppingcart/MyShoppingCart";
+                        break;
+                    case "no":
+                        alert("未知错误！")
+                        window.location.href = "/Shoppingcart/MyShoppingCart";
+                        break;
+                }
+            }, "")
+        }
+    }
+
+    //清空购物车
+    function DelCart(way) {
+        if (window.confirm("您确定要删除您购物车中的这些商品吗？")) {
+            var input = $(".checkbox");
+            var pids = "";
+            var counts = "";
+            if (way == 1) {
+                for (var i = 0; i < input.length; i++) {
+                    if ($(input[i]).attr("checked")) {
+                        var sid = $(input[i]).val();
+                        pids += $("#pro-" + sid).val() + ",";
+                        counts += $("#is-" + sid).val() + ",";
+                    }
+                }
+            } else {
+                for (var i = 0; i < input.length; i++) {
+                    var sid = $(input[i]).val();
+                    pids += $("#pro-" + sid).val() + ",";
+                    counts += $("#is-" + sid).val() + ",";
+                }
+            }
+            var data = "pids=" + pids + "&counts=" + counts;
+            $.post("/Shoppingcart/DelCart", data, function (val) {
+                if (val == "ok") {
+                    alert("删除成功！,您可以在已删除的商品中重新购买或关注该商品！");
+                    window.location.href = "/Shoppingcart/MyShoppingCart";
+                }
+                else {
+                    alert("未知错误！")
+                    window.location.href = "/Shoppingcart/MyShoppingCart";
+                }
+            });
+        }
+    }
+    //重新购买
+    function AgainBuy(pid, Count, IsExpirationProduct) {
+
+        var data = "pid=" + pid + "&jian=" + 0 + "&count=" + Count + "&Expiration=" + IsExpirationProduct;
+
+        $.post("/Shoppingcart/Addcart", data, function (val) {
+            eval("va=" + val);
+            if (va.url == "") {
+                alert(va.message);
+                location.href = "/Shoppingcart/MyShoppingcart"
+            }
+            else {
+                alert(va.message);
+                window.location.href = va.url;
+            }
+        }, "")
+    }
+    //加入收藏
+    function AddFavorites(id) {
+        $.post("/Shoppingcart/AddFavorite", "pid=" + id, function (data) {
+            switch (data) {
+                case "login":
+                    alert("您还未登录，转向登录页面！");
+                    location.href = "/Account/LogOn";
+                    break;
+                case "no":
+                    alert("未知错误，关注失败！")
+                    break;
+                default:
+                    alert(data);
+                    break;
+
+            }
+        });
+    }
+
+    //提交最新购买数量到后台
+    function submitadd(id, snum) {
+        $.ajax({
+            type: 'POST',
+            url: '/Shoppingcart/AddShoppinNum',
+            data: { sid: id, num: snum },
+            dataType: "json",
+            success: function (msg, textStatus) {
+                switch (msg["state"]) {
+                    case 0:
+                        alert(msg["message"]);
+                        break;
+                    case 1:
+                        $("#is-" + id).val(snum);
+                        $("#s-" + id).val(snum);
+                        countPrice();
+                        break;
+                    default:
+                        alert(msg["message"]);
+                        break;
+                }
+            }
+        });
+    }
+
+    //增加购买数量
+    function addcart1(id, plus) {
+        var ipt = "#is-" + id;
+        var minsell = $(ipt).attr("minsell");
+        var snum = 0;
+        //输入框
+        var input = $(ipt);
+        //数量
+        var val = parseFloat(input.val());
+        //销售方式
+        var selltype = parseInt(input.attr("selltype"));
+        //件装
+        var jz = parseFloat(input.attr("jz"));
+        //中包装
+        var zbz = parseFloat(input.attr("zbz"));
+        //库存
+        var stock = parseFloat(input.attr("stock"));
+        if (selltype == 3) {
+            snum = val + jz;
+        } else if (selltype == 2) {
+            snum = val + zbz;
+        } else {
+            snum = val + plus;
+        }
+        if (snum > stock) {
+            $.confirm({
+                'title': '温馨提示',
+                'message': '抱歉！改产品目前库存量不足，请咨询商城在线客服。',
+                'buttons': {
+                    '在线咨询': {
+                        'class': 'blue',
+                        'action': function () {
+                            $(".appdownload a")[0].click();
+                        }
+                    },
+                    '取消': {
+                        'class': 'gray',
+                        'action': function () { }
+                    }
+                }
+            });
+            return false;
+        }
+        //最大购买数
+        var maxsell = parseFloat(input.attr("maxsell"));
+        if (!isNaN(maxsell) && maxsell > 0 && maxsell < snum) {
+            return false;
+        }
+        submitadd(id, snum.toFixed(2));
+    }
+    //减少购买数量
+    function diminish(id) {
+        var ipt = "#is-" + id;
+        var snum = $("#j-" + id).val();
+        var minsell = $(ipt).attr("minsell");
+        var input = $(ipt);
+        var val = parseFloat(input.val());
+        var selltype = parseInt(input.attr("selltype"));
+        var jz = parseFloat(input.attr("jz"));
+        var zbz = parseFloat(input.attr("zbz"));
+        if (selltype == 3) {
+            snum = val - jz;
+        } else if (selltype == 2) {
+            snum = val - zbz;
+        } else {
+            snum = val - minsell;
+        }
+
+        if (parseFloat($(ipt).val()) > parseFloat(minsell)) {
+            submitadd(id, snum.toFixed(2));
+        }
+
+    }
+
+    //去结算
+    function checksubmit() {
+        if ($(".myshoppingcar_allprice").html() != "¥0.00") {
+            document.getElementById("form1").submit();
+        }
+        else {
+            alert("请选择商品后再去结算！");
+            return false;
+        }
+        return true;
+    }
+
+    function henum(pid) {
+        var minsell = $("#is-" + pid).attr("minsell");
+
+        sum = parseFloat($("#is-" + pid).val());
+
+        //检查购买数量
+        var err = checkSellType($("#is-" + pid).get(0));
+        if (err) {
+            alert(err);
+            return false;
+        }
+        if (sum < minsell) {
+            $("#is-" + pid).val(minsell);
+            countPrice();
+        }
+
+        return true;
+    }
+</script>

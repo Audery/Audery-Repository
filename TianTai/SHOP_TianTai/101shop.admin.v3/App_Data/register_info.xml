@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MemberRegister>
+  <MemberInfo genre="Auto">
+    <Info name="Regverify" value="验证码"></Info>
+    <Info name="RegName" value="真实姓名"></Info>
+    <Info name="RegEmailTM" value="电子邮箱TM号"></Info>
+    <Info name="RegTel" value="固定电话"></Info>
+    <Info name="RegCompanyAddress" value="公司所地址"></Info>
+    <Info name="RegMSN" value="MSN"></Info>
+    <Info name="RegStreet" value="街道地址"></Info>
+    <Info name="RegFax" value="传真"></Info>
+    <Info name="RegPhone" value="手机"></Info>
+    <Info name="RegCode" value="邮政编码"></Info>
+    <Info name="RegCompanyName" value="公司名称"></Info>
+    <Info name="RegPost" value="您的职位"></Info>
+  </MemberInfo>
+
+  <MemberInfo genre="Necessary">
+    <Info name="Regverify" value="验证码"></Info>
+    <Info name="RegName" value="真实姓名"></Info>
+    <Info name="RegEmailTM" value="电子邮箱TM号"></Info>
+    <Info name="RegTel" value="固定电话"></Info>
+    <Info name="RegCompanyAddress" value="公司所地址"></Info>
+    <Info name="RegMSN" value="MSN"></Info>
+    <Info name="RegStreet" value="街道地址"></Info>
+    <Info name="RegFax" value="传真"></Info>
+    <Info name="RegPhone" value="手机"></Info>
+    <Info name="RegCode" value="邮政编码"></Info>
+    <Info name="RegCompanyName" value="公司名称"></Info>
+    <Info name="RegPost" value="您的职位"></Info>
+  </MemberInfo>
+
+  <MemberInfo genre="Choice">
+  </MemberInfo>
+</MemberRegister>

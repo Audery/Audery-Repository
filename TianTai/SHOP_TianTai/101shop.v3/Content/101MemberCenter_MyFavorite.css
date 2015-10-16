@@ -1,0 +1,105 @@
+﻿.favorite_text_head
+{
+    font-size:12px;
+    font-family:宋体;
+    font-weight:bold;
+    text-align:left;
+    float:left;
+    padding:5px 5px 0px 5px;
+    vertical-align:middle;
+}
+.favorite_text_headEx
+{
+    font-size:12px;
+    font-family:宋体;
+    text-align:left;
+    float:left;
+    padding:11px 5px 0px 5px;
+    vertical-align:middle;
+    border-right:1px solid #bac9c6;
+    border-bottom:1px solid #bac9c6;
+    height:25px; 
+    word-wrap: break-word; 
+    line-height:115%
+}
+.favorite_text_body
+{
+    font-size:12px;
+    font-family:宋体;
+    text-align:left;
+    float:left;
+    padding:8px 5px 0px 5px;
+    vertical-align:middle;
+    border-right:1px solid #bac9c6;
+    border-bottom:1px solid #bac9c6;
+    height:28px; 
+    word-wrap: break-word; 
+    line-height:115%
+}
+.favorite_head_bottom_bg
+{
+    width:100%; 
+   
+    padding-top:0px; 
+    height:4px;
+    margin-bottom:10px;
+}
+.favorite_list_head_bg
+{
+    background-image: url('../images/head_bg.gif'); 
+    background-repeat:repeat; 
+    height:28px; 
+    width:100%;
+    border:1px solid #bac9c6;    
+}
+.favorite_input_textbox
+{
+    vertical-align:middle; 
+    padding:2px; 
+    border-top:2px solid #404040; 
+    border-bottom:1px solid #d4d0c8; 
+    border-left:2px solid #404040;
+    border-right:1px solid #d4d0c8; 
+    margin-right: 5px;    
+}
+.favorite_function_button
+{
+    color:#005ea7; 
+    cursor:pointer;
+    text-decoration:none;
+}
+.favorite_head_bg
+{
+    border:1px solid #e0e0e0; 
+    height:28px; 
+    width:100%; 
+    padding:5px 0px 0px 0px;   
+}
+.favorite_important_text
+{
+    float: left; 
+    color: #00a539;
+    padding-right:10px; 
+    padding-left:20px
+}
+.favorite_main_back
+{
+	margin-top:10px;
+	padding:10px;
+	margin-left:24px;
+}
+.favorite_text_body_first
+{
+    font-size:12px;
+    font-family:宋体;
+    text-align:left;
+    float:left;
+    padding:8px 5px 0px 5px;
+    vertical-align:middle;
+    border-right:1px solid #bac9c6;
+    border-bottom:1px solid #bac9c6;
+    border-left:1px solid #bac9c6;
+    height:28px; 
+    word-wrap: break-word; 
+    line-height:115%
+}

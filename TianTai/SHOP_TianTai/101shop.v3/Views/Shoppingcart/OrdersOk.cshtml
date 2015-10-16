@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "订单处理结果";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@{Html.RenderPartial("Nav");}
+<link rel="stylesheet" type="text/css" href="/Content/order_submit.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+<div class="clear">
+</div>
+<div class="content">
+    <div class="order_submit">
+        <div class="o_s_con">
+            <div class="o_s_left">
+            </div>
+            <div class="o_s_right">
+                @if (ViewBag.Ok == 1)
+                {
+                    SOSOshop.Model.Order.Orders order = ViewBag.Order;
+                    <h2>
+                        尊敬的@(order.UserName)（@(order.parentCorpName)），您的订单已经提交成功；<br />配送至 @(order.ConsigneeProvince + "" + order.ConsigneeCity + "" + order.ConsigneeBorough) 预计2~3天送达，请留意收货，预祝合作愉快！
+                    </h2>
+                    <p>
+                        <br />订单编号：<span class="order_nuber">@ViewBag.No</span><span style="padding-left: 10px;">应付金额</span><span class="order_money">@ViewBag.Money</span>
+                    </p>
+                    if (Request["payway"] == "2")
+                    {
+                        if (ViewBag.Paytype == 1)
+                        {
+                            <p class="now_pay_s">
+                                <strong>
+                                    <a href="/Payment/Bank/Default.aspx?orderId=@(ViewBag.No)">立即支付</a><span class="order_money">@ViewBag.Money元</span>即可完成订单。
+                                </strong>
+                                @*<span style="padding-left: 10px">请您在<span class="order_money">24小时内</span>完成支付，否则订单将会被自动取消。</span>*@
+                            </p>
+                        }
+                        if (ViewBag.Paytype == 2)
+                        {
+                            <p class="now_pay_s">
+                                <strong><a href="/help/128.html">去付款</a><span class="order_money">@ViewBag.Money元</span>即可完成订单。</strong>
+                                @*<span style="padding-left: 10px">请您在<span class="order_money">24小时内</span>完成支付，否则订单将会被自动取消。</span>*@
+                            </p>
+                        }
+                    }
+                }
+                else
+                {
+                    <h2>@ViewBag.error</h2>
+                }
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="view_order">
+            @if (ViewBag.GSP != null)
+            {
+                <span class="v_o_1 fl"><a href="/membercenter/orderdetails?orderno=@ViewBag.No">查看订单详情</a></span>
+                <span class="v_o_2 fl"><a href="/MemberCenter/Orders">我的订单</a></span>
+            }
+        </div>
+    </div>
+    <!--order_submit-->
+    <ul class="Precautions">
+        <strong>注意事项</strong>
+        <li>1、“订单提交成功”仅表明@(System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"])收到您的订单，只有您的订单通过审核后，才代表订单正式生效；</li>
+        <li>2、 选择货到付款的客户，请您务必认真检查所收货物，如有不符，您可以拒收；</li>
+        <li>3、 选择其他方式的客户，请您认真检查外包装。如有明显损坏迹象，你可以拒收该货品，并及时通知我们。</li>
+    </ul>
+</div>
+<!--content---------content------>
+<div style="height:1px; clear:both;"></div>
+@*<div style="margin-top:15px">
+    <a href="/Promotions/jf" target="_blank">
+        <img src="/adimage/t_00123.jpg" alt="" />
+    </a>
+</div>*@

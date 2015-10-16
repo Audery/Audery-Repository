@@ -1,0 +1,1921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AppendDrugsBaseApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugsBaseApply">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_DrugName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_ProName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_Specification" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_Formulation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_Manufacturer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_ApprovalNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cunchtj" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="YouXq" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_ConveRatio" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Goods_ConveRatio_Unit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Goods_ConveRatio_Unit_Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Goods_Unit" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_Pcs" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_Pcs_Small" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Goods_Package_Unit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImageList" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImageListSmall" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drugsbase_Direct_Context" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sourceName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="created" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="updated" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="info" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Editer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DrugsBase_ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugsClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PharmID" type="tns:ArrayOfInt" />
+          <s:element minOccurs="0" maxOccurs="1" name="OtcTagClass" type="tns:ArrayOfInt" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsZY" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Describe" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AppendDrugsBaseApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppendDrugsBaseApplyResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDrugsBaseBothApplyAudit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDrugsBaseBothApplyAuditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AppendDrugsBaseBothApplyAuditResult" type="tns:DrugBaseResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugBaseResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_Package_ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DrugsBase_ID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AppendDrugsBaseApplyZyc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApplyZyc" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugsBaseApplyZyc">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:DrugsBaseApply">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ProductionClass" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductionBrand" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductionLevel" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductionMethod" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductionAddress" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_Formulation_1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DrugsBase_Manufacturer_Foundry" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="BagCapacity" type="s:decimal" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AppendDrugsBaseApplyZycResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppendDrugsBaseApplyZycResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDrugsBaseApplyZycAudit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApplyZyc" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AppendDrugsBaseApplyZycAuditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AppendDrugsBaseApplyZycAuditResult" type="tns:DrugBaseResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyDrugsBaseApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyDrugsBaseApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ModifyDrugsBaseApplyResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyDrugsBaseApplyZyc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsBaseApplyZyc" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyDrugsBaseApplyZycResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ModifyDrugsBaseApplyZycResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsBaseApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsBaseApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteDrugsBaseApplyResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsBaseApplyZyc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsBaseApplyZycResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteDrugsBaseApplyZycResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBaseApplyList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageIndex" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBaseApplyListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsBaseApplyListResult" type="tns:ArrayOfDrugsBaseApply" />
+            <s:element minOccurs="1" maxOccurs="1" name="recordCount" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageCount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDrugsBaseApply">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugsBaseApply" nillable="true" type="tns:DrugsBaseApply" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDrugsBaseApplyZycList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageIndex" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fields" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBaseApplyZycListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsBaseApplyZycListResult" type="tns:ArrayOfDrugsBaseApplyZyc" />
+            <s:element minOccurs="1" maxOccurs="1" name="recordCount" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageCount" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDrugsBaseApplyZyc">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugsBaseApplyZyc" nillable="true" type="tns:DrugsBaseApplyZyc" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddDrugsImageApplyList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="list" type="tns:ArrayOfDrugsImageApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDrugsImageApply">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugsImageApply" nillable="true" type="tns:DrugsImageApply" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugsImageApply">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Goods_Package_ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sourceName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="category" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="info" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="created" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="updated" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="editer" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddDrugsImageApplyListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddDrugsImageApplyListResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDrugsImageApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="goods_id" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDrugsImageApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetDrugsImageApplyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsImageApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="list" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsImageApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteDrugsImageApplyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsImageApplyId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteDrugsImageApplyIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteDrugsImageApplyIdResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsbaseAllList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageIndex" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="where" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="drugs" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="authKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsbaseAllListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsbaseAllListResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsImageApplyList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageIndex" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="where" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="authKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsImageApplyListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsImageApplyListResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListArray">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strWhere" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="source" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListArrayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListArrayResult" type="tns:ArrayOfDrugsImageApply" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDrugsImageApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsImageApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="authKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDrugsImageApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddDrugsImageApplyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDrugsImageApply">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="model" type="tns:DrugsImageApply" />
+            <s:element minOccurs="0" maxOccurs="1" name="authKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateDrugsImageApplyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateDrugsImageApplyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBaseEnum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="de" type="tns:DrugsBaseEnum" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="DrugsBaseEnum">
+        <s:restriction base="s:string">
+          <s:enumeration value="存储条件" />
+          <s:enumeration value="中药类别" />
+          <s:enumeration value="中药等级" />
+          <s:enumeration value="中药制法" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetDrugsBaseEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsBaseEnumResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBase_Pharm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBase_PharmResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsBase_PharmResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBase_Pharm2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ids" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDrugsBase_Pharm2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDrugsBase_Pharm2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOtcClass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOtcClassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOtcClassResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOtcClass2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ids" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOtcClass2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOtcClass2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDrugsBase_Enterprise">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="lng" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="lat" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="Province" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="City" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Borough" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDrugsBase_EnterpriseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddDrugsBase_EnterpriseResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectCompanyName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="q" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectCompanyNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SelectCompanyNameResult" type="tns:ArrayOfEnterpriseLocation" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEnterpriseLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EnterpriseLocation" nillable="true" type="tns:EnterpriseLocation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EnterpriseLocation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Lon" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Lat" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEnterpriseList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetEnterpriseListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEnterpriseListResult" type="tns:ArrayOfEnterpriseLocation" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="int" type="s:int" />
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ArrayOfDrugsImageApply" nillable="true" type="tns:ArrayOfDrugsImageApply" />
+      <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString" />
+      <s:element name="DataSet" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:element ref="s:schema" />
+            <s:any />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ArrayOfEnterpriseLocation" nillable="true" type="tns:ArrayOfEnterpriseLocation" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AppendDrugsBaseApplySoapIn">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApply" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseApplySoapOut">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseBothApplyAuditSoapIn">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseBothApplyAudit" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseBothApplyAuditSoapOut">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseBothApplyAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseApplyZycSoapIn">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApplyZyc" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseApplyZycSoapOut">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApplyZycResponse" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseApplyZycAuditSoapIn">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApplyZycAudit" />
+  </wsdl:message>
+  <wsdl:message name="AppendDrugsBaseApplyZycAuditSoapOut">
+    <wsdl:part name="parameters" element="tns:AppendDrugsBaseApplyZycAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyDrugsBaseApplySoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyDrugsBaseApply" />
+  </wsdl:message>
+  <wsdl:message name="ModifyDrugsBaseApplySoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyDrugsBaseApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyDrugsBaseApplyZycSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyDrugsBaseApplyZyc" />
+  </wsdl:message>
+  <wsdl:message name="ModifyDrugsBaseApplyZycSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyDrugsBaseApplyZycResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplySoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsBaseApply" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplySoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsBaseApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsBaseApplyZyc" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsBaseApplyZycResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseApplyListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseApplyList" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseApplyListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseApplyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseApplyZycListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseApplyZycList" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseApplyZycListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseApplyZycListResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsImageApplyListSoapIn">
+    <wsdl:part name="parameters" element="tns:AddDrugsImageApplyList" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsImageApplyListSoapOut">
+    <wsdl:part name="parameters" element="tns:AddDrugsImageApplyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplySoapIn">
+    <wsdl:part name="parameters" element="tns:SetDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplySoapOut">
+    <wsdl:part name="parameters" element="tns:SetDrugsImageApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplySoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplySoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsImageApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsImageApplyId" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteDrugsImageApplyIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsbaseAllListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsbaseAllList" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsbaseAllListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsbaseAllListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsImageApplyListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsImageApplyList" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsImageApplyListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsImageApplyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListArraySoapIn">
+    <wsdl:part name="parameters" element="tns:GetListArray" />
+  </wsdl:message>
+  <wsdl:message name="GetListArraySoapOut">
+    <wsdl:part name="parameters" element="tns:GetListArrayResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsImageApplySoapIn">
+    <wsdl:part name="parameters" element="tns:AddDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsImageApplySoapOut">
+    <wsdl:part name="parameters" element="tns:AddDrugsImageApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDrugsImageApplySoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="UpdateDrugsImageApplySoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateDrugsImageApplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseEnum" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsBaseEnumResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsBase_Pharm" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsBase_PharmResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetDrugsBase_Pharm2" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetDrugsBase_Pharm2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOtcClass" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOtcClassResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetOtcClass2" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetOtcClass2Response" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseSoapIn">
+    <wsdl:part name="parameters" element="tns:AddDrugsBase_Enterprise" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseSoapOut">
+    <wsdl:part name="parameters" element="tns:AddDrugsBase_EnterpriseResponse" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectCompanyName" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectCompanyNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEnterpriseListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEnterpriseList" />
+  </wsdl:message>
+  <wsdl:message name="GetEnterpriseListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEnterpriseListResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplyHttpGetIn">
+    <wsdl:part name="goods_id" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplyHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetListArrayHttpGetIn">
+    <wsdl:part name="strWhere" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="source" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListArrayHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumHttpGetIn">
+    <wsdl:part name="de" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmHttpGetIn">
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2HttpGetIn">
+    <wsdl:part name="ids" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2HttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassHttpGetIn">
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2HttpGetIn">
+    <wsdl:part name="ids" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2HttpGetOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseHttpGetIn">
+    <wsdl:part name="Name" type="s:string" />
+    <wsdl:part name="lng" type="s:string" />
+    <wsdl:part name="lat" type="s:string" />
+    <wsdl:part name="Province" type="s:string" />
+    <wsdl:part name="City" type="s:string" />
+    <wsdl:part name="Borough" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameHttpGetIn">
+    <wsdl:part name="q" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEnterpriseLocation" />
+  </wsdl:message>
+  <wsdl:message name="GetEnterpriseListHttpGetIn" />
+  <wsdl:message name="GetEnterpriseListHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEnterpriseLocation" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsBaseApplyZycHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplyHttpPostIn">
+    <wsdl:part name="goods_id" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetDrugsImageApplyHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteDrugsImageApplyIdHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetListArrayHttpPostIn">
+    <wsdl:part name="strWhere" type="s:string" />
+    <wsdl:part name="type" type="s:string" />
+    <wsdl:part name="source" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListArrayHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfDrugsImageApply" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumHttpPostIn">
+    <wsdl:part name="de" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBaseEnumHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfString" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmHttpPostIn">
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_PharmHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2HttpPostIn">
+    <wsdl:part name="ids" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDrugsBase_Pharm2HttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassHttpPostIn">
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClassHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2HttpPostIn">
+    <wsdl:part name="ids" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOtcClass2HttpPostOut">
+    <wsdl:part name="Body" element="tns:DataSet" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseHttpPostIn">
+    <wsdl:part name="Name" type="s:string" />
+    <wsdl:part name="lng" type="s:string" />
+    <wsdl:part name="lat" type="s:string" />
+    <wsdl:part name="Province" type="s:string" />
+    <wsdl:part name="City" type="s:string" />
+    <wsdl:part name="Borough" type="s:string" />
+    <wsdl:part name="key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDrugsBase_EnterpriseHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameHttpPostIn">
+    <wsdl:part name="q" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SelectCompanyNameHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEnterpriseLocation" />
+  </wsdl:message>
+  <wsdl:message name="GetEnterpriseListHttpPostIn" />
+  <wsdl:message name="GetEnterpriseListHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfEnterpriseLocation" />
+  </wsdl:message>
+  <wsdl:portType name="DrugsBaseSoap">
+    <wsdl:operation name="AppendDrugsBaseApply">
+      <wsdl:input message="tns:AppendDrugsBaseApplySoapIn" />
+      <wsdl:output message="tns:AppendDrugsBaseApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseBothApplyAudit">
+      <wsdl:input message="tns:AppendDrugsBaseBothApplyAuditSoapIn" />
+      <wsdl:output message="tns:AppendDrugsBaseBothApplyAuditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZyc">
+      <wsdl:input message="tns:AppendDrugsBaseApplyZycSoapIn" />
+      <wsdl:output message="tns:AppendDrugsBaseApplyZycSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZycAudit">
+      <wsdl:input message="tns:AppendDrugsBaseApplyZycAuditSoapIn" />
+      <wsdl:output message="tns:AppendDrugsBaseApplyZycAuditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApply">
+      <wsdl:input message="tns:ModifyDrugsBaseApplySoapIn" />
+      <wsdl:output message="tns:ModifyDrugsBaseApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApplyZyc">
+      <wsdl:input message="tns:ModifyDrugsBaseApplyZycSoapIn" />
+      <wsdl:output message="tns:ModifyDrugsBaseApplyZycSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <wsdl:input message="tns:DeleteDrugsBaseApplySoapIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <wsdl:input message="tns:DeleteDrugsBaseApplyZycSoapIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplyZycSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyList">
+      <wsdl:input message="tns:GetDrugsBaseApplyListSoapIn" />
+      <wsdl:output message="tns:GetDrugsBaseApplyListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyZycList">
+      <wsdl:input message="tns:GetDrugsBaseApplyZycListSoapIn" />
+      <wsdl:output message="tns:GetDrugsBaseApplyZycListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApplyList">
+      <wsdl:input message="tns:AddDrugsImageApplyListSoapIn" />
+      <wsdl:output message="tns:AddDrugsImageApplyListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <wsdl:input message="tns:SetDrugsImageApplySoapIn" />
+      <wsdl:output message="tns:SetDrugsImageApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApply">
+      <wsdl:input message="tns:DeleteDrugsImageApplySoapIn" />
+      <wsdl:output message="tns:DeleteDrugsImageApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <wsdl:input message="tns:DeleteDrugsImageApplyIdSoapIn" />
+      <wsdl:output message="tns:DeleteDrugsImageApplyIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsbaseAllList">
+      <wsdl:input message="tns:GetDrugsbaseAllListSoapIn" />
+      <wsdl:output message="tns:GetDrugsbaseAllListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsImageApplyList">
+      <wsdl:input message="tns:GetDrugsImageApplyListSoapIn" />
+      <wsdl:output message="tns:GetDrugsImageApplyListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <wsdl:input message="tns:GetListArraySoapIn" />
+      <wsdl:output message="tns:GetListArraySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApply">
+      <wsdl:input message="tns:AddDrugsImageApplySoapIn" />
+      <wsdl:output message="tns:AddDrugsImageApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDrugsImageApply">
+      <wsdl:input message="tns:UpdateDrugsImageApplySoapIn" />
+      <wsdl:output message="tns:UpdateDrugsImageApplySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <wsdl:input message="tns:GetDrugsBaseEnumSoapIn" />
+      <wsdl:output message="tns:GetDrugsBaseEnumSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <wsdl:input message="tns:GetDrugsBase_PharmSoapIn" />
+      <wsdl:output message="tns:GetDrugsBase_PharmSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <wsdl:input message="tns:GetDrugsBase_Pharm2SoapIn" />
+      <wsdl:output message="tns:GetDrugsBase_Pharm2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <wsdl:input message="tns:GetOtcClassSoapIn" />
+      <wsdl:output message="tns:GetOtcClassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <wsdl:input message="tns:GetOtcClass2SoapIn" />
+      <wsdl:output message="tns:GetOtcClass2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <wsdl:input message="tns:AddDrugsBase_EnterpriseSoapIn" />
+      <wsdl:output message="tns:AddDrugsBase_EnterpriseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <wsdl:input message="tns:SelectCompanyNameSoapIn" />
+      <wsdl:output message="tns:SelectCompanyNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <wsdl:input message="tns:GetEnterpriseListSoapIn" />
+      <wsdl:output message="tns:GetEnterpriseListSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="DrugsBaseHttpGet">
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <wsdl:input message="tns:DeleteDrugsBaseApplyHttpGetIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <wsdl:input message="tns:DeleteDrugsBaseApplyZycHttpGetIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplyZycHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <wsdl:input message="tns:SetDrugsImageApplyHttpGetIn" />
+      <wsdl:output message="tns:SetDrugsImageApplyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <wsdl:input message="tns:DeleteDrugsImageApplyIdHttpGetIn" />
+      <wsdl:output message="tns:DeleteDrugsImageApplyIdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <wsdl:input message="tns:GetListArrayHttpGetIn" />
+      <wsdl:output message="tns:GetListArrayHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <wsdl:input message="tns:GetDrugsBaseEnumHttpGetIn" />
+      <wsdl:output message="tns:GetDrugsBaseEnumHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <wsdl:input message="tns:GetDrugsBase_PharmHttpGetIn" />
+      <wsdl:output message="tns:GetDrugsBase_PharmHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <wsdl:input message="tns:GetDrugsBase_Pharm2HttpGetIn" />
+      <wsdl:output message="tns:GetDrugsBase_Pharm2HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <wsdl:input message="tns:GetOtcClassHttpGetIn" />
+      <wsdl:output message="tns:GetOtcClassHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <wsdl:input message="tns:GetOtcClass2HttpGetIn" />
+      <wsdl:output message="tns:GetOtcClass2HttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <wsdl:input message="tns:AddDrugsBase_EnterpriseHttpGetIn" />
+      <wsdl:output message="tns:AddDrugsBase_EnterpriseHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <wsdl:input message="tns:SelectCompanyNameHttpGetIn" />
+      <wsdl:output message="tns:SelectCompanyNameHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <wsdl:input message="tns:GetEnterpriseListHttpGetIn" />
+      <wsdl:output message="tns:GetEnterpriseListHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="DrugsBaseHttpPost">
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <wsdl:input message="tns:DeleteDrugsBaseApplyHttpPostIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <wsdl:input message="tns:DeleteDrugsBaseApplyZycHttpPostIn" />
+      <wsdl:output message="tns:DeleteDrugsBaseApplyZycHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <wsdl:input message="tns:SetDrugsImageApplyHttpPostIn" />
+      <wsdl:output message="tns:SetDrugsImageApplyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <wsdl:input message="tns:DeleteDrugsImageApplyIdHttpPostIn" />
+      <wsdl:output message="tns:DeleteDrugsImageApplyIdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <wsdl:input message="tns:GetListArrayHttpPostIn" />
+      <wsdl:output message="tns:GetListArrayHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <wsdl:input message="tns:GetDrugsBaseEnumHttpPostIn" />
+      <wsdl:output message="tns:GetDrugsBaseEnumHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <wsdl:input message="tns:GetDrugsBase_PharmHttpPostIn" />
+      <wsdl:output message="tns:GetDrugsBase_PharmHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <wsdl:input message="tns:GetDrugsBase_Pharm2HttpPostIn" />
+      <wsdl:output message="tns:GetDrugsBase_Pharm2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <wsdl:input message="tns:GetOtcClassHttpPostIn" />
+      <wsdl:output message="tns:GetOtcClassHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <wsdl:input message="tns:GetOtcClass2HttpPostIn" />
+      <wsdl:output message="tns:GetOtcClass2HttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <wsdl:input message="tns:AddDrugsBase_EnterpriseHttpPostIn" />
+      <wsdl:output message="tns:AddDrugsBase_EnterpriseHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <wsdl:input message="tns:SelectCompanyNameHttpPostIn" />
+      <wsdl:output message="tns:SelectCompanyNameHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <wsdl:input message="tns:GetEnterpriseListHttpPostIn" />
+      <wsdl:output message="tns:GetEnterpriseListHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DrugsBaseSoap" type="tns:DrugsBaseSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AppendDrugsBaseApply">
+      <soap:operation soapAction="http://tempuri.org/AppendDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseBothApplyAudit">
+      <soap:operation soapAction="http://tempuri.org/AppendDrugsBaseBothApplyAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZyc">
+      <soap:operation soapAction="http://tempuri.org/AppendDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZycAudit">
+      <soap:operation soapAction="http://tempuri.org/AppendDrugsBaseApplyZycAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApply">
+      <soap:operation soapAction="http://tempuri.org/ModifyDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApplyZyc">
+      <soap:operation soapAction="http://tempuri.org/ModifyDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <soap:operation soapAction="http://tempuri.org/DeleteDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <soap:operation soapAction="http://tempuri.org/DeleteDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyList">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsBaseApplyList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyZycList">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsBaseApplyZycList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApplyList">
+      <soap:operation soapAction="http://tempuri.org/AddDrugsImageApplyList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <soap:operation soapAction="http://tempuri.org/SetDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApply">
+      <soap:operation soapAction="http://tempuri.org/DeleteDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <soap:operation soapAction="http://tempuri.org/DeleteDrugsImageApplyId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsbaseAllList">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsbaseAllList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsImageApplyList">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsImageApplyList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <soap:operation soapAction="http://tempuri.org/GetListArray" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApply">
+      <soap:operation soapAction="http://tempuri.org/AddDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDrugsImageApply">
+      <soap:operation soapAction="http://tempuri.org/UpdateDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsBaseEnum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsBase_Pharm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <soap:operation soapAction="http://tempuri.org/GetDrugsBase_Pharm2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <soap:operation soapAction="http://tempuri.org/GetOtcClass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <soap:operation soapAction="http://tempuri.org/GetOtcClass2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <soap:operation soapAction="http://tempuri.org/AddDrugsBase_Enterprise" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <soap:operation soapAction="http://tempuri.org/SelectCompanyName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <soap:operation soapAction="http://tempuri.org/GetEnterpriseList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DrugsBaseSoap12" type="tns:DrugsBaseSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AppendDrugsBaseApply">
+      <soap12:operation soapAction="http://tempuri.org/AppendDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseBothApplyAudit">
+      <soap12:operation soapAction="http://tempuri.org/AppendDrugsBaseBothApplyAudit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZyc">
+      <soap12:operation soapAction="http://tempuri.org/AppendDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AppendDrugsBaseApplyZycAudit">
+      <soap12:operation soapAction="http://tempuri.org/AppendDrugsBaseApplyZycAudit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApply">
+      <soap12:operation soapAction="http://tempuri.org/ModifyDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyDrugsBaseApplyZyc">
+      <soap12:operation soapAction="http://tempuri.org/ModifyDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <soap12:operation soapAction="http://tempuri.org/DeleteDrugsBaseApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <soap12:operation soapAction="http://tempuri.org/DeleteDrugsBaseApplyZyc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyList">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsBaseApplyList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseApplyZycList">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsBaseApplyZycList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApplyList">
+      <soap12:operation soapAction="http://tempuri.org/AddDrugsImageApplyList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <soap12:operation soapAction="http://tempuri.org/SetDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApply">
+      <soap12:operation soapAction="http://tempuri.org/DeleteDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <soap12:operation soapAction="http://tempuri.org/DeleteDrugsImageApplyId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsbaseAllList">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsbaseAllList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsImageApplyList">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsImageApplyList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <soap12:operation soapAction="http://tempuri.org/GetListArray" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsImageApply">
+      <soap12:operation soapAction="http://tempuri.org/AddDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDrugsImageApply">
+      <soap12:operation soapAction="http://tempuri.org/UpdateDrugsImageApply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsBaseEnum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsBase_Pharm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <soap12:operation soapAction="http://tempuri.org/GetDrugsBase_Pharm2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <soap12:operation soapAction="http://tempuri.org/GetOtcClass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <soap12:operation soapAction="http://tempuri.org/GetOtcClass2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <soap12:operation soapAction="http://tempuri.org/AddDrugsBase_Enterprise" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <soap12:operation soapAction="http://tempuri.org/SelectCompanyName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <soap12:operation soapAction="http://tempuri.org/GetEnterpriseList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DrugsBaseHttpGet" type="tns:DrugsBaseHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <http:operation location="/DeleteDrugsBaseApply" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <http:operation location="/DeleteDrugsBaseApplyZyc" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <http:operation location="/SetDrugsImageApply" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <http:operation location="/DeleteDrugsImageApplyId" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <http:operation location="/GetListArray" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <http:operation location="/GetDrugsBaseEnum" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <http:operation location="/GetDrugsBase_Pharm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <http:operation location="/GetDrugsBase_Pharm2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <http:operation location="/GetOtcClass" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <http:operation location="/GetOtcClass2" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <http:operation location="/AddDrugsBase_Enterprise" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <http:operation location="/SelectCompanyName" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <http:operation location="/GetEnterpriseList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DrugsBaseHttpPost" type="tns:DrugsBaseHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="DeleteDrugsBaseApply">
+      <http:operation location="/DeleteDrugsBaseApply" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsBaseApplyZyc">
+      <http:operation location="/DeleteDrugsBaseApplyZyc" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDrugsImageApply">
+      <http:operation location="/SetDrugsImageApply" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteDrugsImageApplyId">
+      <http:operation location="/DeleteDrugsImageApplyId" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListArray">
+      <http:operation location="/GetListArray" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBaseEnum">
+      <http:operation location="/GetDrugsBaseEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm">
+      <http:operation location="/GetDrugsBase_Pharm" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDrugsBase_Pharm2">
+      <http:operation location="/GetDrugsBase_Pharm2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass">
+      <http:operation location="/GetOtcClass" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOtcClass2">
+      <http:operation location="/GetOtcClass2" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDrugsBase_Enterprise">
+      <http:operation location="/AddDrugsBase_Enterprise" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectCompanyName">
+      <http:operation location="/SelectCompanyName" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseList">
+      <http:operation location="/GetEnterpriseList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DrugsBase">
+    <wsdl:port name="DrugsBaseSoap" binding="tns:DrugsBaseSoap">
+      <soap:address location="http://192.168.1.75:8083/Api/DrugsBase.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DrugsBaseSoap12" binding="tns:DrugsBaseSoap12">
+      <soap12:address location="http://192.168.1.75:8083/Api/DrugsBase.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DrugsBaseHttpGet" binding="tns:DrugsBaseHttpGet">
+      <http:address location="http://192.168.1.75:8083/Api/DrugsBase.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DrugsBaseHttpPost" binding="tns:DrugsBaseHttpPost">
+      <http:address location="http://192.168.1.75:8083/Api/DrugsBase.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

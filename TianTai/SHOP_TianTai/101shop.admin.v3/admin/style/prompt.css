@@ -1,0 +1,9 @@
+﻿BODY {text-align:center;}
+td{font-size: 12px;line-height: 18px;}
+#excerpts {
+	BORDER-RIGHT: #bebebe 1px solid; BORDER-TOP: #bebebe 1px solid; Z-INDEX: 9; VISIBILITY: hidden; BORDER-LEFT: #bebebe 1px solid; BORDER-BOTTOM: #bebebe 1px solid;POSITION: absolute;
+}
+.tt2
+{text-align:right;
+	
+}

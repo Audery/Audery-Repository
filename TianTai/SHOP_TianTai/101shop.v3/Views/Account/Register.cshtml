@@ -1,0 +1,271 @@
+﻿@model _101shop.v3.Models.RegisterModel
+@{
+   
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["Register_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["Register_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["Register_Key"];
+}
+@section top_ad
+{
+    <div style="margin-top: 5px" id="ad_58">
+        @*<a href="/Promotions/jf" target="_blank">
+            <img src="/adimage/t_113244.jpg" alt="" />
+        </a>*@
+    </div>
+}
+<link rel="stylesheet" type="text/css" href="/Content/101register.css" />
+<script src="/scripts/LocationJson.js" type="text/javascript"></script>
+<script src="/scripts/YlChinaArea.js" type="text/javascript"></script>
+<script src="/Scripts/jquery-autocomplete/jquery.autocomplete.js" type="text/javascript"></script>
+<link href="/Scripts/jquery-autocomplete/jquery.autocomplete.css" type="text/css"
+    rel="stylesheet" />
+<script src="/Scripts/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#ChinaArea").jChinaArea({ aspnet: 0, s1: "<%=ConsigneeProvince %>", s2: "<%=ConsigneeCity %>", s3: "<%=ConsigneeBorough %>" });
+        $("#province").css("width", "83px");
+        $("#city").css("width", "83px");
+        $("#county").css("width", "83px");
+        $("#province").change(function () {
+            $("#province").css("width", "");
+            $("#city").css("width", "");
+            $("#county").css("width", "");
+        });
+        //企业名称自动完成功能
+        $("#CompanyName").autocomplete("/Account/SelectCompanyName", {
+            width: 320,
+            cacheLength: 1,
+            selectFirst: false,
+            max: 0,
+            delay: 200,
+            parse: function (data) {
+                return $.map(eval(data), function (row) {
+                    return {
+                        data: row,
+                        value: row.Name,
+                        result: row.Name
+                    }
+                });
+            },
+            formatItem: function (row, i, max) {
+                return row.Name;
+            },
+            formatMatch: function (row, i, max) {
+                return row.Name;
+            },
+            formatResult: function (row) {
+                return row.Name;
+            }
+        }).result(function (event, row) {
+            $("#lon").val(row.Lon);
+            $("#lat").val(row.Lat);
+        });
+
+        $("#btnLocation").click(function () {
+            var companyName = $("#CompanyName").val();
+            //            var s = "#s9";
+            //            if (companyName == "" || companyName == "请输入企业名称") {
+            //                $(s).removeClass("input_c_ok").addClass("input_c_error");
+            //                $(s).show();
+            //                return false;
+            //            }
+            if (companyName == "请输入企业名称") {
+                companyName = "";
+            }
+            var lon = $("#lon").val();
+            var lat = $("#lat").val();
+            //var test = '/Account/EnterpriseLocation?name=海思科&lon=123&lat=123';
+
+            var index = layer.open({
+                type: 2,
+                title: '选择地理位置',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['800px', '530px'],
+                content: '/Account/EnterpriseLocation?name=' + companyName + '&lon=' + lon + '&lat=' + lat
+            });
+        });
+
+        //显示/隐藏上传资质
+        $("#CompanyClass").change(function () {
+            var type = $("#CompanyClass").val();
+            if (type == "诊所" || type == "单体/加盟药店") {
+                $("#upload").css("display", "");
+            }
+            else {
+                $("#upload").css("display", "none");
+            }
+        });
+    });
+    
+    
+</script>
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="#">注册会员</a></li>
+</ul>
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "RegisterForm" }))
+{
+   
+    <!-- <div class="step">
+        <ul>
+            <li class="one cur">1、免费注册基本信息</li>
+            <li style="padding: 0 106px 0 107px;">2、邮寄首营建档资料</li>
+            <li class="four">3、审核通过，享有会员权益</li>
+        </ul>
+    </div>
+	-->
+    <div class="register">
+        <div class="register_left">
+            <p class="register_title">
+            </p>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>手机号：</span>
+                @Html.TextBoxFor(x => x.UserName, new { @placeholder = "（必填）请输入11位手机号" })
+                <div id="s1" class="reg_title">
+                </div>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>密码：</span>
+                @Html.PasswordFor(x => x.PassWord, new { @placeholder = "（必填）不得少于6个字符" })
+                <div id="s2" style="display: none" class="reg_title">
+                </div>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>确认密码：</span>
+                @Html.PasswordFor(x => x.ConfirmPassword)
+                <div id="s3" style="display: none" class="reg_title">
+                </div>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>联系人：</span>
+                @Html.TextBoxFor(x => x.LinkMan, new { @placeholder = "（必填）" })
+                <div id="s4" style="display: none" class="reg_title">
+                </div>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>联系邮箱：</span>
+                @Html.TextBoxFor(x => x.Email, new { @placeholder = "（必填）" })
+                <div id="s5" style="display: none" class="reg_title">
+                </div>
+            </div>
+            <div class="reg_nub" style="clear: both;">
+                <span class="rg_info"><span class="reg_red">*</span>注册地址：</span> <span id="ChinaArea"
+                    class="ChinaArea">
+                    <select id="province" name="province">
+                    </select>
+                    <select id="city" name="city">
+                    </select>
+                    <select id="county" name="county">
+                    </select>
+                </span><span id="s6" style="display: none;"></span>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>企业类型：</span>
+                <select class="CompanyClass" name="CompanyClass" id="CompanyClass">
+                    <option value="">请选择企业类型</option>
+                    @foreach (var item in SOSOshop.Model.CompanyClass.GetList())
+                    {
+                        if (item.CompanyClassName == "内部门店")
+                        {
+                            continue;
+                        }
+                        <option>@item.CompanyClassName</option>   
+                    }
+                </select>
+                <span id="s8" style="display: none"></span>
+            </div>
+            <div class="reg_nub">
+                <span class="rg_info"><span class="reg_red">*</span>企业名称：</span>
+                <input type="text" class="CompanyName def" name="q" id="CompanyName" style="width: 280px"
+                    autocomplete="off" value="请输入企业名称" def="请输入企业名称" />
+                <span id="s9" style="display: none"></span>
+            </div>
+            <div class="reg_nub_location">
+                <span style="padding-left: 104px">经度<input type="text" class="reg_nub_lon_lat" name="lon"
+                    id="lon" readonly="readonly" />
+                    纬度<input type="text" class="reg_nub_lon_lat" name="lat" id="lat" readonly="readonly" />
+                    <input id="btnLocation" type="button" value="选择地理位置" style="padding-left: 8px" />
+                </span>
+            </div>
+            <div id="upload" style="display: none; height: 65px; margin: 0px;">
+                <span class="rg_info">上传资质：</span>
+                <div style="height: 100%; margin: 0px 0px 20px 0px;">
+                    <input id="gspfile" name="gspfile" type="file" title="GSP证书" readonly="readonly" />
+                    @*<input id="btnSelGspfile" type="button" value="GSP证书" />
+                <input type="text" class="reg_nub_lon_lat" id="gspfilename" name="gspfilename" readonly="readonly" />
+                <input id="btnUploadGspfile" type="button" value="上传" />*@
+                    <br />
+                    <input id="yyzzfile" name="yyzzfile" type="file" readonly="readonly" title="营业执照" />
+                    @*<input id="btnSelYyfile" type="button" value="营业执照" />
+                <input type="text" class="reg_nub_lon_lat" id="yyfilename" name="yyfilename" readonly="readonly" />
+                <input id="btnUploadYyfile" type="button" value="上传" />*@
+                    <br />
+                    <input id="syzzfile" name="syzzfile" type="file" style="padding-left: 97px" readonly="readonly"
+                        title="首营经营资质" />
+                    @*<input id="btnSelSyfile" type="button" value="首营经营资质" style="padding-left: 73px" />
+                <input type="text" class="reg_nub_lon_lat" id="syfilename" name="syfilename" readonly="readonly" />
+                <input id="btnUploadSyfile" type="button" value="上传" />*@
+                </div>
+            </div>
+            <div class="code1">
+                <span class="rg_info"><span class="reg_red">*</span>验证码：</span>
+                @Html.TextBoxFor(x => x.Captcha, new { @placeholder = "验证码" })<div style="float: left;">
+                    <img border="0" class="codeimg" id="imgCode" src="/include/captcha.ashx?r=385282549"
+                        alt="看不清，单击换一张" onclick="this.src='/include/captcha.ashx?r='+Math.random()" title="点击可刷新验证码" />看不清楚？<a
+                            style="color: #fc5a5a;" href="javascript:void(0)" onclick="reloadimg()">换一张</a></div>
+                <div id="s7">
+                </div>
+            </div>
+            <div class="checkbox_xy">
+                <input name="" type="checkbox" checked="ON" value="" onclick="xieyi();" />
+                <span>我已查看并同意<a href="/help/1.html#title2">《@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]服务条款》</a><a href="/help/1.html#title1">《用户协议》</a></span>
+            </div>
+            <div class="submit">
+                <a class="submit_register_ok" name="submit1" onclick="return checksubmit()"></a>
+            </div>
+            @Html.ValidationSummary()
+        </div>
+        <div class="register_right">
+            <div class="register_Process_new">
+            </div>
+            <!--  <div class="right_01">
+                <strong>会员服务</strong>
+                <ol>
+                    <li>1、一对一贴心“采购顾问”服务</li>
+                    <li>2、省内48小时限时送达</li>
+                    <li>3、及时掌控海量新品动态</li>
+                </ol>
+            </div>
+            <div class="right_02">
+                <strong>四大权益</strong>
+                <ol>
+                    <li>1、支付方式灵活</li>
+                    <li>2、全款全额增值税票</li>
+                    <li>3、大批采购，价格优惠</li>
+                    <li>4、大额订单，专车配送</li>
+                </ol>
+            </div>
+            <div class="right_03">
+                <strong>申请条件</strong>
+                <ol>
+                    <li style="width: 230px;">必须是能提供合法的药品经营资质的单位</li>
+                </ol>
+            </div>
+			-->
+            <div style="padding: 50px 0 0 20px; color: #999; font-size: 13px;">
+                <span>如您对用户注册有任何疑问可查看<a style="color: #fc5a5a;" href="/help/133.html" target="_blank">用户须知</a></span>
+            </div>
+        </div>
+        <!--register--right-->
+    </div>
+    <!--register-->
+
+                                 
+}
+<script language="javascript" type="text/javascript" src="/Scripts/register.js">
+</script>
+<script language="javascript" type="text/javascript">
+    //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+    getAdContent("58");
+</script>

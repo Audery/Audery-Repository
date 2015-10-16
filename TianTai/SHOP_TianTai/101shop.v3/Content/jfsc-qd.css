@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+.qd-left{ float:left; width:150px;}
+.qd-login{ border:1px solid #ddd; padding:10px;}
+.qd-login-name{ font-size:18px; font-weight:bold; float:left;}
+.qd-login-exit{ float:right; margin-top:10px;}
+.qd-jf{ border-top: 1px dashed #ddd; margin-top:10px;}
+.jf-shows{ font-size: 29px;color: #eb0000;padding-left: 4px;display: block;}
+.qd-right{ float:left; border:1px solid #ddd; width:600px; margin-left:10px;}
+.date-time li{ float:left; padding:10px 30px; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.day-1{ border-bottom:none !important;}
+.day-end{ border-right: none !important; padding:10px 90px 10px 30px !important;}
+.time-day{ font-size:50px; line-height:48px; color:#eb0000;}
+.time-ql{float:left; width:70px; padding:10px 0 22px 10px;}
+.qd-cont{ float:left; padding:10px 25px; font-size:13px;}
+.qd-button{ display:block; padding:5px 20px; background:#eb0000; margin-top:10px; text-align:center; color:#fff !important;
+            width:140px;}
+.qd-button:hover{ display:block; padding:5px 20px; background: #eb0000; margin-top:10px; text-align:center; color:#fff !important;
+            width:140px;}
+.qd-button-now{display:block; padding:5px 20px; background:#999; margin-top:10px; text-align:center; color:#fff !important;
+            width:140px;}

@@ -1,0 +1,372 @@
+﻿@using System.Data
+@using System.Linq
+@using _101shop.v3.Controllers
+@using SOSOshop.BLL.Common;
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["Promotions_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["Promotions_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["Promotions_Key"];    
+   
+    SOSOshop.BLL.Product.Product bll = new SOSOshop.BLL.Product.Product();
+    Dictionary<string, string> c1 = HomeController.GetADID("促销_1");
+    Dictionary<string, string> c2 = HomeController.GetADID("促销_2");
+    Dictionary<string, string> c3 = HomeController.GetADID("促销_3");
+    Dictionary<string, string> c4 = HomeController.GetADID("促销_4");
+    Dictionary<string, string> c5 = HomeController.GetADID("促销_5");
+    Dictionary<string, string> z1 = HomeController.GetADID("折扣_1");
+    Dictionary<string, string> z2 = HomeController.GetADID("折扣_2");
+    Dictionary<string, string> z3 = HomeController.GetADID("折扣_3");
+    Dictionary<string, string> z4 = HomeController.GetADID("折扣_4");
+    Dictionary<string, string> z5 = HomeController.GetADID("折扣_5");
+}
+
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/sales.css" />
+}
+@{Html.RenderPartial("Nav");}
+<div class="con-box">
+    <div class="thzt_banner" id="ad_48">
+    </div>
+    <div class="cnt-title-box">
+        <div class="cnt_title_03">
+            <h2 class="cnt_03">
+                <span>折扣专区</span></h2>
+            <div class="cnt_link" id="xt">
+                @if (!string.IsNullOrEmpty(z1["title"]))
+                {
+                    <a class="cnt_a_06 cnt_a_now" id="zk1" href="#">@z1["title"].Trim()</a>
+                }
+                @if (!string.IsNullOrEmpty(z2["title"]))
+                {
+                    <a class="cnt_a_06" id="zk2" href="#">@z2["title"].Trim()</a>
+                }
+                @if (!string.IsNullOrEmpty(z3["title"]))
+                {
+                    <a class="cnt_a_06" id="zk3" href="#">@z3["title"].Trim()</a>
+                }
+                @if (!string.IsNullOrEmpty(z4["title"]))
+                {
+                    <a class="cnt_a_06" id="zk4" href="#">@z4["title"].Trim()</a>
+                }
+                @if (!string.IsNullOrEmpty(z5["title"]))
+                {
+                    <a class="cnt_a_06" id="zk5" href="#">@z5["title"].Trim()</a> 
+                }
+                @if (z1["title"] != "" || z2["title"] != "" || z3["title"] != "" || z4["title"] != "" || z5["title"] != "")
+                {
+                    <a class="" href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)?new=2">更多</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="thzt_cnt">
+        <div class="lm">
+            <ul class="lm_sp" id="zsp1">
+                @GetCu(z1["pid"])
+            </ul>
+            <ul class="lm_sp1" id="zsp2">
+                @GetCu(z2["pid"])
+            </ul>
+            <ul class="lm_sp1" id="zsp3">
+                @GetCu(z3["pid"])
+            </ul>
+            <ul class="lm_sp1" id="zsp4">
+                @GetCu(z4["pid"])
+            </ul>
+            <ul class="lm_sp1" id="zsp5">
+                @GetCu(z5["pid"])
+            </ul>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="cnt-title-box">
+        <div class="cnt_title_03">
+            <h2 class="cnt_02">
+                <span>特惠专区</span></h2>
+            <div class="cnt_link" id="xtt">
+                <a class="cnt_a_05 cnt_a_now" id="ck1" href="#">@c1["title"]</a> <a class="cnt_a_05"
+                    id="ck2" href="#">@c2["title"]</a> <a class="cnt_a_05" id="ck3" href="#">@c3["title"]</a>
+                <a class="cnt_a_05" id="ck4" href="#">@c4["title"]</a> <a class="cnt_a_05" id="ck5"
+                    href="#">@c5["title"]</a> <a class="" href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)?new=3">
+                        更多</a>
+            </div>
+        </div>
+    </div>
+    <div class="thzt_cnt">
+        <div class="lm">
+            <ul class="lm_sp" id="csp1">
+                @GetCu(c1["pid"])
+            </ul>
+            <ul class="lm_sp1" id="csp2">
+                @GetCu(c2["pid"])
+            </ul>
+            <ul class="lm_sp1" id="csp3">
+                @GetCu(c3["pid"])
+            </ul>
+            <ul class="lm_sp1" id="csp4">
+                @GetCu(c4["pid"])
+            </ul>
+            <ul class="lm_sp1" id="csp5">
+                @GetCu(c5["pid"])
+            </ul>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<script language="javascript" type="text/javascript">
+    //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+    getAdContent("48");
+</script>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("#zk1").mouseover(function () {
+            $("#xt .cnt_a_06.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#zsp1").removeClass("lm_sp1").addClass("lm_sp");
+            $("#zsp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#zk2").mouseover(function () {
+            $("#xt .cnt_a_06.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#zsp2").removeClass("lm_sp1").addClass("lm_sp");
+            $("#zsp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#zk3").mouseover(function () {
+            $("#xt .cnt_a_06.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#zsp3").removeClass("lm_sp1").addClass("lm_sp");
+            $("#zsp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#zk4").mouseover(function () {
+            $("#xt .cnt_a_06.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#zsp4").removeClass("lm_sp1").addClass("lm_sp");
+            $("#zsp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#zk5").mouseover(function () {
+            $("#xt .cnt_a_06.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#zsp5").removeClass("lm_sp1").addClass("lm_sp");
+            $("#zsp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#zsp3").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+
+
+        $("#ck1").mouseover(function () {
+            $("#xtt .cnt_a_05.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#csp1").removeClass("lm_sp1").addClass("lm_sp");
+            $("#csp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#ck2").mouseover(function () {
+            $("#xtt .cnt_a_05.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#csp2").removeClass("lm_sp1").addClass("lm_sp");
+            $("#csp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#ck3").mouseover(function () {
+            $("#xtt .cnt_a_05.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#csp3").removeClass("lm_sp1").addClass("lm_sp");
+            $("#csp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#ck4").mouseover(function () {
+            $("#xtt .cnt_a_05.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#csp4").removeClass("lm_sp1").addClass("lm_sp");
+            $("#csp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp3").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp5").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+        $("#ck5").mouseover(function () {
+            $("#xtt .cnt_a_05.cnt_a_now").removeClass("cnt_a_now");
+            $(this).addClass("cnt_a_now");
+            $("#csp5").removeClass("lm_sp1").addClass("lm_sp");
+            $("#csp1").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp2").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp4").removeClass("lm_sp").addClass("lm_sp1");
+            $("#csp3").removeClass("lm_sp").addClass("lm_sp1");
+
+        });
+       
+    });
+
+
+</script>
+@helper ProptionProductList(DataTable Model, bool cp = false)
+    {
+    <div class="lm">
+        <ul class="lm_sp">
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                var item = Model.Rows[i];
+
+                var dt = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute().GetList(71);
+                object o = new SOSOshop.BLL.Db().ExecuteScalarForCache("SELECT Tag_PharmAttribute_id FROM dbo.Tag_PharmProduct WHERE Tag_PharmAttribute_id in (SELECT id FROM dbo.Tag_PharmAttribute WHERE tag_id='71') and product_id=" + item["DrugsBase_ID"]);
+                string url = "/" + item["Product_id"] + ".html";
+                string name = "";
+                if (!Library.Lang.DataValidator.isNULL(o))
+                {
+                    int tagid = int.Parse(dt.AsEnumerable().Where(x => x.Field<int>("id") == (int)o).Select(x => x.Field<string>("fullPath")).First().Trim('/').Split('/')[0]);
+                    System.Data.DataRow dr = dt.AsEnumerable().Where(x => x.Field<int>("id") == (int)tagid).ToArray()[0];
+                    if (!cp) { url = HomeController.SearchUrl((int)dr["id"], 1); }
+                    name = (string)dr["name"];
+                }
+                string frist = "";
+                if (i % 4 == 0)
+                {
+                    frist = "frist";
+                }
+                <li class="@{@frist}">
+                    <div class="lm_shop_title">
+                        <a href="@url" class="shop_title_in1" target="_blank">
+                            @Library.Lang.Input.GetSubString(item["Product_Name"], 14, "...")
+                        </a><span class="shop_title_md">
+                            @Public.GetSpecificationAndS(item)
+                        </span>
+                    </div>
+                    <div class="shop_img2">
+                        <a href="@url" target="_blank">
+                            <img src="@Public.RawImage(item["Image"])" alt="@item["Product_Name"]" width="239" height="239" />
+                        </a>
+                        @{
+                if (!Library.Lang.DataValidator.isNULL(o))
+                {
+                            <div class="lm_sp_ico">
+                                <a href="@url" style="color:white">@name</a>
+                            </div>
+                }
+                if ((int)item["minsell"] != 0 && (bool)item["iscu"])
+                {
+                            <div class="cuxiao">
+                                本商品限购@{@item["minsell"]@item["Goods_Unit"]}
+                            </div>
+                }
+                        }
+                    </div>
+                    <div class="shop_price">
+                        @if ((bool)item["iscu"])
+                        {
+                            <span class="price_fh">¥</span><span style="font-size: 30px; font-weight: bold; color: #fff;">
+                                @item["showPrice"]
+                            </span><span class="price_jz">/@item["Goods_Unit"]</span>
+
+                        }
+                        else
+                        {
+                          <span class="price_fh"> @Html.Raw(item["showPrice"].ToString())</span>
+    
+                            // @string.Format("{0:f2}", item["OrigPrice"])
+                        }
+                        @{
+                        int Stock = 0;
+                        int Stock3 = 0;
+                        if (Library.Lang.DataValidator.isNumber(item["Stock3"]))
+                        {
+                            Stock3 = int.Parse(item["Stock3"].ToString());
+                        }
+                        if (Library.Lang.DataValidator.isNumber(item["Stock"]))
+                        {
+                            Stock = (int)item["Stock"] - Stock3;
+                        }
+                        }
+                        @if (!(bool)item["iscu"] || Stock <= 0)
+                        {
+                            <input class="qg_button" name="" type="button" style="width:65px;color:#999;padding: 8px 10px 8px 10px;
+							_padding: 4px 10px 4px 10px;" value="已售完" onclick="javascript:location='@url'" />
+                        }
+                        else
+                        {
+                            <input class="qg_button" name="" type="button" value="抢购" onclick="javascript:location='@url'" />
+                        }
+                    </div>
+                    <div class="shop_dsp2">
+                        @if ((bool)item["iscu"])
+                        {
+                            @getdiscount((decimal)item["OrigPrice"], (decimal)item["Price"])
+                        }
+                    </div>
+                    <div class="sccj">
+                        @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"], 18, "...")
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+@helper getdiscount(decimal oldPrice, decimal ProPrice)
+    {
+    <span class="yuanjia">原价：@string.Format("{0:C2}", oldPrice)</span>
+
+        if (oldPrice > 0)
+        {
+    <span class="zhekou">
+        @string.Format("{0:F1}", (ProPrice * 10 / oldPrice))
+        折 </span>
+        }
+
+}
+@helper GetCu(string cu)
+    {
+
+        if (!string.IsNullOrEmpty(cu.Trim()))
+        {
+            SOSOshop.BLL.Product.Product bll = new SOSOshop.BLL.Product.Product();
+            DataTable dt0 = bll.GetOtcPageList2(cu).GetPriceTable();
+            if (dt0.Rows.Count > 0)
+            {
+                DataTable dt = dt0.Clone();
+                var query = from a in dt0.AsEnumerable()
+                            where a.Field<int>("Stock") > 0
+                            orderby a.Field<string>("showPrice")
+                            select a;
+                if (query.Count() > 0)
+                {
+                    dt = query.CopyToDataTable();
+    @ProptionProductList(dt, true);
+                }
+            }
+        }
+}

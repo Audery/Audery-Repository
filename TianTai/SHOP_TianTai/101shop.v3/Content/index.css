@@ -1,0 +1,344 @@
+@charset "utf-8";
+/* CSS Document */
+
+div.__01 {
+	position:relative;
+	
+	width:1000px;
+	height:2116px;
+}
+
+div.index-01 {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:774px;
+	height:364px;
+}
+
+div.index-02 {
+	position:absolute;
+	left:774px;
+	top:0px;
+	width:13px;
+	height:420px;
+}
+
+div.index-03 {
+	position:absolute;
+	left:787px;
+	top:0px;
+	width:210px;
+	height:214px;
+}
+
+div.index-04 {
+	position:absolute;
+	left:997px;
+	top:0px;
+	width:3px;
+	height:420px;
+}
+
+div.index-05 {
+	position:absolute;
+	left:787px;
+	top:214px;
+	width:210px;
+	height:7px;
+}
+
+div.index-06 {
+	position:absolute;
+	left:787px;
+	top:221px;
+	width:210px;
+	height:193px;
+}
+
+div.index-07 {
+	position:absolute;
+	left:0px;
+	top:364px;
+	width:774px;
+	height:10px;
+}
+
+div.index-08 {
+	position:absolute;
+	left:0px;
+	top:374px;
+	width:774px;
+	height:330px;
+}
+
+div.index-09 {
+	position:absolute;
+	left:787px;
+	top:414px;
+	width:210px;
+	height:6px;
+}
+
+div.index-10 {
+	position:absolute;
+	left:774px;
+	top:420px;
+	width:12px;
+	height:294px;
+}
+
+div.index-11 {
+	position:absolute;
+	left:788px;
+	top:426px;
+	width:212px;
+	height:282px;
+}
+
+div.index-12 {
+	position:absolute;
+	left:998px;
+	top:420px;
+	width:2px;
+	height:294px;
+}
+
+div.index-13 {
+	position:absolute;
+	left:786px;
+	top:702px;
+	width:212px;
+	height:12px;
+}
+
+div.index-14 {
+	position:absolute;
+	left:0px;
+	top:704px;
+	width:774px;
+	height:10px;
+}
+
+div.index-15 {
+	position:absolute;
+	left:0px;
+	top:714px;
+	width:1000px;
+	height:444px;
+}
+
+div.index-16 {
+	position:absolute;
+	left:0px;
+	top:1158px;
+	width:1000px;
+	height:8px;
+}
+
+div.index-17 {
+	position:absolute;
+	left:0px;
+	top:1166px;
+	width:1000px;
+	height:63px;
+}
+
+div.index-18 {
+	position:absolute;
+	left:0px;
+	top:1229px;
+	width:1000px;
+	height:8px;
+}
+
+div.index-19 {
+	position:absolute;
+	left:0px;
+	top:1237px;
+	width:1000px;
+	height:401px;
+}
+
+div.index-20 {
+	position:absolute;
+	left:0px;
+	top:1638px;
+	width:1000px;
+	height:8px;
+}
+
+div.index-21 {
+	position:absolute;
+	left:0px;
+	top:1646px;
+	width:1000px;
+	height:63px;
+}
+
+div.index-22 {
+	position:absolute;
+	left:0px;
+	top:1709px;
+	width:1000px;
+	height:6px;
+}
+
+div.index-23 {
+	position:absolute;
+	left:0px;
+	top:1715px;
+	width:1000px;
+	height:401px;
+}
+.index_11{
+	position:absolute;
+	top:0;
+	left:30px;
+}
+.index_11 li{
+	font-size:14px;
+	line-height:41px;
+}
+.list_text li{
+	float:left;
+	width:180px;
+	 padding: 0 4px;
+}
+.ind_02{
+	position:absolute;
+	top:240px;;
+	left:20px;	
+	  width: 760px;
+}
+.ind_03{
+	 left: 204px;
+    position: absolute;
+    top: 1400px;
+    z-index: 1;
+	 width: 590px;
+}
+.ind_03 li , .ind_04 li , .ind_05 li , .ind_06 li{
+	width:176px;
+	margin-right:10px;
+}
+.ind_04{
+	 left: 204px;
+    position: absolute;
+    top: 1572px;
+    z-index: 1;
+	 width: 590px;
+}
+
+.ind_05{
+	 left: 204px;
+    position: absolute;
+    top: 1880px;
+    z-index: 1;
+	 width: 590px;
+}
+.ind_06{
+	 left: 204px;
+    position: absolute;
+    top: 2055px;
+    z-index: 1;
+	 width: 590px;
+}
+.ind_07{
+	 left: 20px;
+    position: absolute;
+    top: 1282px;
+    z-index: 1;
+	font-size:14px;
+}
+.ind_08{
+	 left: 106px;
+    position: absolute;
+    top: 1282px;
+    z-index: 1;
+	font-size:14px;
+}
+.ind_09{
+	 left: 20px;
+    position: absolute;
+     top: 1760px;
+    z-index: 1;
+	font-size:14px;
+}
+.ind_10{
+	 left: 110px;
+    position: absolute;
+    top: 1760px;
+    z-index: 1;
+	font-size:14px;
+}
+.ind_11{
+	  font-size: 14px;
+    position: absolute;
+    right: 12px;
+    top: 266px;
+    width: 180px;
+    z-index: 1;
+	font-size:12px;
+}
+ .ind_11 li{
+	 line-height:23px;
+ }
+.ind_07 li , .ind_08 li , .ind_09 li , .ind_10 li {
+	line-height:30px;
+	width:200px;
+}
+.hover .pic{
+	float:left;
+	
+	width:90px;
+	height:90px;
+	padding:0 4px;
+}
+.hover .pic a{
+	margin:0;
+	padding:0;
+}
+.hover .pic img{
+	border:1px solid #f0f0f0;
+}
+.hover .title{
+	float:left;
+	width:120px;
+	
+}
+.hover .title a{
+	width: 110px;
+height: 35px;
+white-space: normal;
+
+overflow: hidden;
+text-overflow: ellipsis;
+float: left;
+}
+
+	.title i {
+float: left;
+width: 17px;
+height: 17px;
+display: inline;
+font: 12px/16px Arial;
+text-align: center;
+color: #fff;
+position: relative;
+margin: 0 0 0 -93px;
+background: #d00;
+}
+.hover p {
+float: left;
+width: 120px;
+margin:4px 10px;
+
+}
+.hover p span {
+	color:#bd0000;
+	padding:0 2px;
+	font-weight:bold;
+
+}
+.shop_price a { color:#EB0000 !important;}

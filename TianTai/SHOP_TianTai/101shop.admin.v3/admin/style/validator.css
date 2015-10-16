@@ -1,0 +1,65 @@
+﻿.msgNormal
+{
+	margin:5px;
+	background: url(../images/validate_normal.gif) no-repeat;
+	width: 300px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	color: #999999;
+}
+.msgOnFocus
+{
+	margin:5px;
+	background: #E9F0FF url(../images/validate_waring.gif) no-repeat;
+	width: 300px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	border: #00a8ff 1px solid;
+}
+.msgError
+{
+	margin:5px;
+	background: #FFF2E9 url(../images/validate_error.gif) no-repeat;
+	width: 300px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	border: #f60 1px solid;
+}
+.msgError a
+{
+	color: red;
+}
+.msgOK
+{
+	margin:5px;
+	background: #E9FFEB url(../images/validate_success.gif) no-repeat;
+	width: 300px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	border: #00be00 1px solid;
+}
+
+.msgFree
+{
+	margin:5px;
+	background: url(../images/validate_normal.gif) no-repeat;
+	width: 680px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	color: #999999;
+}
+.msgShort
+{
+	margin:5px;
+	background: url(../images/validate_normal.gif) no-repeat;
+	width: 150px;
+	padding-left: 25px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	color: #999999;
+}

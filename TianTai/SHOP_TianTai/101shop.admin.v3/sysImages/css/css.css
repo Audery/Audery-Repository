@@ -1,0 +1,80 @@
+﻿body
+{
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+td
+{
+    font-size: 12px;
+    color: #414141;
+    line-height: 20px;
+}
+.STYLE1
+{
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+.STYLE2
+{
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+.STYLE3
+{
+    color: #FF0000;
+    font-weight: bold;
+}
+input.username
+{
+    background: #FFFFFF url("../Login/input_username.gif") 2px 2px no-repeat;
+    padding-left: 18px;
+    border: 1px double #ccc;
+}
+input.password
+{
+    background: #FFFFFF url("../Login/input_password.gif") 2px 2px no-repeat;
+    padding-left: 18px;
+    border: 1px double #ccc;
+}
+input.vercode
+{
+    background: #FFFFFF url("../Login/input_vercode.gif") 2px 2px no-repeat;
+    padding-left: 18px;
+    border: 1px double #ccc;
+}
+a:link
+{
+    color: #414141;
+    font-family: Arial;
+    text-decoration: none;
+}
+a:visited
+{
+    color: #414141;
+    font-family: Arial;
+    text-decoration: none;
+}
+a:active
+{
+    color: #ff0000;
+    font-family: Arial;
+    text-decoration: none;
+}
+a:hover
+{
+    border-top-width: 1px;
+    border-left-width: 1px;
+    color: #DD6800;
+    border-bottom: 1px dotted;
+    border-right-width: 1px;
+    text-decoration: none;
+    background-position: 50% bottom;
+    left: 1px;
+    background-repeat: repeat-x;
+    position: relative;
+    top: 1px;
+}

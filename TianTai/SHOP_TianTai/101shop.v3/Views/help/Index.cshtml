@@ -1,0 +1,83 @@
+﻿@using System.Data
+@model DataRowCollection
+@{
+    if(Model.Count>0)
+    {
+        ViewBag.Title = Model[0]["Title"];
+        ViewBag.keywords = Model[0]["KeyWord"];
+        ViewBag.description = Model[0]["Introduction"];
+    }
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_index.css" />
+}
+@{Html.RenderPartial("Nav");}
+<div style="padding: 8px">
+    <a href="/">首页</a> > 帮助中心 > @(Model.Count > 0 ? Model[0]["Channel"] : "") > @(Model.Count > 0 ? Model[0]["Title"] : "")
+</div>
+<div class="oy_ct_ifm" style="height: auto; width: 220px; float: left;">
+    <div class="radio_left">
+        <div class="radio_right">
+            <h2>
+                帮助中心</h2>
+        </div>
+    </div>
+    <div class="ifm_con">
+        <ul>
+            @{
+                var _101资讯 = (DataTable)ViewBag._101资讯;
+                if (_101资讯.Rows.Count > 0)
+                {
+                <li style="padding-left:15px;"><strong>采购指南</strong></li>
+                    foreach (DataRow item in _101资讯.Select("Channel='102100'"))
+                    {
+                        if (item.ItemArray.Length > 1)
+                        {
+                            if (item.ItemArray[1].ToString().Equals("隐私申明"))
+                            {
+                <li style="padding-left:25px;"><a href="/help/1.html#title_hyys" title="@item["Title"]">@item["Title"]</a></li>
+                            }
+                            else
+                            {                                
+                <li style="padding-left:25px;"><a href="/help/@{@item["Id"]}.html" title="@item["Title"]">@item["Title"]</a></li>  
+                            }
+                        }
+                    }
+                <li style="padding-left:15px;"><strong>配送方式</strong></li>
+                    foreach (DataRow item in _101资讯.Select("Channel='102101'"))
+                    {
+                        if(item.ItemArray.Length>1)
+                        {
+                            if(item.ItemArray[1].ToString().Equals("商品验货及签收"))
+                            {
+                <li style="padding-left:25px;"><a href="/help/1.html#title_spyhjqs" title="@item["Title"]">@item["Title"]</a></li>
+                            }
+                            else
+                            {
+                <li style="padding-left:25px;"><a href="/help/@{@item["Id"]}.html" title="@item["Title"]">@item["Title"]</a></li> 
+                            }
+                        }
+                    }
+                <li style="padding-left:15px;"><strong>支付方式</strong></li>
+                    foreach (DataRow item in _101资讯.Select("Channel='102102'"))
+                    {
+                <li style="padding-left:25px;"><a href="/help/@{@item["Id"]}.html" title="@item["Title"]">@item["Title"]</a></li>           
+                    }
+                <li style="padding-left:15px;"><strong>售后服务</strong></li>
+                    foreach (DataRow item in _101资讯.Select("Channel='102104'"))
+                    {
+                <li style="padding-left:25px;"><a href="/help/1.html#title_thh" title="@item["Title"]">@item["Title"]</a></li>           
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+<div style="float: left; width: 745px; padding: 5px 5px 5px 15px;">
+    @if (Model.Count > 0)
+    {
+        ViewBag.ActuationValue = Model[0]["Title"];//
+        @Html.Raw((string)Model[0]["Content"])
+    }
+</div>

@@ -1,0 +1,199 @@
+/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}
+ul,ol,li{list-style:none;}
+input,button{margin:0;font-size:12px;vertical-align:middle;}
+body{font-size:12px;font-family:Arial, Helvetica, sans-serif;  text-align:center; margin:0 auto; }
+a{color:#333;text-decoration:none;}
+em{ font-style:normal;}
+H3 {FONT-SIZE: 14px}
+.font{ font-family:microsoft yahei;}
+.allsort {
+	Z-INDEX: 11; FLOAT: left; WIDTH: 224px; MARGIN-RIGHT: 4px;
+}
+.allsort .mt {
+ CURSOR: pointer; LINE-HEIGHT: 24px; PADDING-TOP: 14px; HEIGHT: 24px; border-bottom:1px solid #ed2d2d; padding:9px 12px ;
+}
+.box{ margin-top:-6px; float:left; z-index:100;}
+.box1{ margin-top:-10px; float:left; z-index:100;}
+
+
+.allsort .mt STRONG {
+	FONT-SIZE: 14px; FLOAT: left;
+}
+.allsort .mt STRONG a {
+   COLOR: #fff !important;
+}
+#o-search .allsort .mt A {
+	COLOR: #FF6600
+}
+.allsort .mt .extra {
+	DISPLAY: none
+}
+.allsort .mc {
+ border-width:0px 1px 1px; border-style:solid; border-color:#D9222F; background:#f5f5f5; OVERFLOW: visible;  WIDTH: 224px; /*-moz-border-radius: 0 0 5px 5px; -webkit-border-radius: 0 0 5px 5px;*/ position:relative; z-index:110010;
+}
+.allsort .item {
+	border-width:1px 0px 1px; border-style:solid; border-color: #f5f5f5 #f5f5f5 #ddd; WIDTH: 223px; height:60px
+}
+.allsort .hover {
+	border-width:1px 0px 1px; border-style:solid; border-color:#D9222F; WIDTH: 224px; height:60px; background:#fff;
+	-moz-box-shadow: 0 0 10px #DDD;
+-webkit-box-shadow: 0 0 10px #DDD;
+box-shadow: 0 0 10px #DDD;
+-webkit-transition: all .1s ease-in;
+-o-transition: all .1s ease-in;
+-ms-transition: all .1s ease-in;
+transition: all .1s ease-in;
+}
+.allsort .fore {
+}
+.allsort SPAN {
+	DISPLAY: block; Z-INDEX: 13000; POSITION: relative
+}
+.allsort H3 {
+FONT-WEIGHT: normal; padding:9px 0; height:42px;
+}
+.allsort H3 .title {
+	color:#333; font-size:16px; width:193px; display:block;
+}
+.allsort H3 .title:hover {
+	color:#FF6600; font-size:16px; text-decoration: underline;
+}
+.allsort .cate2{display:block;padding:0;_padding: 0;width: 223px;position: static;background-color:#f5f5f5;z-index: 3;box-shadow: none;-webkit-box-shadow:  none;-moz-box-shadow: none; }
+.allsort H3 .cate2 a {
+	color:#888; font-size:12px; padding:0 8px 0px 6px; font-family:"宋体";
+}
+.allsort .hover H3 .title{ display:block;}
+
+.allsort H3 .h3-ico1 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -9px;  padding-left:30px;}
+.allsort H3 .h3-ico2 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -33px;  padding-left:30px;}
+.allsort H3 .h3-ico3 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -60px;  padding-left:30px;}
+.allsort H3 .h3-ico4 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -85px;  padding-left:30px;}
+.allsort H3 .h3-ico5 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -110px;  padding-left:30px;}
+.allsort H3 .h3-ico6 {background: #f5f5f5 url(../images/101yao-ico-index.png) no-repeat 0px -132px;  padding-left:30px;}
+
+.allsort .hover H3 .h3-ico1 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -158px; padding-left:30px;}
+.allsort .hover H3 .h3-ico2 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -182px;  padding-left:30px;}
+.allsort .hover H3 .h3-ico3 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -209px; padding-left:30px;}
+.allsort .hover H3 .h3-ico4 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -234px; padding-left:30px;}
+.allsort .hover H3 .h3-ico5 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -259px; padding-left:30px;}
+.allsort .hover H3 .h3-ico6 {background: #fff url(../images/101yao-ico-index.png) no-repeat 0px -281px; padding-left:30px;}
+
+
+.allsort S {
+	DISPLAY: block;  LEFT: 182px; WIDTH: 13px; POSITION: absolute; TOP: 10px; HEIGHT: 13px
+}
+.allsort .item .i-mc {
+ DISPLAY: none; BACKGROUND: #fff;  OVERFLOW: hidden; WIDTH: 550px; POSITION: absolute; TOP:0px;LEFT: 223px;
+ border-width:1px; border-style:solid; border-color:#D9222F;/*-moz-box-shadow: 0 0 10px #DDD;-webkit-box-shadow: 0 0 10px #DDD;box-shadow: 0 0 10px #DDD;*/-webkit-transition: all .1s ease-in;
+-o-transition: all .1s ease-in;
+-ms-transition: all .1s ease-in;
+transition: all .1s ease-in;
+}
+.allsort .item DT {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; PADDING-TOP: 3px
+}
+.allsort .item DD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; OVERFLOW: hidden; PADDING-TOP: 3px; ZOOM: 1
+}
+.allsort .subitem {
+	 MIN-HEIGHT: 364px; FLOAT: left;  WIDTH: 542px; padding:4px;
+}
+.allsort .subitem DL {
+	PADDING-RIGHT: 0px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; OVERFLOW: hidden; PADDING-TOP: 6px; ZOOM: 1
+}
+.allsort .subitem .fore {
+	BORDER-TOP-STYLE: none
+}
+.allsort .subitem DT {
+	FLOAT: left; WIDTH: 85px; LINE-HEIGHT: 22px; TEXT-ALIGN: right;
+}
+.allsort .subitem DT em{ color:#FF6600;}
+.allsort .subitem DT A{COLOR: #FF6600;}
+.allsort .subitem DD {
+	FLOAT: left; WIDTH:434px
+}
+.allsort .subitem DD A { BORDER-right: #ddd 1px solid; padding:0 8px; margin-bottom:5PX;display:inline-block; line-height:20PX; color:#666; font-size:13px;
+}
+.allsort .subitem DD A:hover { BORDER-rihgt: #ddd 1px solid; padding:0 8px; margin-bottom:5PX; TEXT-DECORATION: underline;display:inline-block; line-height:20PX; color:#FF6600;
+}
+
+.allsort .fr {
+	BACKGROUND: #fff; MARGIN-BOTTOM: -2000px; PADDING-BOTTOM: 2010px; WIDTH: 176px
+}
+.allsort .fr DL {
+	PADDING-BOTTOM: 0px
+}
+
+.cat-right-con{ float:left; padding:4px; width:222px; display:none;}
+.cat-right-con p{ margin:12px 0 6px;}
+.cat-right-con li{ float:left; width:110px;}
+.cat-right-con li a{ display:block; padding:2px 0; color:#666;}
+.cat-right-con li a:hover{ display:block; padding:2px 0; color:#FF6600; text-decoration:underline;}
+.cat-right-con img{ border:1px solid #ddd;  }
+
+
+#o-search .allsort .fr A {
+	COLOR: #666
+}
+.allsort .brands {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 6px; WIDTH: 160px; PADDING-TOP: 6px
+}
+.allsort .brands EM {
+	FLOAT: left; WIDTH: 80px
+}
+.allsort .brands DD {
+	LINE-HEIGHT: 20px; PADDING-TOP: 6px
+}
+.allsort .promotion {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 6px; WIDTH: 160px; PADDING-TOP: 6px
+}
+.allsort .promotion DD {
+	LINE-HEIGHT: 20px; PADDING-TOP: 6px
+}
+.allsort .mc .extra {
+	PADDING-RIGHT: 8px; BORDER-TOP: #fde6d2 1px solid; PADDING-LEFT: 8px; BACKGROUND: #fdf1de; PADDING-BOTTOM: 7px; PADDING-TOP: 7px; display:none;
+}
+#o-search .allsort .mc .extra A {
+	COLOR: #FF6600
+}
+.allsorthover {
+	BACKGROUND-POSITION: 0px -166px
+}
+.allsorthover .mt .extra {
+	BACKGROUND-POSITION: -274px -190px
+}
+.allsorthover .mc {
+	DISPLAY: block
+}
+.allsort .hover SPAN {
+	display:block; z-index:11000;
+}
+
+.allsort .hover h3 { background:#fff; padding:9px 0; height:42px;
+}
+.allsort .hover h3 a {
+	color:#FF6600;
+}
+.allsort .hover h3 a:hover {
+	color:#FF6600;
+}
+.allsort .hover .cate2  {
+	 background:#fff; padding:0; margin:0;
+}.allsort .hover .cate2:hover  {
+	 background:#fff; padding:0; margin:0;
+}
+.allsort .hover .cate2 a {
+	color:#999; padding:0px 8px 0 6px;
+}
+.allsort .hover S {
+	DISPLAY: none
+}
+.allsort .hover .title:hover{ color:#FF6600; *+padding:0 0 0px 30px;
+}
+.allsort .hover .i-mc {
+	DISPLAY: block; Z-INDEX: 10000;
+}
+* HTML .allsort .item DD {
+	PADDING-BOTTOM: 6px
+}

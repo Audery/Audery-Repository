@@ -1,0 +1,206 @@
+@charset "utf-8";
+/* CSS Document */
+
+div.__01 {
+	position:relative;
+	width:1000px;
+	height:1448px;
+}
+
+
+
+div.linchuang-02 {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:1000px;
+	height:132px;
+}
+
+div.linchuang-03 {
+	position:absolute;
+	left:0px;
+	top:160px;
+	width:735px;
+	height:425px;
+}
+
+div.linchuang-04 {
+	position:absolute;
+	left:735px;
+	top:160px;
+	width:265px;
+	height:426px;
+}
+
+div.linchuang-05 {
+	position:absolute;
+	left:0px;
+	top:585px;
+	width:735px;
+	height:1px;
+}
+
+div.linchuang-06 {
+	position:absolute;
+	left:0px;
+	top:586px;
+	width:2px;
+	height:397px;
+}
+
+div.linchuang-07 {
+	position:absolute;
+	left:2px;
+	top:586px;
+	width:998px;
+	height:397px;
+}
+
+div.linchuang-08 {
+	position:absolute;
+	left:0px;
+	top:983px;
+	width:1px;
+	height:63px;
+}
+
+div.linchuang-09 {
+	position:absolute;
+	left:1px;
+	top:983px;
+	width:999px;
+	height:63px;
+}
+
+div.linchuang-10 {
+	position:absolute;
+	left:0px;
+	top:1046px;
+	width:742px;
+	height:402px;
+}
+
+div.linchuang-11 {
+	position:absolute;
+	left:742px;
+	top:1046px;
+	width:258px;
+	height:401px;
+}
+
+div.linchuang-12 {
+	position:absolute;
+	left:742px;
+	top:1447px;
+	width:258px;
+	height:1px;
+}
+
+/*---------------------------------------------------------*/
+.index_11{
+	position:absolute;
+	top:41px;
+	left:13px;
+	z-index:1;
+}
+.index_11 li{
+	font-size:14px;
+	line-height:31px;
+}
+.list_text li{
+	   float: left;
+    padding: 0 54px 0 0;
+    width: 125px;
+}
+.menu{
+	position:absolute;
+	left: 240px;
+    top: 66px;
+	z-index:1;
+	font-family:"微软雅黑";
+	font-size:24px;
+	font-weight:bold;
+	width:550px;
+    z-index: 1;
+}
+.menu li{
+	float:left;
+	padding:0 10px;
+	font-family:"微软雅黑";
+	font-weight:bold;
+}
+.menu li a{
+	padding-bottom:10px;
+}
+
+.ind_01{
+	   left: 744px;
+    position: absolute;
+    top: 380px;
+    width: 250px;
+    z-index: 1;
+	font-size:14px;
+	font-family:"微软雅黑";
+}
+.ind_01 li{
+	float:left;
+	margin-right:16px;
+	text-align:left;
+}
+.ind_02{
+	 left: 0px;
+    position: absolute;
+    top: 848px;
+    width: 1100px;
+    z-index: 1;
+}
+.ind_02 li{
+	   float: left;
+    padding: 0 18px 0 0;
+    width: 185px;
+}
+.ind_03{
+	 left: 46px;
+    position: absolute;
+    top: 1234px;
+    width: 800px;
+    z-index: 1;
+}
+.ind_03 li , .ind_04 li , .ind_05 li , .ind_06 li{
+	float: left;
+width: 122px;
+margin-right: 14px;
+}
+.ind_04{
+	left: 54px;
+    position: absolute;
+    top: 1280px;
+    width: 800px;
+    z-index: 1;
+}
+.ind_05{
+	left: 54px;
+    position: absolute;
+    top: 1330px;
+    width: 800px;
+    z-index: 1;
+}
+.ind_06{
+	left: 54px;
+    position: absolute;
+    top: 1380px;
+    width: 800px;
+    z-index: 1;
+}
+ .ind_07{
+	   left: 780px;
+    position: absolute;
+    top: 1090px;
+    width: 130px;
+    z-index: 1;
+}
+.ind_07 li{
+	line-height:34px;
+	margin-bottom:2px;
+}

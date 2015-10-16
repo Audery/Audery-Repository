@@ -1,0 +1,374 @@
+﻿@using _101shop.v3.Controllers;
+
+@{
+    ViewBag.Title = "我的交易意向";
+    SOSOshop.Model.memberTradingIntention model = new SOSOshop.Model.memberTradingIntention();
+}
+<link rel="stylesheet" type="text/css" href="/Content/101Membercenter_TradingIntention.css" />
+<script type="text/javascript" src="/Scripts/wbox/wbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css" />
+<style type="text/css"> 
+.xstooltip 
+{ 
+    background:#efefef;
+visibility: hidden; 
+position: absolute; 
+top: 0; 
+left: 20; 
+z-index: 2; 
+padding-left:2px;
+padding-top:2px;
+display:none;
+}
+.xstooltip th
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+    text-align:center;
+} 
+.xstooltip td
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+}
+.xstooltip .right
+{   
+    text-align:right;
+}
+.xstooltip .center
+{   
+    text-align:center;
+}
+.step{overflow:hidden;background:#ededed;color:#999999;font-weight:bold;margin:0 auto 10px;zoom:1}/*m*/
+.step li{float:left;position:relative;padding-left:22px;padding-right:35px;line-height:25px;height:25px;overflow:hidden;}
+.step li b{position:absolute;width:22px;height:25px;background:url(i/flow.gif) no-repeat;top:0;right:-1px;}
+#step1 .fore1,#step2 .fore2,#step3 .fore3,#step4 .fore4{background:#ffd1d1;color:#bd0000;}
+#step1 .fore1 b,#step2 .fore2 b,#step3 .fore3 b{background-position:0 -26px;}
+#step2 .fore1,#step3 .fore1,#step3 .fore2,#step4 .fore1,#step4 .fore2,#step4 .fore3{background:#bbbbbb;color:#ffffff;}
+#step2 .fore1 b,#step3 .fore2 b,#step4 .fore3 b{background-position:0 -78px;}
+#step3 .fore1 b,#step4 .fore2 b,#step4 .fore1 b{background-position:0 -52px;}
+
+.step li b {
+position: absolute;
+width: 22px;
+height: 25px;
+background: url(/images/flow.gif) no-repeat;
+top: 0;
+right: -1px;
+
+
+}
+#step1 .fore1 b, #step2 .fore2 b, #step3 .fore3 b {
+background-position: 0 -26px;
+}
+.step01 li {
+width: 209px;
+text-align: center;
+}
+.tip1
+{
+    text-align: center; font-size: 14px; background: #FFFDEE; border: 1px solid #EDD28B; width: 100%; height:35px; line-height:35px;
+}
+.tip2
+{
+    text-align: left; padding-top:8px; font-size: 13px; border: 1px solid #DDDDDD; width: 100%; height:30px; line-height:25px;
+}
+.tip3
+{
+    text-align: left; padding-top:8px; font-size: 13px; border: 1px solid #DDDDDD; width: 100%; height:70px; line-height:25px;
+}
+.tip2_1
+{
+    width:150px; display:block; float:left; text-align:right;font-size: 13px;
+}
+.tip2_2
+{
+    width:600px; display:block; float:left; text-align:left;font-size: 13px;
+}
+.zhb{color:#3344EE;}
+input{ border:1px solid #AAAAAA; }
+select{ padding:2px;font-size: 13px; }
+textarea{ padding:2px;font-size: 13px; }
+</style> 
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>交易意向</span></li>
+</ul>
+ <div class="mc_left">
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind"><div style="width:200px; float:left;">提交品种交易意向</div>
+    <div style="width:100%; float:none; clear:both;">
+    <div id="step@(ViewBag.Step)" class="step step01">
+		<ul>
+			<li class="fore1">1.选择品种<b></b></li><li class="fore2">2.输入可接受到货周期<b></b></li><li class="fore3">3.完成</li>
+		</ul>
+	</div>
+    </div>
+
+    </div>
+    
+    @if (ViewBag.Step == 1)
+    {
+      @*<div class="search_01">
+      搜索品种：
+      <input class="text def" name="search" id="search" type="text" placeholder="药品名称(拼音缩写) | 商品名称 | 生产企业" def="药品名称(拼音缩写) | 商品名称 | 生产企业" value="@ViewBag.search" />
+      <input type="button" value="查 询" class="bti" onclick="search()"/>
+      </div>*@
+    <ul style="clear:both; float:none;">
+    <li class="tip1">
+        在输入产品信息后，然后会进入第二步。
+    </li>
+    </ul>
+    <div>
+      <table width="100%" cellspacing="5" cellpadding="5" style=" border:1px solid #999999;">
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">通用名</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="DrugsBase_Name" id="DrugsBase_Name" />*</td></tr>
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">规格</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="Guige" id="guige" />*</td></tr>
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">剂型</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="JiXing" id="jixing" /></td></tr>
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">生产企业</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="Qiye" id="qiye" /></td></tr>
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">批准文号</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="pzwh" id="pzwh" /></td></tr>
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">件装量</td><td style=" padding: 5px; border: 1px solid #999999;"><input name="jz" id="jz" /></td></tr>     
+          <tr><td style=" padding: 5px; border: 1px solid #999999;">操作</td><td style=" padding: 5px; border: 1px solid #999999;"><a href="javascript:select1(this)">下一步</a></td></tr>     
+        
+      </table>
+      </div>
+     
+        int dvIndex = 0; int UID = ViewBag.UID;
+      @*foreach (DataRow dv in list.Rows)
+      {
+          dvIndex++;
+        <ul class="zk_info">
+        <li class="zk_info_1">
+            <span>@(dv["DrugsBase_DrugName"])</span>
+        </li>
+        <li class="zk_info_2">
+        @if (dv.IsNull("Goods_ConveRatio_Unit_Name") || dv["Goods_ConveRatio_Unit_Name"].ToString() == "")
+        {
+            <span>@(Html.Raw(string.Format("{0}<span class=zhb>{1}</span>/{2}", dv.IsNull("DrugsBase_Specification") || dv["DrugsBase_Specification"].ToString() == "" ? "" : dv["DrugsBase_Specification"] + " x ", dv["Goods_ConveRatio"], dv["Goods_Unit"])))</span>
+        }
+        else
+        {
+            <span>@dv["Goods_ConveRatio_Unit_Name"]</span>
+        }
+        </li>
+        <li class="zk_info_3">@(dv["DrugsBase_Formulation"])</li>
+        <li class="zk_info_4">@(dv["DrugsBase_Manufacturer"])</li>
+        <li class="zk_info_5">@(dv["DrugsBase_ApprovalNumber"])</li>
+        <li class="zk_info_6">
+        <input id="input-@(dvIndex)" type="text" maxlength="8" class="inputPcs" pcs="@(dv["Goods_Pcs"])" style="display:block; float:left; width:30px; height:27px; padding:0; padding-left:2px; margin-left:3px;" />
+        </li>
+        <li class="zk_info_7">
+            <span> <a href="#" onclick="select(this);return false;" DrugsBase_ID="@(dv["DrugsBase_ID"])" Goods_ConveRatio="@(dv["Goods_ConveRatio"])" Goods_Unit="@(dv["Goods_Unit"])" Goods_Pcs="input-@(dvIndex)">选择品种</a></span>
+        </li>
+        </ul>
+      }
+        <div style="margin:5px; clear:both; float:right;">
+        <div style="float:left;display:none;"> 共<span style="color: Red">@ViewBag.recordCount</span>条记录 &nbsp;</div>
+       @Html.Pager(Model as PagedList<System.Data.DataRow>, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator" })           
+        </div>*@
+    }
+    else if (ViewBag.Step == 2)
+    {
+    <br />
+    <ul style="clear:both; float:none;">
+    <li class="tip1">
+        在选择品种后，请输入以下内容，完成“提交品种交易意向”。
+    </li>
+    <li class="tip2">
+        <label><span class="tip2_1">可接受到货周期：</span>
+        <span class="tip2_2"><select id="zq"><option value="7">7天</option><option value="15">半个月</option><option value="30">1个月</option><option value="365">1个月以上</option></select></span>
+        </label>
+    </li>
+    <li class="tip3">
+        <label><span class="tip2_1">备注说明：</span>
+        <span class="tip2_2">
+        <textarea id="bz" rows="2" cols="50"></textarea>
+        </span>
+        </label>
+    </li>
+    <li class="tip2">
+        <span class="tip2_1">&nbsp;</span>
+        <span class="tip2_2">
+      <input type="button" value="提 交" onclick="submitZqBz()" style="cursor:pointer;border:0 none;background:url(/images/use.gif) no-repeat 0 -42px;width:50px;height:25px;padding:1px 8px;"/>
+        </span>
+    </li>
+    </ul>
+    }
+    else if (ViewBag.Step == 3)
+    {
+        <br /><br />
+    <ul style="clear:both; float:none;">
+    <li class="tip1" style="height:85px;">
+        <a href="/MemberCenter/TradingIntention" style="color:Green">提交成功，点击返回交易意向管理。</a>
+        <span style="display:block;padding-left:135px;">您的意向已经提交，@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]的工作人员会尽快审核您的需求，补货后会及时通知您。</span>
+    </li>
+    </ul>
+    }
+     </div>
+<!--content---------content------>
+
+<script language="javascript" type="text/javascript">
+    //第一步选择品种
+    function select1(a) {
+        if($('#DrugsBase_Name').val()=="")
+        {
+            alert("亲，请您填写通用名！");
+            return;
+        }
+        if ($('#guige').val() == "") {
+            alert("亲，请您填写规格！");
+            return;
+        }
+        var html = $(a).html();
+        $(a).html("请等待");
+        
+        $.ajax({
+            type: 'POST',
+            url: '/MemberCenter/TradingIntentionAdd1',
+            data: { DrugsBase_Name: $('#DrugsBase_Name').val(), Guige: $('#guige').val() == "" ? "" : $('#guige').val(), Qiye: $('#qiye').val() == "" ? "" : $('#qiye').val(), pzwh: $('#pzwh').val() == "" ? "" : $('#pzwh').val(), Jixing: $('#jixing').val() == "" ? "" : $('#jixing').val(), jz: $('#jz').val() == "" ? 0 : $('#jz').val() },
+            dataType: "json",
+            success: function (msg, textStatus) {
+                switch (msg["state"]) {
+                    case 1:
+                        a.onclick = null;
+                        $(a).html("已选择").attr("title", '点击可以取消选择');
+                        document.location.href = "/MemberCenter/TradingIntentionAdd";
+                        break;
+                    default:
+                        $(a).html(html);
+                        alert(msg["message"]);
+                        break;
+                }
+            }
+        });
+    }
+    //第二步提交
+    function submitZqBz() {
+        if ($('#bz').val().length > 500) {
+            $('#bz').val($('#bz').val().substring(0, 500));
+            alert("备注说明不能超过500个字，请重新输入！");
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/MemberCenter/TradingIntentionAdd2',
+            data: { zq: $('#zq').val(), bz: $('#bz').val() },
+            dataType: "json",
+            success: function (msg, textStatus) {
+                switch (msg["state"]) {
+                    case 1:
+                        document.location.href = "/MemberCenter/TradingIntentionAdd";
+                        break;
+                    default:
+                        alert(msg["message"]);
+                        break;
+                }
+            }
+        });
+    }   
+    //搜索
+    function search() {
+        var s = $("#search").val();
+        if (s == "" || s == "药品名称(拼音缩写) | 商品名称 | 生产企业") {
+            alert("请输入要查询的内容！");
+        }
+        else {
+            document.location.href = "?search="+s;
+        }
+    }
+    function pcsBtnOnmouseover(a) {
+        $(a).css("border", "2px solid #EE4444");
+    }
+    function pcsBtnOnmouseout(a) {
+        $(a).css("border", "2px solid #AAAAAA");
+    }
+    function pcsBtnOnclick(a) {
+        $("#" + $(a).attr("input")).val($(a).text());
+        if(wBox)wBox.close();
+    }
+    var wBox = 0;
+    $(function () {
+        $('input.inputPcs').each(function () {
+            var a = $(this), id = a.attr('id'), pcs = a.attr('pcs'), input = a.parent().find('input'), sel = null;
+            if (pcs.length > 0) {
+                sel = $('<span title="件装量为商城提供，仅供参考。请点击并进行选择！" style="cursor:pointer; border:1px solid #AAAAAA; border-left:0 none; display:block; float:left; width:20px; height:27px; background:url(/images/mc_bg_left_unfold_selected.jpg)">&nbsp;</span>');
+                sel.click(function () {
+                    var pcss = pcs.split(","), html = ''; for (var i = 0; i < pcss.length; i++) { if (pcss[i].length) { html += '<span onclick="pcsBtnOnclick(this)" onmouseover="pcsBtnOnmouseover(this)" onmouseout="pcsBtnOnmouseout(this)" input="' + id + '" style="cursor:pointer; border:2px solid #AAAAAA; display:block; float:left; height:22px; padding:3px; margin:3px;">' + pcss[i] + '</span>'; } }
+                    wBox = $("#wbox1").wBox({
+                        title: "选择件装量",
+                        html: "<div style='display:block;width:" + (60 * (pcs.length - 1)) + "px;height:40px;margin:5px auto;'>" + html + "</div>",
+                        timeout: 10000000000
+                    });
+                    wBox.showBox();
+                });
+                sel.appendTo(a.parent());
+            } else {
+                sel = $('<span title="华润商城未提供参考的件装量！请直接输入件装量！" style="cursor:not-allowed; border:1px solid #AAAAAA; border-left:0 none; display:block; float:left; width:20px; height:27px; background:url(/images/mc_bg_left_unfold_unselected.jpg)">&nbsp;</span>');
+                sel.appendTo(a.parent());
+            }
+        });
+    });
+</script>
+
+<script language="javascript" type="text/javascript">
+    function xstooltip_findPosX(obj) {
+        var curleft = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curleft += obj.offsetLeft
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.x)
+            curleft += obj.x;
+        return curleft;
+    }
+    function xstooltip_findPosY(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curtop += obj.offsetTop
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.y)
+            curtop += obj.y;
+        return curtop;
+    }
+    function xstooltip_show(tooltipId, parentId, posX, posY) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "";
+            }
+        }
+        it = document.getElementById(tooltipId);
+        if ((it.style.top == '' || it.style.top == 0) && (it.style.left == '' || it.style.left == 0)) {
+            // need to fixate default size (MSIE problem) 
+            it.style.width = it.offsetWidth + 'px';
+            it.style.height = it.offsetHeight + 'px';
+            img = document.getElementById(parentId);
+            // if tooltip is too wide, shift left to be within parent 
+            if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
+            if (posX < 0) posX = 0;
+            x = xstooltip_findPosX(img) + posX;
+            y = xstooltip_findPosY(img) + posY;
+            it.style.top = y + 'px';
+            it.style.left = x + 'px';
+        }
+        it.style.visibility = 'visible';
+	it.style.display = 'block';
+    }
+    function xstooltip_hide(id) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "none";
+            }
+        }
+        it = document.getElementById(id);
+        it.style.visibility = 'hidden';
+	it.style.display = 'none';
+    } 
+</script> 

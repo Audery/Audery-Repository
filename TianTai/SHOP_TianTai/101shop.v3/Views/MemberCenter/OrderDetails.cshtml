@@ -1,0 +1,219 @@
+﻿@using System.Data;
+@using SOSOshop.Model.Order;
+@using SOSOshop.BLL.Order;
+@using _101shop.v3.Controllers;
+@{
+    ViewBag.Title = "我的订单 " + ViewBag.OrderNo;
+    DataTable list = ViewBag.List;
+    SOSOshop.Model.Order.Orders o = ViewBag.Orders;
+}
+@{Html.RenderPartial("Nav");}
+<link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanagerDetail.css" />
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易信息</span> &gt; <span>我的订单</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 400px; float: left;">
+            订单编号：@ViewBag.OrderNo
+            <span style="color: Red">@*@(new SOSOshop.BLL.Product.ZENGPFAZL().GetIs_pch(o.OrderId))*@</span>
+        </div>
+    </div>
+    <div class="mc">
+        <dl>
+            <dd class="p-list">
+                <table cellpadding="0" cellspacing="0" width="828">
+                    <tbody>
+                        <tr>
+                            <th>
+                                商品名称
+                            </th>
+                            <th>
+                                生产企业
+                            </th>
+                            <th>
+                                规格包装
+                            </th>
+                            <th>
+                                数量
+                            </th>
+                            <th>
+                                单价
+                            </th>
+                            <th>
+                                小计
+                            </th>
+                            <th style="width: 70px;">
+                                商品状态
+                            </th>
+                            <th style="width: 60px;">
+                                操作
+                            </th>
+                        </tr>
+                        @{if (list != null)
+                          {
+                              if (list.Rows.Count > 0)
+                              {
+                                  string ext = ".html";
+                                  foreach (DataRow dv in list.Rows)
+                                  {
+                            <tr>
+                                <td>
+                                    <div class="al fl">
+                                        <a target="_blank" href="/@dv["proid"]@ext" clstag="click|keycount|orderinfo|product_name">
+                                            @dv["ProName"]</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div title="@dv["DrugsBase_Manufacturer"]">@dv["DrugsBase_Manufacturer"]
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        @dv["GuiGe"]</div>
+                                </td>
+                                <td align="right">
+                                    @dv["ProNum"]
+                                </td>
+                                <td>
+                                    <div style="text-align: right">
+                                        @dv["ProPrice"]</div>
+                                </td>
+                                <td>
+                                    <div style="text-align: right">
+                                        @{
+                                      decimal countPrice = (decimal)dv["ProNum"] * (decimal)dv["ProPrice"];
+                                        }
+                                        @countPrice</div>
+                                </td>
+                                <td>
+                                    <!--是否缺货--->
+                                    @if (MemberCenterController.IsNoShop((int)dv["Status"]))
+                                    {  
+                                        <!--缺货提醒-->
+                                        <div style="color: Red;">
+                                            @MemberCenterController.GetWaitDay((int)dv["id"])</div>
+                                    }
+                                    else
+                                    {
+                                        <!--商品状态-->
+                                        @SOSOshop.Model.Order.OrderProduct.GetClientStauts((int)dv["Status"])
+                                    }
+                                </td>
+                                <td>
+                                    @if (MemberCenterController.IsNoShop((int)dv["Status"]))
+                                    {
+                                        <a  href="javascript:void(0)" onclick="cancelshop('@dv["id"]','@dv["OrderId"]',4)" style="color:Red;">
+                                            确认预购</a><br />
+                                        <span><a  href="javascript:void(0)" onclick="cancelshop(@dv["id"],'@dv["OrderId"]',6)">
+                                            取消商品</a></span>
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+                                </td>
+                            </tr>
+                                  }
+                              }
+                          }}
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="jsmx">
+        <div class="Remind2">
+            结算明细</div>
+        <div class="list_shop_title">
+            <ul>
+                <li class="ls_01">订单金额合计</li>
+                <li class="ls_02">优惠金额 </li>
+                <li class="ls_03">已支付金额</li>
+                <li class="ls_04">获得积分</li>
+                <li class="ls_05">应支付金额</li>
+            </ul>
+        </div>
+        @if (o != null)
+        {
+            <ul class="zk_info">
+                <li class="zk_info_1">@string.Format("{0:C}", o.TotalPrice)</li>
+                <li class="zk_info_2">
+                    <text>&nbsp;</text>
+                </li>
+                <li class="zk_info_3">
+                    @if (o.PaymentStatus == 1)
+                    {
+                        object je = new SOSOshop.BLL.Db().ExecuteScalar(string.Format("select dbo.fn_QianTai_Select_Orders_TotalPrice('{0}',1)", ViewBag.OrderNo));
+                        if (je != null && (decimal)je > 0)
+                        { <text>@string.Format("{0:C}", je)</text>}
+                    }
+                    else
+                    { <text>&nbsp;</text> }
+                </li>
+                <li class="zk_info_4">
+                    <text>&nbsp;</text>
+                </li>
+                <li class="zk_info_5">@string.Format("{0:C}", o.TotalPrice)</li>
+            </ul>
+        }
+    </div>
+    <div class="clear">
+    </div>
+    <div class="psxx">
+        <div class="Remind2">
+            配送信息</div>
+        <div class="list_shop_title">
+            <ul>
+                <li class="ls_01">收货人</li>
+                <li class="ls_02">所在地区 </li>
+                <li class="ls_03">街道地址</li>
+                <li class="ls_04">邮政编码</li>
+                <li class="ls_05">获得积分</li>
+            </ul>
+        </div>
+        @if (o != null)
+        {
+            <ul class="zk_info">
+                <li class="zk_info_1">@o.ConsigneeRealName</li>
+                <li class="zk_info_2">@o.ConsigneeProvince<span>@o.ConsigneeCity</span>@o.ConsigneeBorough</li>
+                <li class="zk_info_3">@o.ConsigneeAddress</li>
+                <li class="zk_info_4">@o.ConsigneeZip</li>
+                <li class="zk_info_5"></li>
+            </ul>
+        }
+    </div>
+</div>
+<!---------mc_right------------>
+<script language="javascript" type="text/javascript">
+    function cancelshop(xid, id, status) {
+        var message = "取消";
+        if (status == 4) {
+            message = "预购";
+        }
+        if (confirm("您确认要" + message + "该商品吗？")) {
+            $.ajax({
+                type: 'POST',
+                url: '/MemberCenter/CancelShop',
+                data: { oid: id, pid: xid, stu: status },
+                dataType: "json",
+                success: function (msg, textStatus) {
+                    switch (msg["state"]) {
+                        case 1:
+                            alert(msg["message"]);
+                            document.location.reload();
+                            break;
+                        default:
+                            alert(msg["message"]);
+                            break;
+                    }
+                }
+            });
+        }
+    }
+</script>

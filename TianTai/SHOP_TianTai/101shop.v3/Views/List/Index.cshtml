@@ -1,0 +1,1153 @@
+﻿@model PagedList<System.Data.DataRow>
+@using System.Data;
+@using SOSOshop.BLL
+@using Webdiyer.WebControls.Mvc
+@using _101shop.v3.Controllers
+@using SOSOshop.BLL.Common;
+@{
+    string par = (string.IsNullOrEmpty(Request.QueryString.ToString())) ? "" : "?" + Request.QueryString.ToString();
+    ViewBag.ActuationValue = ViewBag.ActuationValue;
+    ViewBag.Title = ViewBag.Title;
+    ViewBag.keywords = ViewBag.keywords;
+    ViewBag.description = ViewBag.description;
+    DataTable alllist = ViewBag.List as DataTable;
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101shoplist.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+}
+@{Html.RenderPartial("Nav");}
+<script type="text/javascript">
+    //最近浏览的商品
+    $(document).ready(function () {
+        var latestBrowsedUl = document.getElementById("latestBrowsedUl");
+        var latestBrowsed = latestBrowsedUl.getElementsByTagName("li");
+        var browseMore = document.getElementById("browseMore");
+
+        if (latestBrowsed != undefined) {
+            if (latestBrowsed.length >= 5) {
+                for (var i = 4; i < latestBrowsed.length; i++) {
+                    latestBrowsed[i].style.display = "none";
+                }
+            }
+            else {
+                browseMore.style.display = "none";
+            }
+        }
+        else {
+            browseMore.style.display = "none";
+        }
+    });
+
+    //点击更多展示剩余的最近浏览的商品
+    function showMoreBrowsed() {
+        var latestBrowsedUl = document.getElementById("latestBrowsedUl");
+        var latestBrowsed = latestBrowsedUl.getElementsByTagName("li");
+        var browseMore = document.getElementById("browseMore");
+
+        if (latestBrowsed != undefined) {
+            if (latestBrowsed.length >= 5) {
+                if (browseMore.innerHTML == "更多&gt;&gt;") {
+                    for (var i = 4; i < latestBrowsed.length; i++) {
+                        latestBrowsed[i].style.display = "";
+                    }
+
+                    browseMore.innerHTML = "收起&gt;&gt;";
+                }
+                else {
+                    for (var i = 4; i < latestBrowsed.length; i++) {
+                        latestBrowsed[i].style.display = "none";
+                    }
+
+                    browseMore.innerHTML = "更多&gt;&gt;";
+                }
+            }
+        }
+    }
+</script>
+<ul class="list_nav">
+    <li>药品列表</li>
+</ul>
+<div class="list_left_detail">
+    @if (ViewBag.ThisClass != null && ViewBag.DrugsBase_Pharm_Of_Product != null)
+    {
+        DataTable dt = ViewBag.DrugsBase_Pharm_Of_Product;
+
+        if (dt.Rows.Count > 0)
+        {
+        <div class="menu_Head">
+            <h3>@ViewBag.ThisClass</h3>
+            <ul>
+                @foreach (DataRow dr in dt.Rows)
+                {
+                    string url = _101shop.v3.Controllers.HomeController.SearchUrl((int)dr["Pharm_ID"], 0);
+                    <li class="menu_Below_Li"><span style="padding-left: 5px; padding-right: 10px;">&gt;</span><a href="@url">@dr["Pharm_Name"]</a></li>
+                }</ul>
+        </div>
+        }
+    }
+    @if (ViewBag.SyzList != null && !(ViewBag.ThisClass != null && ViewBag.DrugsBase_Pharm_Of_Product != null))
+    {
+        DataTable dt = ViewBag.SyzList;
+
+        if (dt.Rows.Count > 0)
+        {
+        <div class="menu_Head">
+            <h3>@dt.Rows[0]["name"]</h3>
+            <ul id="OTC_Menu">
+                @if (dt.Rows.Count > 11)
+                {
+                    int isyz = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (isyz++ > 0)
+                        {
+                            string url = _101shop.v3.Controllers.HomeController.SearchUrl((int)dr["id"], 1);
+
+                            if (Convert.ToInt32(dr["id"].ToString()) == Convert.ToInt32(ViewBag.SelectMenuId))
+                            {
+                    <li class="menu_Over_Li_Selected"><span style="padding-left: 0px; padding-right: 10px;">
+                        &gt;</span><a href="@url">@dr["name"]</a></li>
+                            }
+                            else
+                            {
+                    <li class="menu_Over_Li"><span style="padding-left: 0px; padding-right: 10px;">&gt;</span><a href="@url">@dr["name"]</a></li>
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    int isyz = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (isyz++ > 0)
+                        {
+                            string url = _101shop.v3.Controllers.HomeController.SearchUrl((int)dr["id"], 1);
+
+                            if (Convert.ToInt32(dr["id"].ToString()) == Convert.ToInt32(ViewBag.SelectMenuId))
+                            {
+                    <li class="menu_Below_Li_Selected"><span style="padding-left: 5px; padding-right: 10px;">
+                        &gt;</span><a href="@url">@dr["name"]</a></li>
+                            }
+                            else
+                            {     
+                    <li class="menu_Below_Li"><span style="padding-left: 5px; padding-right: 10px;">&gt;</span><a href="@url">@dr["name"]</a></li>
+                            }
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        }
+    }
+    <div style="padding-top: 20px; clear: both" id="ad_50">
+    </div>
+    <div class="info_Retrieval3 irf" style="@(ViewBag.Search != null && ViewBag.Selected.Count == 0 ? "" : "display:none")">
+        <h3>
+            热销榜</h3>
+        <div class="Retrieval3_gghu">
+            <ul>
+                @{int i = 0;
+                  DataTable hot = ViewBag.Hot;
+                  string ext = ".html";
+                  foreach (DataRow item in hot.Rows)
+                  {
+                      i += 1;
+                    <li @Html.Raw(i == 1 ? "class='hr'" : " class='hh'") onmousemove="showlist(@i);" id="hli-@i">
+                        <span class="shuzi" style="@(i == 1 ? "background:#d00;" : "")" id="sli-@i">@i</span><span
+                            class="shop_id"><a title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" href="/@item["Product_ID"]@ext">@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")</a></span>
+                        <span class="guige">已售 <span style="color: #bd0000; font-weight: bold">@item["SaleNum"]
+                        </span>@item["Goods_Unit1"]</span>
+                        <div @Html.Raw(i == 1 ? "" : " style='display:none;'") id="hot-@i" class="hotx">
+                            <div style="float: left; margin-right: 5px;">
+                                <img style="margin:3px 3px 3px 3px; border:1px solid #ebebeb;" src="@Public.RawImage(item["Image"])" 
+                                  title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" width="58px" height="58px" />
+                            </div>
+                            <div style="float: left; margin-top: 10px;">
+                                <div style="height: 20px; width: 140px; overflow: hidden;">
+                                    规格：@Public.GetSpecificationAndS(item)</div>
+                                <div style="margin-top: 10px;">
+                                    @{@Price.GetPriceShowString()}
+                                    ：<span style="color: #d00; font-weight: bold;">@Html.Raw(item["showPrice"].ToString())</span></div>
+                            </div>
+                        </div>
+                    </li>
+                  }
+                }
+            </ul>
+        </div>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <!---------------->
+    @if (ViewBag.ThisClass != null && ViewBag.ThisClass_ProductList != null && ViewBag.ThisClass_ProductList_Count > 0 && (alllist != null && alllist.Rows.Count != 0))
+    {
+        <div class="info_Retrieval4 irf">
+            <h3>
+                <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(ViewBag.ThisClassID, 0)">
+                    “@ViewBag.ThisClass”类</a> <span class="h3_01">热销品种</span>
+            </h3>
+            <div class="Retrieval4_gghu">
+                <div class="d_01">
+                    <ul id="latestBrowsedUl0">
+                        @{
+        DataTable dt = ViewBag.ThisClass_ProductList;
+        for (i = 0; i < dt.Rows.Count; i++)
+        {
+            DataRow dr = dt.Rows[i];
+                            <li>
+                                <div style="position: relative">
+                                    @Html.Raw(Public.Tag(dr))
+                                    <a href="/@{@dr["Product_ID"]}.html" target="_blank">
+                                        <img class="pImage" src="@Public.RawImage(dr["Image"])" width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                                <div class="shop_dsp">
+                                    <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                        <span>
+                                            @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                            @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                    </a>
+                                </div>
+                                <div class="shop_price">
+                                    @{@Price.GetPriceShowString()}
+                                    :
+                                    @if (User.Identity.IsAuthenticated)
+                                    {                                    
+                                        <strong>@Html.Raw(dr["showPrice"].ToString())</strong>                                   
+                                    }
+                                    else
+                                    {
+                                        <a href="/Account/LogOn" class="LogOnShowPrice">登录可见</a>
+                                    }
+                                </div>
+                            </li>
+        }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    <div style="clear: both;">
+    </div>
+    <!---------------->
+    @if (ViewBag.ThisClass_SYZ != null && ViewBag.ThisClass_ProductList_SYZ != null && ViewBag.ThisClass_ProductList_Count_SYZ > 0 && (alllist != null && alllist.Rows.Count != 0))
+    {
+        <div class="info_Retrieval4 irf">
+            <h3>
+                <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(ViewBag.ThisClassID_SYZ, 1)">
+                    “@ViewBag.ThisClass_SYZ”类</a> <span class="h3_01">热销品种</span>
+            </h3>
+            <div class="Retrieval4_gghu">
+                <div class="d_01">
+                    <ul id="latestBrowsedUl0">
+                        @{
+        DataTable dt = ViewBag.ThisClass_ProductList_SYZ;
+        for (i = 0; i < dt.Rows.Count; i++)
+        {
+            DataRow dr = dt.Rows[i];
+                            <li>
+                                <div style="position: relative">
+                                    <a href="/@{@dr["Product_ID"]}.html" target="_blank">
+                                        @Html.Raw(Public.Tag(dr))
+                                        <img class="pImage" src="@Public.RawImage(dr["Image"])" width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                                <div class="shop_dsp">
+                                    <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                        <span>
+                                            @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                            @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                    </a>
+                                </div>
+                                <div class="shop_price">
+                                    @{@Price.GetPriceShowString()}
+                                    :
+                                    @if (User.Identity.IsAuthenticated)
+                                    {                                    
+                                        <strong>@Html.Raw(dr["showPrice"].ToString())</strong>                                   
+                                    }
+                                    else
+                                    {
+                                        <a href="/Account/LogOn" class="LogOnShowPrice">登录可见</a>
+                                    }
+                                </div>
+                            </li>
+        }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    <div style="clear: both;">
+    </div>
+    <div class="info_Retrieval4 irf">
+        <h3>
+            最近浏览过的商品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                id="browseMore" onclick="showMoreBrowsed()" style="font-weight: normal; cursor: pointer;">更多&gt;&gt;</span></h3>
+        <div class="Retrieval4_gghu">
+            <div class="d_01">
+                <ul id="latestBrowsedUl">
+                    @if (ViewBag.History_Of_ProductList != null)
+                    {
+                        DataTable dt = ViewBag.History_Of_ProductList;
+                        for (i = 0; i < dt.Rows.Count; i++)
+                        {
+                            DataRow dr = dt.Rows[i];
+                        <li>
+                            @if (dr["is_cl"].ToString() == "是")
+                            {
+                                <div style="position: relative">
+                                    <a href="/@{@dr["Product_ID"]}.html" target="_blank">
+                                        <div class="detail_img_ico">
+                                            <span class="bkcl_ico">拆零</span></div>
+                                        <img class="pImage" src="@Public.RawImage(dr["Image"])" width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                            }
+                            else
+                            { 
+                                <div>
+                                    <a href="/@{@dr["Product_ID"]}.html" target="_blank">
+                                        <img class="pImage" src="@Public.RawImage(dr["Image"])" width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                            }
+                            <div class="shop_dsp">
+                                <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                    <span>
+                                        @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                        @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                    </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                </a>
+                            </div>
+                            <div class="shop_price">
+                                @{@Price.GetPriceShowString()}
+                                :
+                                @if (User.Identity.IsAuthenticated)
+                                {                                    
+                                    <strong>@Html.Raw(dr["showPrice"].ToString())</strong>                                   
+                                }
+                                else
+                                {
+                                    <a href="/Account/LogOn" class="LogOnShowPrice">登录可见</a>
+                                }
+                            </div>
+                        </li>
+                        }
+                    }</ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--list_left_detail-->
+<div class="list_right_detail">
+    <div class="info_Retrieval5 irf" style="display: none">
+        <h3>
+            新品推荐</h3>
+        @foreach (DataRow dv in ViewBag.HotTj.Rows)
+        {
+            <div class="Retrieval5_gghu">
+                <div class="gghu_img">
+                    <a href="/@(@dv["Product_ID"]).html">
+                        <img  src="@Public.RawImage(@dv["Image"])" width="148" height="148" /></a></div>
+                <ul class="shop_dsp">
+                    <li><a href="/@(@dv["Product_ID"]).html">
+                        <h2>
+                            @dv["Product_Name"]</h2>
+                    </a></li>
+                    <li>@dv["DrugsBase_Manufacturer"]</li>
+                    <li>规格：<span>@dv["gg"]</span></li>
+                    <li class="shop_price">
+                        @{@Price.GetPriceShowString()}
+                        ：<span>@Html.Raw(dv["showPrice"].ToString())</span></li>
+                    <li class="adtocart">
+                        @if (dv["showPrice"].ToString().IndexOf("¥") > -1)
+                        {
+                            <a href="/@(@dv["Product_ID"]).html" class="spec_button"></a>
+                            
+                        }
+                        else
+                        {
+                            <a href="/@(@dv["Product_ID"]).html" class="spec_button"></a>
+                        }
+                    </li>
+                    <li class="list_gz"><a href="#" onclick="shore(@dv["Product_ID"])"></a></li>
+                </ul>
+            </div>
+        }
+    </div>
+    <div class="hotlabel">
+        <div class="frist">
+            热门标签：</div>
+        <ul>
+            @foreach (var item in SearchModel.GetList(SearchModelEnum.热门标签))
+            {
+                <li><a href="@HomeController.SearchUrl(item.id, 5)">@item.name</a></li>                                 
+            }
+        </ul>
+    </div>
+    <style type="text/css">
+        .moreSx
+        {
+            display: none;
+        }
+        .showMore
+        {
+            background: #ffffff;
+            cursor: pointer;
+            text-align: center;
+            margin-left: 300px;
+            margin-top: -1px;
+            border: 1px solid #ccc;
+            border-top: 0 none;
+            width: 90px;
+            height: 22px;
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+        function toggleMore(a) {
+            var s1 = "展开更多条件 ↓", s2 = " 收起条件 ↑ ";
+            if (jQuery(a).text() == s1) {
+                jQuery(a).text(s2);
+                jQuery(".moreSx").show();
+            } else {
+                jQuery(a).text(s1);
+                jQuery(".moreSx").hide();
+            }
+        }
+    </script>
+    <div id="moreSxDiv" class="info_Retrieval6 irf">
+        <h3>
+            分类筛选</h3>
+        <div class="sx_pub">
+            <ul class="sx_ylyx">
+                <li class="sx_title">药理药效</li>
+                <li><a href="@ListController.DeleteUrl(0, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(0, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @{ 
+                    DataTable yaoli = ViewBag.Yaoli;
+                    int num = 7;
+                    i = 0;
+                    int p = 1;//页面码
+                    
+                }
+                @foreach (var item2 in SearchModel.GetList(SearchModelEnum.药理二级))
+                {
+                    i = i + 1;
+         
+                    <li><a href="@ListController.SearchUrl(item2.id, 0, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item2.id, 0, (string)ViewContext.RouteData.Values["filter"]))>@item2.name</a></li>
+                    if (i >= num)
+                    {
+                        break;
+                    }
+                }
+            </ul>
+            <span class="sx_last" onclick="openlist('#ylyx')" id="ylyx1">展开</span>
+            <div class="sx_zk_L1" style="display: none;" id="ylyx">
+                @{
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.药理一级))
+                    {
+                    <a style="color:#00a539; font-weight:bold;" href="@ListController.SearchUrl(item.tid, 0, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item.tid, 0, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a>
+                        foreach (var item2 in SearchModel.GetList(SearchModelEnum.药理二级).Where(x => x.ParentID == item.id))
+                        {
+                            i++;
+                            if (i > num)
+                            {
+                    <nobr><a href="@ListController.SearchUrl(item2.id, 0, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item2.id, 0, (string)ViewContext.RouteData.Values["filter"]))>@item2.name</a></nobr>
+                            }
+                        }
+                    <br />
+                    }
+                }
+            </div>
+        </div>
+        <div class="sx_pub">
+            <ul class="sx_ylyx">
+                <li class="sx_title">适应症</li>
+                <li><a href="@ListController.DeleteUrl(1, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(1, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @{ i = 0;
+                   num = 8;
+                   var syzdt = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute().GetList(71).AsEnumerable();
+                   foreach (var item in syzdt.Where(x => x.Field<int>("ParentId") == 0))
+                   {
+
+                       foreach (var item2 in syzdt.Where(x => x.Field<int>("ParentId") == (int)item["id"]))
+                       {
+                           i = i + 1;
+                                                   
+                    <li><a href="@ListController.SearchUrl((int)item2["id"], 1, (string)ViewContext.RouteData.Values["filter"])@par"  @Html.Raw(ListController.Selected((int)item2["id"], 1, (string)ViewContext.RouteData.Values["filter"]))>@item2["name"]</a></li>
+                           if (i >= num)
+                           {
+                               break;
+                           }
+                       }
+
+                       if (i >= num)
+                       {
+                           break;
+                       }
+                   }
+                }
+            </ul>
+            <span class="sx_last" onclick="openlist('#syz')" id="syz1">展开</span>
+            <div style="display: none;" class="sx_zk_L1" id="syz">
+                @{ i = 0;
+                   foreach (var item in syzdt.Where(x => x.Field<int>("ParentId") == 0))
+                   {
+                    <a style="color: #00a539; font-weight: bold;"href="@ListController.SearchUrl((int)item["id"], 1, (string)ViewContext.RouteData.Values["filter"])@par"  @Html.Raw(ListController.Selected((int)item["id"], 1, (string)ViewContext.RouteData.Values["filter"]))>@item["name"]</a>
+                       foreach (var item2 in syzdt.Where(x => x.Field<int>("ParentId") == (int)item["id"]))
+                       {
+                           i = i + 1;
+                           if (i > num)
+                           {
+                    <nobr><a href="@ListController.SearchUrl((int)item2["id"], 1, (string)ViewContext.RouteData.Values["filter"])@par"  @Html.Raw(ListController.Selected((int)item2["id"], 1, (string)ViewContext.RouteData.Values["filter"]))>@item2["name"]</a></nobr>                       
+                           }
+                       }
+                    <br />
+                   }
+                }
+            </div>
+        </div>
+        <div class="sx_pub">
+            <ul class="sx_ylyx">
+                <li class="sx_title">剂型</li>
+                <li><a href="@ListController.DeleteUrl(4, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(4, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @{
+                    num = 10;
+                    i = 0;
+                    var jxlist = SearchModel.GetList(SearchModelEnum.剂型二级);
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.剂型一级))
+                    {
+
+                        foreach (var item2 in jxlist.Where(x => x.ParentID == item.id))
+                        {
+                            i = i + 1;                  
+                    <li><a href="@ListController.SearchUrl(item2.id, 4, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item2.id, 4, (string)ViewContext.RouteData.Values["filter"]))>@item2.name</a></li>
+                            if (i >= num)
+                            {
+                                break;
+                            }
+                        }
+                        if (i >= num)
+                        {
+                            break;
+                        }
+
+                    }
+                }
+            </ul>
+            <span class="sx_last" onclick="openlist('#jx')" id="jx1">展开</span>
+            <div style="display: none;" class="sx_zk_L1" id="jx">
+                @{                   
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.剂型一级))
+                    {
+                    <a style="color: #00a539; font-weight: bold;">@item.name</a>                        
+                        foreach (var item2 in jxlist.Where(x => x.ParentID == item.id))
+                        {
+                            i = i + 1;
+
+                            if (i > num)
+                            {
+                    <nobr><a href="@ListController.SearchUrl(item2.id, 4, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item2.id, 4, (string)ViewContext.RouteData.Values["filter"]))>@item2.name</a></nobr>
+                            }
+                        }
+                    <br />
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="sx_pub moreSx">
+            <ul class="sx_ylyx">
+                <li class="sx_title">价格区间</li>
+                <li><a href="@ListController.DeleteUrl(3, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(3, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @foreach (var item in SearchModel.GetList(SearchModelEnum.价格区间))
+                {
+                    <li><a href="@ListController.SearchUrl(item.id, 3, (string)ViewContext.RouteData.Values["filter"])@par"  @Html.Raw(ListController.Selected(item.id, 3, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></li>                                 
+                }
+            </ul>
+        </div>
+        <div class="sx_pub moreSx">
+            <ul class="sx_ylyx">
+                <li class="sx_title">品牌厂家</li>
+                <li><a href="@ListController.DeleteUrl(6, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(6, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @{
+                    num = 7;
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.品牌厂家))
+                    {
+                        i += 1;
+                    <li><a href="@ListController.SearchUrl(item.id, 6, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item.id, 6, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></li>     
+                        if (i >= num)
+                        {
+                            break;
+                        }
+                    }
+                }
+            </ul>
+            <span class="sx_last" onclick="openlist('#ppzj')" id="ppzj1">展开</span>
+            <div style="display: none;" class="sx_zk_L1" id="ppzj">
+                @{                   
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.品牌厂家))
+                    {
+                        i += 1;
+                        if (i > num)
+                        {
+                    <nobr><a href="@ListController.SearchUrl(item.id, 6, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item.id, 6, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></nobr>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        @*<div class="sx_pub moreSx">
+            <ul class="sx_ylyx">
+                <li class="sx_title">进口药品</li>
+                <li><a href="@ListController.DeleteUrl(9, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(9, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @{
+                    num = 5;
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.进口药品))
+                    {
+                        i += 1;
+                    <li><a href="@ListController.SearchUrl(item.id, 9, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item.id, 9, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></li>     
+                        if (i >= num)
+                        {
+                            break;
+                        }
+                    }
+                }
+            </ul>
+            <span class="sx_last" onclick="openlist('#ppzjkou')" id="ppzjkou1">展开</span>
+            <div style="display: none;" class="sx_zk_L1" id="ppzjkou">
+                @{                   
+                    i = 0;
+                    foreach (var item in SearchModel.GetList(SearchModelEnum.进口药品))
+                    {
+                        i += 1;
+                        if (i > num)
+                        {
+                    <nobr><a href="@ListController.SearchUrl(item.id, 9, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(item.id, 9, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></nobr>
+                        }
+                    }
+                }
+            </div>
+        </div>*@
+        <div class="sx_pub moreSx">
+            <ul class="sx_ylyx">
+                <li class="sx_title">中药饮片</li>
+                <li><a href="@ListController.DeleteUrl(8, (string)ViewContext.RouteData.Values["filter"])@par" @Html.Raw(ListController.Selected(8, (string)ViewContext.RouteData.Values["filter"]))>
+                    不限</a></li>
+                @foreach (var item in SearchModel.GetList(SearchModelEnum.中药饮片))
+                {
+                    <li><a href="@ListController.SearchUrl(item.id, 8, (string)ViewContext.RouteData.Values["filter"])@par"  @Html.Raw(ListController.Selected(item.id, 8, (string)ViewContext.RouteData.Values["filter"]))>@item.name</a></li>                                 
+                }
+            </ul>
+        </div>
+        <div class="sx_tjsx">
+            <span class="sx_title">已选条件</span>
+            <ul class="sx_ylyx">
+                @{
+                    for (int j = 0; j < ViewBag.Selected.Count; j++)
+                    {
+                    <li><a href="@ListController.DeleteUrl(ViewBag.Posit[j], (string)ViewContext.RouteData.Values["filter"])@par">@ViewBag.Selected[j]</a></li>
+                    }
+                    if (ViewBag.Search != null)
+                    {
+                    <li><a href="@ListController.DeleteSearch(Request)">@ViewBag.Search</a></li>
+                    }
+                    if (ViewBag.ThisClass != null)
+                    {
+                        if (ViewBag.Selected.Count == 0)
+                        {
+                    <li><a href="@ListController.DeleteUrl(0, (string)ViewContext.RouteData.Values["filter"])">@ViewBag.ThisClass</a></li>
+                        }
+                        else
+                        {
+                            List<SOSOshop.Model.SearchModel> list = SearchModel.GetList(SearchModelEnum.药理二级);
+                            bool display = false;
+                            foreach (SOSOshop.Model.SearchModel item in list)
+                            {
+                                if (item.id == ViewBag.ThisClassID)
+                                {
+                                    display = false;
+                                    break;
+                                }
+                                else
+                                {
+                                    display = true;
+                                }
+                            }
+                            if (display)
+                            {
+                    <li><a href="@ListController.DeleteUrl(0, (string)ViewContext.RouteData.Values["filter"])">@ViewBag.ThisClass</a></li>
+                            }
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="info_Retrieval6 irf" style="padding-top: 0; margin-top: 0; border: 0;">
+        <div class="sx_tjsx" style="padding-top: 0; margin-top: 0;">
+            <span class="showMore" onclick="toggleMore(this)">展开更多条件 ↓</span></div>
+    </div>
+    <!--div class="hotlabel">
+        <form action="" method="post">
+        药品名称<input type="text" style="border:1px solid #dedede" name="ypmc"/>&nbsp;&nbsp;生产厂家<input type="text"  style="border:1px solid #dedede" name="sccj" /> 
+        <input type="submit" style="border:1px solid #dedede"  value="查询"/>
+        </form>
+    </div-->
+    <!------------------------->
+    @helper productlistheader(int show)
+        {
+            string style = "id=list_px_red";
+            string ext = ".html";
+        <div class="shop_sx">
+            <ul class="list_sx">
+                <li class="shoplist_dt@(show == 1 ? "_red" : "")"><a href="javascript:list(1)">大图</a></li>
+                <li class="shoplist_lb@(show == 0 ? "_red" : "")"><a href="javascript:list(0)">列表</a></li>
+            </ul>
+            <ul class="list_px">
+                <li @if (ViewBag.Sort == 1)
+                    { 
+                    @style
+                    }
+                ><a href="javascript:sort(1)">浏览量</a></li>
+                <li @if (ViewBag.Sort == 2)
+                    { 
+                    @style
+                    }><a href="javascript:sort(2)">价格</a></li>
+                <li @if (ViewBag.Sort == 3)
+                    { 
+                    @style
+                    }><a href="javascript:sort(3)">销量</a></li>
+            </ul>
+            @{if (ViewBag.PageCount == 0) { ViewBag.PageCount = 1; }}
+            <ul class="list_page">
+                <li>共：<strong>@ViewBag.RecordSize</strong>个商品</li>
+                <li><strong>@ViewBag.CurrentPage</strong>/<span>@ViewBag.PageCount</span></li>
+                @{  
+                    int cpage = @ViewBag.CurrentPage;
+                    int prev = 1;
+                    int next = @ViewBag.PageCount;
+                    if (cpage > 0)
+                    {
+                        prev = cpage - 1; 
+                    <li class="list_page_left" onclick="document.location.href='/products/@ViewBag.PageURL-@(prev)@ext/?@Request.QueryString'">
+                        <span><a href="">></a></span></li>
+                    }
+                    else
+                    {
+                    <li class="list_page_left"><span><a href="">></a></span></li>
+                    }
+                    if (cpage < next)
+                    {
+                        next = cpage + 1;
+                    <li class="list_page_right" onclick="document.location.href='/products/@ViewBag.PageURL-@(next)@ext/?@Request.QueryString'">
+                        <span><a href=""><</a></span></li>
+                    }
+                    else
+                    {
+                    <li class="list_page_right"><span><a href=""><</a></span></li>
+                    }
+     
+    
+                }
+            </ul>
+        </div>
+    }
+    @if (ViewBag.Show == 0)
+    {
+        if (ViewBag.Memberclass == 1)
+        {
+        @productlistheader(1)
+        @showPicture()       
+        }
+        else
+        {
+        @productlistheader(0)
+        @productlist()        
+        }
+    }
+    else if (ViewBag.Show == 1)
+    {
+        @productlistheader(1)
+        @showPicture()   
+    }
+    else
+    {
+        @productlistheader(0)
+        @productlist()
+    
+    }
+    <div class="div_paginator">
+        @if (Model != null)
+        {
+            @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator" })
+            <span class="div_paginator_span">没有找到你想要的商品？ <a style="color: #00a539;" href="/MemberCenter/TradingIntentionAdd">
+                点击这里提交品种交易意向， 我们会尽快补货！</a></span>
+        }
+    </div>
+    <!--list_right_detail-->
+    <!--列表-->
+    @helper productlist()
+        {
+        <div class="clear">
+        </div>
+        <div class="zk_info">
+            <table class="p-list" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                    <tr>
+                        @*  <th>
+                            标示
+                        </th>*@
+                        <th>
+                            药品名称
+                        </th>
+                        <!--th>
+                            商品名
+                        </th-->
+                        <th style="width: 120px;">
+                            规格
+                        </th>
+                        <th>
+                            生产企业
+                        </th>
+                        <th>
+                            件装
+                        </th>
+                        <th style="width: 62px;">
+                            @{@Price.GetPriceShowString()}
+                        </th>
+                        @if (User.Identity.IsAuthenticated)
+                        { 
+
+                            <th>
+                                购买数
+                            </th>
+                        }
+                        <th style="width: 66px">
+                            操作
+                        </th>
+                    </tr>
+                    @{DataTable list = ViewBag.List;
+                      string ext = ".html";
+                      if (list != null && list.Rows.Count != 0)
+                      {
+                          foreach (DataRow dv in list.Rows)
+                          {                   
+                   
+                        <tr>
+                            <td>
+                                <div>
+                                    <a href="/@dv["Product_ID"]@ext" title="@dv["Product_Name"]" target="_blank">@dv["Product_Name"]@(@dv["DrugsBase_ProName"].ToString() != "" ? " [" + @dv["DrugsBase_ProName"] + "]" : "")</a></div>
+                            </td>
+                            <!--td>
+                            </td-->
+                            <td title="@dv["DrugsBase_Specification"] x @Public.GetSpecification(dv)">@Public.GetSpecificationAndS(dv)
+                            </td>
+                            <td>
+                                <div title="@dv["DrugsBase_Manufacturer"]">@dv["DrugsBase_Manufacturer"]</div>
+                            </td>
+                            <td width="50">
+                                @if (dv["Goods_Pcs"].ToString() == "1")
+                                {
+                                    <text>无</text>
+                                }
+                                else
+                                {
+                                    @dv["Goods_Pcs"]<span>@dv["Goods_Unit"]<text>/件</text></span>
+                                }
+                                <input type="hidden" id="jz-@dv["Product_ID"]" value="@dv["Goods_Pcs"]" />
+                            </td>
+                            @if (User.Identity.IsAuthenticated)
+                            { 
+                                <td>
+                                    <div style="text-align: right">@Html.Raw(@dv["showPrice"].ToString())</div>
+                                </td>
+                                <td style="width: 80px;">
+                                    @if (1 == (int)dv["sellType"] || 2 == (int)dv["sellType"])
+                                    {
+                                        decimal minsell = (decimal)dv["BagCapacity"];
+                                        if (2 == (int)dv["sellType"])
+                                        {
+                                            minsell = Math.Max((decimal)dv["Goods_Pcs_Small"], minsell);
+                                        }
+                                        //if (minsell < 1)
+                                        //{
+                                        //    minsell = 1;
+                                        //}
+                                        <div class="zk_info_input_box">
+                                            <div class="zk_info_input">
+                                                <span class="jianshao">
+                                                    <img style="padding:2px 0;" src="/images/jianshao_bg.jpg" width="16" height="16" onclick="sub(@dv["Product_ID"],@dv["BagCapacity"])" />
+                                                </span>
+                                                <input type="text" id="h-@dv["Product_ID"]" onblur="henum(@dv["Product_ID"])" class="numbers" value="@minsell.ToString("f2")" minsell="@minsell" jz="@(dv["Goods_Pcs"])" zbz="@(dv["Goods_Pcs_Small"])" selltype="@(dv["sellType"])" />
+                                                <span class="zhengjia">
+                                                    <img style="padding:2px 0;" src="/images/zhengjia_bg.jpg" width="16" height="16" onclick="add(@dv["Product_ID"],@dv["BagCapacity"])"/>
+                                                </span>
+                                            </div>@dv["Goods_Unit"]
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="zk_info_input_box">
+                                            <div class="zk_info_input">
+                                                <span class="jianshao">
+                                                    <img style="padding:2px 0;" src="/images/jianshao_bg.jpg" width="16" height="16" onclick="sub(@dv["Product_ID"])" />
+                                                </span>
+                                                <input type="text" id="h-@dv["Product_ID"]" onblur = "henum(@dv["Product_ID"])" class="numbers" value="1.00"  minsell="1.00" />
+                                                <span class="zhengjia">
+                                                    <img style="padding:2px 0;" src="/images/zhengjia_bg.jpg" width="16" height="16" onclick="add(@dv["Product_ID"],0)"/>
+                                                </span>
+                                            </div>
+                                            件
+                                        </div>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                
+                                <td>
+                                    @Html.Raw(dv["showprice"].ToString())
+                                </td>
+                                
+                            }
+                            <td>
+                                <strong style="float: left; padding: 0 2px;">
+                                    @if (dv["showPrice"].ToString().IndexOf("¥") > -1)
+                                    {
+                                        <img  style="cursor:pointer;" src="/images/jy_cart.jpg"  onclick="addShopCar(@dv["Product_ID"],@Price.GetMember_Class())"/>
+                                    }
+                                    else
+                                    {
+                                        <img style="cursor:pointer;" src="/images/jy_cart2.jpg" onclick="addShopCar(@dv["Product_ID"],@Price.GetMember_Class())"/>
+                                    }
+                                </strong><strong style="float: left;">
+                                    <img  style="cursor:pointer;" src="/images/jy_sc.jpg" onclick="shore(@dv["Product_ID"],@Price.GetMember_Class())" /></strong>
+                            </td>
+                        </tr>  
+                          }
+                      }
+                      else
+                      {
+                        <tr>
+                            <td colspan="20" id="checkerror">
+                                抱歉, 没有找到与“
+                                @for (int j = 0; j < ViewBag.Selected.Count; j++)
+                                {
+                                    <span>@ViewBag.Selected[j]</span>
+                                }
+                                @if (ViewBag.Search != null)
+                                {
+                                    <span>@ViewBag.Search</span>
+                                }
+                                ”相关的商品,<br />
+                                <a href="/MemberCenter/TradingIntentionAdd">点击这里提交品种交易意向，@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]会尽快补货！</a>
+                                <style type="text/css">
+                                    /*checkerror*/
+                                    #checkerror
+                                    {
+                                        padding: 15px 10px 15px 50px;
+                                        border: 1px solid #edd28b;
+                                        background: #fffdee;
+                                        font-size: 14px;
+                                        font-weight: bold;
+                                        text-align: left;
+                                    }
+                                    #checkerror span
+                                    {
+                                        color: #c00;
+                                        font-weight: normal;
+                                        padding: 1px 2px;
+                                    }
+                                    #checkerror a
+                                    {
+                                        color: #005aa0;
+                                    }
+                                    #checkerror a.text-red
+                                    {
+                                        color: #c00;
+                                    }
+                                </style>
+                            </td>
+                        </tr>  
+                      }
+                    }
+                </tbody>
+            </table>
+        </div>  
+    }
+    <!--大图-->
+    @helper showPicture()
+        {
+            DataTable list = ViewBag.List;
+            string ext = ".html";
+            if (list != null && list.Rows.Count != 0)
+            {
+        <ul class="djrx_shopimg">
+            @for (int i = 0; i < list.Rows.Count; i++)
+            {
+                DataRow dv = list.Rows[i];
+                <li class="djrx_shopimg_li01">
+                    <div class="Retrieval5_gghu2">
+                        <div class="gghu_img2" style="position: relative">
+                            <a href="/@list.Rows[i]["Product_ID"]@ext"  target="_blank">
+                                @Html.Raw(Public.Tag(list.Rows[i]))
+                                <img class="pImage" title="@list.Rows[i]["Product_Name"]  规格：@Public.GetSpecificationAndS(list.Rows[i])  @list.Rows[i]["DrugsBase_Manufacturer"]" src="@Public.RawImage(list.Rows[i]["Image"])" alt="@list.Rows[i]["Product_Name"]包装盒" width="168px" height="168px" />
+                            </a>
+                        </div>
+                        <ul class="shop_dsp2">
+                            <li title="@list.Rows[i]["Product_Name"]  规格：@Public.GetSpecificationAndS(list.Rows[i])  @list.Rows[i]["DrugsBase_Manufacturer"]">
+                                <p class="list_cj">
+                                    <a href="/@list.Rows[i]["Product_ID"]@ext"  target="_blank">@list.Rows[i]["Product_Name"]</a></p>
+                            </li>
+                            <li title="@list.Rows[i]["Product_Name"]  规格：@Public.GetSpecificationAndS(list.Rows[i])  @list.Rows[i]["DrugsBase_Manufacturer"]">
+                                <p class="list_cj">@list.Rows[i]["DrugsBase_Manufacturer"]</p>
+                            </li>
+                            <li title="@list.Rows[i]["Product_Name"]  规格：@Public.GetSpecificationAndS(list.Rows[i])  @list.Rows[i]["DrugsBase_Manufacturer"]">
+                                <span class="list_gg_title">规格：</span><span class="list_gg_show">@list.Rows[i]["DrugsBase_Specification"]<text>x</text>@Public.GetSpecification(list.Rows[i])</span></li>
+                            <li class="shop_price">
+                                @{@Price.GetPriceShowString()}
+                                ：<span>
+                                    @Html.Raw(list.Rows[i]["showPrice"].ToString())</span> </li>
+                            <li>
+                                @if (1 == (int)dv["sellType"] || 2 == (int)dv["sellType"])
+                                {
+                                    decimal minsell = (decimal)list.Rows[i]["BagCapacity"];
+                                    if (2 == (int)dv["sellType"])
+                                    {
+                                        minsell = Math.Max((int)dv["Goods_Pcs_Small"], minsell);
+                                    }
+                                    //if (minsell < 1)
+                                    //{
+                                    //    minsell = 1;
+                                    //}
+                                    <div class="zk_info_input_box">
+                                        <div class="zk_info_input">
+                                            <span class="jianshao">
+                                                <img style="padding:2px 0;" src="/images/jianshao_bg.jpg" width="16" height="16" onclick="sub(@list.Rows[i]["Product_ID"],@list.Rows[i]["BagCapacity"])" />
+                                            </span>
+                                            <input type="text" id="h-@list.Rows[i]["Product_ID"]" onblur="henum(@list.Rows[i]["Product_ID"])" class="numbers" value="@minsell.ToString("f2")" minsell="@minsell" jz="@(dv["Goods_Pcs"])" zbz="@(dv["Goods_Pcs_Small"])" selltype="@(dv["sellType"])" />
+                                            <span class="zhengjia">
+                                                <img style="padding:2px 0;" src="/images/zhengjia_bg.jpg" width="16" height="16" onclick="add(@list.Rows[i]["Product_ID"],@list.Rows[i]["BagCapacity"])"/>
+                                            </span>
+                                        </div>
+                                        <span style="width: 12px; overflow: hidden; white-space: nowrap; float: left; _display: inline;">@list.Rows[i]["Goods_Unit"]</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="zk_info_input_box">
+                                        <div class="zk_info_input">
+                                            <span class="jianshao">
+                                                <img style="padding:2px 0;" src="/images/jianshao_bg.jpg" width="16" height="16" onclick="sub(@list.Rows[i]["Product_ID"],0)" />
+                                            </span>
+                                            <input type="text" id="h-@list.Rows[i]["Product_ID"]" onblur = "jhenum(@list.Rows[i]["Product_ID"])" class="numbers" value="1.00" minsell="1.00" />
+                                            <span class="zhengjia">
+                                                <img style="padding:2px 0;" src="/images/zhengjia_bg.jpg" width="16" height="16" onclick="add(@list.Rows[i]["Product_ID"],0)"/>
+                                            </span>
+                                        </div>
+                                        件
+                                    </div>
+                                }
+                                <div style="float: left; margin-top: 7px; margin-left: 6px; _margin-left: 4px; max-width: 80px;
+                                    overflow: hidden; white-space: nowrap;">
+                                    @if (list.Rows[i]["Goods_Pcs"].ToString() == "1")
+                                    {
+                                        <text></text>
+                                    }
+                                    else
+                                    {
+                                        <span class="jz_num_nnu">@list.Rows[i]["Goods_Pcs"]</span><span style="width: 12px;
+                                            overflow: hidden; white-space: nowrap; float: left; _display: inline;">@list.Rows[i]["Goods_Unit"]</span><text>/件</text>
+                                    }</div>
+                            </li>
+                            <li style="padding-top: 8px;" class="adtocart"><a class="addCat" href="javascript:addShopCar(@list.Rows[i]["Product_ID"],@Price.GetMember_Class())">
+                                加入购物车</a> <a class="addGuanz" href="javascript:shore(@list.Rows[i]["Product_ID"])">关注</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ul>
+            }
+            else
+            {
+        <div class="clear">
+        </div>
+        <div class="zk_info">
+            <table class="p-list" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td colspan="20" id="checkerror">
+                        抱歉, 没有找到与“
+                        @for (int j = 0; j < ViewBag.Selected.Count; j++)
+                        {
+                            <span>@ViewBag.Selected[j]</span>
+                        }
+                        @if (ViewBag.Search != null)
+                        {
+                            <span>@ViewBag.Search</span>
+                        }
+                        ”相关的商品,<br />
+                        <a href="/MemberCenter/TradingIntentionAdd">点击这里提交品种交易意向，@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]会尽快补货！</a>
+                        <style type="text/css">
+                            /*checkerror*/
+                            #checkerror
+                            {
+                                padding: 15px 10px 15px 50px;
+                                border: 1px solid #edd28b;
+                                background: #fffdee;
+                                font-size: 14px;
+                                font-weight: bold;
+                                text-align: left;
+                            }
+                            #checkerror span
+                            {
+                                color: #c00;
+                                font-weight: normal;
+                                padding: 1px 2px;
+                            }
+                            #checkerror a
+                            {
+                                color: #005aa0;
+                            }
+                            #checkerror a.text-red
+                            {
+                                color: #c00;
+                            }
+                        </style>
+                    </td>
+                </tr>
+            </table>
+        </div>  
+            }
+    }
+    <script language="javascript" type="text/javascript" src="/Scripts/shopcart-num.js"></script>
+    <script language="javascript" type="text/javascript">
+        //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+        getAdContent("50");
+    </script>
+</div>

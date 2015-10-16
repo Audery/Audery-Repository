@@ -1,0 +1,115 @@
+﻿@model _101shop.v3.Models.LogOnModel
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["LogOn_Title"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["LogOn_Key"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["LogOn_Description"];
+}
+<link rel="stylesheet" type="text/css" href="/Content/login.css" />
+@*<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">*@
+</head>
+@{Html.RenderPartial("Nav");}
+<script type="text/javascript">
+    function turnToPage() {
+        var userName = document.getElementById("UserName");
+        var forgetPassWord = document.getElementById("forgetPassWord");
+
+        if (userName.value != undefined && userName.value != "" && userName.value != "点击输入手机号码") {
+            forgetPassWord.href = "/account/findpassword?userName=" + userName.value;
+        }
+        else {
+            forgetPassWord.href = "/account/findpassword";
+        }
+
+    }
+</script>
+<ul class="list_nav">
+    <li><a href="#">会员登陆</a></li>
+</ul>
+@using (Html.BeginForm())
+{
+    <div class="login_left_banner">
+        <img src="/images/login_bg.jpg" />
+    </div>
+    <div class="right_login">
+        <p style="height: 20px;">
+            <span style="float: left;">会员登陆</span><a id="forgetPassWord" style="float: right;
+                font-size: 12px; font-weight: normal; cursor: pointer;" onclick="turnToPage()">忘记密码？</a></p>
+        <div class="username">@Html.TextBoxFor(x => x.UserName, new { onblur = "return onPhone()", @placeholder = "点击输入手机号码", @def = "点击输入手机号码", @class = "ok def" })
+        </div>
+        <div class="password">@Html.PasswordFor(x => x.PassWord, new { onblur = "return onPass()", @placeholder = "点击输入密码", @class = "ok" })
+        </div>
+        <div class="code">
+            @Html.TextBoxFor(x => x.Captcha, new { onblur = "return onCheck()", @placeholder = "验证码", @def = "验证码", @class = "ok def" })
+            <span class="codeimg">
+                <img border="0" id="imgCode" src="/include/captcha.ashx?r=385282549" alt="看不清，单击换一张"
+                    onclick="this.src='/include/captcha.ashx?r='+Math.random()" title="点击可刷新验证码"
+                    style="width: 103px; height: 30px;" /></span> <a href="javascript:void(0)" onclick="reloadimg()">
+                        换一张</a>
+        </div>
+        <div class="submit">
+            <input class="submit_login" name="" type="submit" value="" onclick="return checksubmit()" />
+            <input class="submit_register" name="" type="button" value="" onclick="document.location.href='/account/register'" />
+            <input type="hidden" value="@ViewBag.Ref" name="referrer" />
+            <input id="WebBrowser" name="WebBrowser" type="hidden" />
+            <input id="distinguishability" name="distinguishability" type="hidden" />
+        </div>
+        <div id="ValidationSummary">@Html.ValidationSummary()</div>
+        <div style="display: none; margin-top: 10px; padding-left: 10px; color: #bd0000;"
+            id="hdAttention">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <!------------------>
+
+}
+@*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+				</div>
+				<div class="modal-body alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;&nbsp;&nbsp;&nbsp;由于近期网站升级与调试，为避免影响到用户体验与下单数据，商城决定从<mark>2015年4月23日</mark>起暂停下单，在此期间诸多不便，敬请谅解！</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">我知道了</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+	</div>*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        //alert(navigator.appVersion);
+        $("#WebBrowser").val(navigator.appName);
+        $("#distinguishability").val(window.screen.width + "x" + window.screen.height);
+
+
+//        var Sys = {};
+//        var ua = navigator.userAgent.toLowerCase();
+//        if (window.ActiveXObject)
+//            Sys.ie = ua.match(/msie ([\d.]+)/)[1]
+//        else if (document.getBoxObjectFor)
+//            Sys.firefox = ua.match(/firefox\/([\d.]+)/)[1]
+//        else if (window.MessageEvent && !document.getBoxObjectFor)
+//            Sys.chrome = ua.match(/chrome\/([\d.]+)/)[1]
+//        else if (window.opera)
+//            Sys.opera = ua.match(/opera.([\d.]+)/)[1]
+//        else if (window.openDatabase)
+//            Sys.safari = ua.match(/version\/([\d.]+)/)[1];
+
+//        //以下进行测试
+//        if (Sys.ie) document.write('IE: ' + Sys.ie);
+//        if (Sys.firefox) document.write('Firefox: ' + Sys.firefox);
+//        if (Sys.chrome) document.write('Chrome: ' + Sys.chrome);
+//        if (Sys.opera) document.write('Opera: ' + Sys.opera);
+//        if (Sys.safari) document.write('Safari: ' + Sys.safari);
+    });
+
+$(function () { $('#myModal').modal({
+      keyboard: true
+   })});
+</script>
+<script language="javascript" type="text/javascript" src="/scripts/check.js"></script>

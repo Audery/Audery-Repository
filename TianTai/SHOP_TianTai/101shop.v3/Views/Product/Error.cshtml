@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101shopDetail.css" />
+    <script type="text/javascript" src="/Scripts/tab.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/">首页</a></li>
+</ul>
+
+<div style="display: block; height: 100px;">
+<p></p>
+<p></p>
+<span style="display:block; font-size:18px; text-align:center; margin:50px auto;">很抱歉，您查看的宝贝不存在，可能已下架或者被转移。
+</span>
+<p></p>
+<p></p>
+</div>

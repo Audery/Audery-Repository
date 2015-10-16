@@ -1,0 +1,334 @@
+﻿@model PagedList<System.Data.DataRow>
+@using System.Data;
+@using SOSOshop.Model.Order;
+@using Webdiyer.WebControls.Mvc
+@using _101shop.v3.Controllers
+@{
+    ViewBag.Title = "我的订单";
+    DataTable list = ViewBag.List;
+    int waitnum = new MemberCenterController().WaitProcessOrders();
+
+}
+<link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanager.css" />
+<style type="text/css">
+    .xstooltip
+    {
+        background: #efefef;
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 20;
+        z-index: 2;
+        padding-left: 2px;
+        padding-top: 2px;
+        display: none;
+    }
+    
+    .xstooltip th
+    {
+        padding: 2px 4px 2px 4px;
+        border: 1px solid #aeaeae;
+        text-align: center;
+    }
+    
+    .xstooltip td
+    {
+        padding: 2px 4px 2px 4px;
+        border: 1px solid #aeaeae;
+    }
+    
+    .xstooltip .right
+    {
+        text-align: right;
+    }
+    
+    .xstooltip .center
+    {
+        text-align: center;
+    }
+</style>
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>我的订单</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 100px; float: left;">
+            我的订单
+        </div>
+        <span>
+            @if (waitnum > 0)
+            {
+                <span class="waitpic" style="padding-left: 20px;"><a href="?wait=1">
+                    <text>有</text>@waitnum<text>个订单需要您去处理</text>
+                </a></span>
+            }
+        </span>
+        <div class="search_01">
+            <input class="text def" name="search" id="search" type="text" def="商品名称或订单编号" value="@ViewBag.search" />
+            <input type="button" value="查 询" class="bti" onclick="search()">
+        </div>
+    </div>
+    <div class="list_shop_title">
+        <ul>
+            <li class="ls_01">订单类型
+                <!--select class="city" name="ordertype" id="ordertype">
+                        <option value=""></option>
+                        <option value="1">普通订单</option>
+                        <option value="2">预购订单</option>
+                    </select-->
+            </li>
+            <li class="ls_02">订单编号/详情 </li>
+            <li class="ls_03">
+                <select class="city" name="Paymenttype" id="Paymenttype">
+                    <option value="" @(string.IsNullOrEmpty(ViewBag.Paymenttype) ? "selected" : "")>付款方式</option>
+                    <option value="1" @(ViewBag.Paymenttype == "1" ? "selected" : "")>在线支付</option>
+                    <option value="2" @(ViewBag.Paymenttype == "2" ? "selected" : "")>银行转账</option>
+                </select>
+            </li>
+            <li class="ls_04">订单金额</li>
+            <li class="ls_05">
+                <select class="city" name="orderdate" id="orderdate">
+                    <option value="" @(string.IsNullOrEmpty(ViewBag.orderdate) ? "selected" : "")>下单时间</option>
+                    <option value="1" @(ViewBag.orderdate == "1" ? "selected" : "")>一周内订单</option>
+                    <option value="2" @(ViewBag.orderdate == "2" ? "selected" : "")>一个月内订单</option>
+                    <option value="3" @(ViewBag.orderdate == "3" ? "selected" : "")>三个月内订单</option>
+                </select>
+            </li>
+            <li class="ls_06">
+                <select class="city" name="orderstatus" id="orderstatus">
+                    <option value="" @(string.IsNullOrEmpty(ViewBag.orderstatus) ? "selected" : "")>订单状态</option>
+                    <option value="1" @(ViewBag.orderstatus == "1" ? "selected" : "")>待审核</option>
+                    <option value="2" @(ViewBag.orderstatus == "2" ? "selected" : "")>已审核</option>
+                    @*<option value="3" @(ViewBag.orderstatus == "3" ? "selected" : "")>已支付</option>*@
+                    <option value="4" @(ViewBag.orderstatus == "4" ? "selected" : "")>已完成</option>
+                    <option value="-1" @(ViewBag.orderstatus == "-1" ? "selected" : "")>已取消</option>
+                    <option value="-2" @(ViewBag.orderstatus == "-2" ? "selected" : "")>已作废</option>
+                </select>
+            </li>
+            <li class="ls_07">操作</li>
+        </ul>
+    </div>
+    @{
+        foreach (DataRow dv in list.Rows)
+        {
+        <ul class="zk_info">
+            <li class="zk_info_1">普通订单</li>
+            <li class="zk_info_2"><a href="/membercenter/orderdetails?orderno=@dv["OrderId"].ToString()" id="@dv["OrderId"]" onmouseover="xstooltip_show('tooltip-@dv["OrderId"]', '@dv["OrderId"]', 480, 20);" onmouseout="xstooltip_hide('tooltip-@dv["OrderId"]');">@dv["OrderId"]</a>
+                <div id="tooltip-@dv["OrderId"]" class="xstooltip">
+                    @{
+            DataTable proname = new MemberCenterController().OrderProudctName(dv["OrderId"].ToString());
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            s.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th><th>{3}</th><th>{4}</th></tr>", "品名", "数量", "单价", "金额", "状态");
+            foreach (DataRow dr in proname.Rows)
+            {
+                s.AppendFormat("<tr><td>{0}</td><td class='center'>{1}</td><td class='right'>{2}</td><td class='right'>{3}</td><td class='center'>{4}</td></tr>", dr["ProName"], dr["ProNum"], dr["ProPrice"], (decimal)dr["ProNum"] * (decimal)dr["ProPrice"], @SOSOshop.Model.Order.OrderProduct.GetClientStauts((int)dr["Status"]));
+            }
+                        <table cellpadding="0" class="detailTable" style="background: #efefef;">@Html.Raw(s.ToString())</table>
+                    }
+                </div>
+            </li>
+            <li class="zk_info_4">
+                @Orders.GetPayment((int)dv["Payment"]) /
+                @if ((int)dv["PaymentType"] == 1 && (int)dv["PaymentStatus"] == 0 && (int)dv["OrderStatus"] > 0)
+                {
+                    <a href='/Payment/@dv["OrderId"]' target="_blank">立即支付</a>
+                }
+                else
+                {
+                    string pays = Orders.GetPaymentType((int)dv["PaymentType"]);
+                    @pays
+                }
+            </li>
+            <li class="zk_info_5">@string.Format("{0:C}", dv["TotalPrice"])</li>
+            <li class="zk_info_6">@dv["ShopDate"]</li>
+            <li class="zk_info_7">
+                @if ((int)dv["orderstatus"] == 1 && (int)dv["isprocess"] > 0)
+                {
+                    <text>正在处理</text>
+                }
+                else
+                {
+                    if ((int)dv["PaymentType"] == 1 && (int)dv["PaymentStatus"] == 1)
+                    {
+                    <span style='color: #008085'>已支付</span>
+                    }
+                    else
+                    {
+                    @Html.Raw(Orders.GetOrderStatus((int)dv["orderstatus"]))
+                    }
+                }
+                @if ((int)dv["iswait"] > 0)
+                {
+                    <text><div class="waitpic" style="margin: 0 auto;">
+                    </div></text>
+                }
+            </li>
+            <li class="zk_info_8">
+                @if (((int)dv["orderstatus"] == 1 || (int)dv["orderstatus"] == 2 || (int)dv["orderstatus"] == 3) && dv.IsNull("BusinessCheckDate"))
+                {
+                    <span><a href="javascript:void(0)" onclick="canelorders('@dv["OrderId"]')">取消</a></span>
+                }
+@*@if ((int)dv["orderstatus"] == 1 || (int)dv["orderstatus"] == 3)
+                            {
+                                if ((int)dv["isprocess"] == 0)
+                                {
+                                <!--span><a href="#">修改</a></span--> <span> <a href="javascript:void(0)" onclick="canelorders('@dv["OrderId"]')">
+                                    取消</a></span>
+                                }
+                            }*@
+                <a class="btn-again" href="javascript:void(0)" onclick="copy('@dv["OrderId"]')">还要买</a>
+            </li>
+        </ul>
+        }
+
+    }
+    <div style="clear: both">
+        <br />
+        @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })
+    </div>
+</div>
+<!--content---------content------>
+<script language="javascript" type="text/javascript">
+
+        function canelorders(id) {
+            $.ajax({
+                type: 'POST',
+                url: '/MemberCenter/CancelOrders',
+                data: { oid: id },
+                dataType: "json",
+                success: function (msg, textStatus) {
+                    switch (msg["state"]) {
+                        case 1:
+                            alert(msg["message"]);
+                            document.location.reload();
+                            break;
+                        default:
+                            alert(msg["message"]);
+                            break;
+                    }
+                }
+            });
+        }
+
+        function search() {
+            var s = $("#search").val();
+            if (s == "" || s == "商品名称或订单编号") {
+                alert("请输入要查询的内容！");
+            }
+            else {
+                document.location.href = "?search="+s;
+            }
+        }
+
+        function copy(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '/MemberCenter/CopyShopToShoppinCart',
+                data: { oid: id },
+                dataType: "json",
+                success: function (msg, textStatus) {
+                    switch (msg["state"]) {
+                        case 1:
+                            alert(msg["message"]);
+                            document.location.href = "/Shoppingcart/MyShoppingCart";
+                            break;
+                        default:
+                            alert(msg["message"]);
+                            break;
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $("#orderstatus").change(function () {
+                var id = $("#orderstatus").val();
+                document.location.href = "?orderstatus=" + id;
+            });
+            $("#ordertype").change(function () {
+                var id = $("#ordertype").val();
+                document.location.href = "?ordertype=" + id;
+            });
+            $("#Paymenttype").change(function () {
+                var id = $("#Paymenttype").val();
+                document.location.href = "?Paymenttype=" + id;
+            });
+            $("#orderdate").change(function () {
+                var id = $("#orderdate").val();
+                document.location.href = "?orderdate=" + id;
+            });
+        });
+        var waitnum=@waitnum;
+        if(waitnum>0)
+        {
+            // alert("您有 "+waitnum+" 个订单需要您确认处理，请您点击进入后进行确认。");
+        }
+
+
+</script>
+<script>
+    function xstooltip_findPosX(obj) {
+        var curleft = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curleft += obj.offsetLeft
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.x)
+            curleft += obj.x;
+        return curleft;
+    }
+    function xstooltip_findPosY(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curtop += obj.offsetTop
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.y)
+            curtop += obj.y;
+        return curtop;
+    }
+    function xstooltip_show(tooltipId, parentId, posX, posY) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "";
+            }
+        }
+        it = document.getElementById(tooltipId);
+        if ((it.style.top == '' || it.style.top == 0) && (it.style.left == '' || it.style.left == 0)) {
+            // need to fixate default size (MSIE problem)
+            it.style.width = it.offsetWidth + 'px';
+            it.style.height = it.offsetHeight + 'px';
+            img = document.getElementById(parentId);
+            // if tooltip is too wide, shift left to be within parent
+            if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
+            if (posX < 0) posX = 0;
+            x = xstooltip_findPosX(img) + posX;
+            y = xstooltip_findPosY(img) + posY;
+            it.style.top = y + 'px';
+            it.style.left = x + 'px';
+        }
+        it.style.visibility = 'visible';
+        it.style.display = 'block';
+    }
+    function xstooltip_hide(id) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "none";
+            }
+        }
+        it = document.getElementById(id);
+        it.style.visibility = 'hidden';
+        it.style.display = 'none';
+    }
+</script>

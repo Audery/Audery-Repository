@@ -1,0 +1,252 @@
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+.register{
+	position:relative;
+	width:998px;
+	border:1px solid #ddd;
+	margin-top:20px;
+	height:145px;
+	padding:20px 0 10px;
+}
+.register h2 , .register p{
+	width:700px;
+	margin:0 auto;
+	
+}
+.rst{
+	width:700px;
+	margin:0 auto;
+	margin-top:20px;
+	
+}
+.register h2{
+	background:url(/images/rst_but_04.jpg) no-repeat left center;
+	padding-left:40px;
+	height:30px;
+}
+.register p{
+		padding-left:40px;
+		padding-bottom:6px;
+}
+.register p span{
+	color:#f00;
+}
+.rst01{
+	padding:0 10px;
+	margin-left:30px;
+	cursor:pointer;
+}
+.rst_mx_left{
+	width:464px;
+	float:left;
+	margin-top:26px;
+	margin-left:10px;
+	}
+	.rst_mx_left p{
+		border-bottom:1px solid #ddd;
+		padding-bottom:6px;
+	
+	}
+	.rst_mx_left p span{
+		color:#888;
+	
+	}
+	.rst_mx_left li{
+		padding-top:10px;
+	}
+	.rst_mx_left li span{
+		display:block;
+		padding-left:19px;
+	}
+	/*-----------*/
+	.rst_mx_right{
+	width:464px;
+	float:left;
+	margin-top:26px;
+	margin-left:47px;
+	}
+	.rst_mx_right p{
+		border-bottom:1px solid #ddd;
+			padding-bottom:6px;
+	
+	}
+	.rst_mx_right p span{
+		color:#888;
+	
+	}
+	.rst_mx_right li{
+		padding-top:10px;
+		font-weight:bold;
+		color:#bd0000;
+	}
+	.rst_mx_right li span{
+		display:block;
+		padding-left:19px;
+		font-weight: normal;
+		color:#333;
+	}
+	.rst_mx_right li span a{
+		display:block;
+
+		color:#bd0000;
+	}
+.rst_mx_left li span a{
+		display:block;
+
+		color:#bd0000;
+	}
+	
+	.step {
+overflow: hidden;
+margin-top: 20px;
+height: 35px;
+}
+.step li {
+float: left;
+background: url(/images/q1.jpg) no-repeat top right #ededed;
+height: 35px;
+line-height: 35px;
+color: #999999;
+padding: 0 91px 0 75px;
+font-weight: bold;
+}
+.step .one {
+background: url(/images/q5.jpg) no-repeat top right #efefef;
+color: #FFF;
+}
+.step .one1 {
+background:url(/images/q1.jpg) no-repeat right top #efefef;
+color: #999;
+}
+.step .two1 {
+background:url(/images/q1.jpg) no-repeat right top #efefef !important;
+color: #999;
+}
+.step .two {
+background:url(/images/q5.jpg) no-repeat right top #efefef;
+color: #FFF;
+}
+.step .three {
+background: url(/images/q5.jpg) no-repeat top right #efefef;
+color: #FFF;
+}
+.step .cur {
+background: url(/images/q2.jpg) no-repeat top right #e20000;
+color: #fff;
+}
+.step .four {
+background: none #ededed;
+}
+.step .four1 {
+background: #ffd1d1;
+}
+.register_left{
+	float:left;
+	margin-top:14px;
+	width:650px;
+}
+.register_right{
+border: 1px solid #DDDDDD;
+float: left;
+height: 420px;
+margin-top: 30px;
+}
+.register_Process_new{
+	background: url(/images/reg_pre_2.jpg) no-repeat;
+	width:307px;
+	height:332px;
+}
+.register2_title{
+	background:url(/images/register_2_title.jpg) no-repeat;
+	width:408px;
+	height:58px;
+	margin:20px 0 30px;
+}
+.register2_call{
+	width:363px;
+	height:75px;
+	background: #f6f6f6;
+	margin-bottom:23px;
+	
+}
+.register2_qicq{
+	width:363px;
+	height:75px;
+	background: #f6f6f6;
+	margin-bottom:23px;
+}
+.register2_call_cnt{
+	/*background: url(/images/REG_CALL.jpg) no-repeat 22px 23px;*/
+	padding:18px 0 0 23px;
+	font-family:"微软雅黑";
+	font-size:24px;
+	color:#c0c0c0;
+	font-weight:500;
+}
+.register2_call_cnt span {
+	font-family:"微软雅黑";
+	font-size:26px;
+	color:#c0c0c0;
+	font-weight:600;
+}
+.register2_qq_cnt span{
+	font-family:"微软雅黑";
+	font-size:26px;
+	color:#c0c0c0;
+	font-weight:600;
+	float:left;
+	margin:6px 10px 0 0;
+}
+.register2_qq_cnt{
+	/*background: url(/images/REG_qq.jpg) no-repeat 29px 19px;*/
+	
+	height:38px;
+	padding:10px 0 0 29px;
+}
+.register2_qq_cnt a{
+	float:left;
+	margin:6px 0 0 0;
+}
+.reg_wxts_01{
+	background:url(/images/reg_info_ico1.jpg) no-repeat left center;
+	padding-left:24px;
+	font-family:"微软雅黑";
+	font-size:16px;
+	color:#fc5a5a;
+	font-weight:bold;
+	margin-bottom: 13px;
+}
+.reg_wxts_02{
+	
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#b6b6b6;
+	font-weight:bold;
+	margin-bottom: 13px;
+	width:363px;
+}
+.reg_wxts_03{
+	
+	font-family:"微软雅黑";
+	font-size:14px;
+	color:#fc5a5a;
+	font-weight:bold;
+	margin-bottom: 13px;
+	padding:0 6px 0 0;
+	width:90px;
+	cursor:pointer;
+	
+	background:url(/images/reg_info_3.jpg) no-repeat right center;
+}

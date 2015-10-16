@@ -1,0 +1,53 @@
+﻿@model PagedList<System.Data.DataRow>
+@using System.Data;
+@using SOSOshop.Model.Order;
+@using Webdiyer.WebControls.Mvc
+@using _101shop.v3.Controllers
+@{
+    
+    ViewBag.Title = ViewBag.Name;
+    Layout = "~/Views/Shared/_Master.cshtml";    
+}
+@section head
+{
+    <link href="/Content/zx.css" rel="stylesheet" type="text/css" />
+    <meta name="keywords" content="@ViewBag.MeteKey" />
+    <meta name="description" content="ViewBag.MeteDescription" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".zx-list").last().addClass("clear-border-bottom");
+            $(".t@{@ViewBag.id}").addClass("clear-border-bottom");
+            $(".t@{@ViewBag.id} a").addClass("a-click");
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<div class="content">
+    <div class="left-con">
+        <ul>
+            <li class="t100"><a href="/article/list/100">活动资讯</a></li>
+            <li class="t101"><a href="/article/list/101">通知公告</a></li>
+            <li class="t106"><a href="/article/list/106">行业动态</a></li>
+            <li class="t107"><a href="/article/list/107">兰海风采</a></li>
+            <li class="t108"><a href="/article/list/108">人才招聘</a></li>
+        </ul>
+    </div>
+    <div class="right-con">
+        <div class="title">
+            <span>行业资讯->@ViewBag.Name</span></div>
+        @foreach (var item in Model)
+        {
+            <div class="zx-list">
+                <a href="/article/@{@item["id"]}.html" target="_blank"><span class="zx-list-con">@item["Title"]</span><span
+                    class="zx-list-time">@string.Format("{0:yyyy-MM-dd}", item["CreateTime"])</span>
+                </a>
+                <div class="clear">
+                </div>
+            </div>   
+        }
+        <div class="page">
+            @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })</div>
+    </div>
+    <div class="clear">
+    </div>
+</div>

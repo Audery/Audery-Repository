@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* register_help */
+
+.register_help{
+float: left;
+width: 745px;
+padding: 5px 5px 5px 15px;}
+
+.bor{
+	border:1px solid #ddd;
+	margin-bottom:6px;
+}
+.rh_tit{
+	border-bottom:1px solid #ddd;
+	background:#f5f5f5;
+	font-size:12px;
+	font-weight:bold;
+	color:#bd0000;
+	padding:6px 0 6px 11px;
+}
+.rh_title{
+	font-size:14px;
+	color:#bd0000;
+	font-weight:bold;
+	margin-bottom:17px;
+}
+.register_help_01 ul , .register_help_02 ul{
+	padding-left:13px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.register_help_01 li , .register_help_02 li{
+	/*line-height:26px;*/
+	padding:5px 0;
+}
+.rh_li_tit01{
+	background:url(/images/rh_ima12.jpg) no-repeat 0px 0px ;
+	padding:2px 10px 2px 28px;
+	font-weight:bold;
+	color:#333; 
+}
+.rh_li_tit02{
+	background:url(/images/rh_ima12.jpg) no-repeat 0px -29px ;
+	padding:2px 10px 2px 28px;
+	font-weight:bold;
+	color:#333; 
+}
+.rh_li_tit03{
+	background:url(/images/rh_ima12.jpg) no-repeat 0px -61px ;
+	padding:2px 10px 2px 28px;
+	font-weight:bold;
+	color:#333; 
+}
+.fl{
+	float:left;
+}
+.register_help_03 dt{
+	font-weight:bold;
+	padding-bottom:10px;
+}
+.register_help_03 dl{
+	padding:15px 15px 0 25px;
+	font-size:13px;
+	float:left;
+	height:271px;
+	border-right: 1px solid  #ddd;
+}
+.register_help_03 dd{
+	padding:2px 0;
+	font-size:12px;
+}
+.red_ico{
+	color:red;
+	font-size:13px;
+	padding-top: 6px;
+	
+}

@@ -1,0 +1,315 @@
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+.login_left_banner{
+	float:left;
+	width:662px;
+	height:288px;
+	margin-top:14px;
+}
+.right_login{
+	float:left;
+	width:314px;
+	height:266px;
+	margin-left:10px;
+	background:#fcfcfc;
+	border:1px solid #ddd;
+	margin-top:30px;
+}
+.right_login p{
+	border-bottom:1px solid #ddd;
+	margin:0 8px;
+	font-size:14px;
+	font-weight:bold;
+	padding:10px 0 6px;
+}
+
+
+.username{
+	width:288px;
+	height:32px;
+	margin:8px;
+}
+.username .ok{
+	line-height: 30px;
+height: 30px;
+padding-left: 30px;
+background: url(/images/login_input_bg.png) #FFF no-repeat 0 0px;
+color: #333;
+width: 256px;
+border: 1px solid #ddd;
+*margin-left:-8px;
+}
+
+.username .login_input_info_text{
+	line-height: 30px;
+height: 30px;
+padding-left: 30px;
+background: url(/images/login_input_bg.png) #FFF no-repeat 0 0px;
+color: #333;
+width: 256px;
+border: 1px solid #ddd;
+}
+.password .login_input_info_text{
+	line-height: 30px;
+height: 30px;
+padding-left: 30px;
+background: url(/images/login_input_bg.png) #FFF no-repeat 0 -60px;
+color: #333;
+width: 256px;
+border: 1px solid #ddd;
+}
+.code .login_input_info_text{
+    width:78px;
+	line-height:30px;
+	height:30px;
+	color:#333;
+		width:72px;
+		padding-left:4px;
+		border:1px solid #ddd;
+		float:left;
+		*margin-left:-8px;
+	
+}
+.password .ok{
+	line-height: 30px;
+height: 30px;
+padding-left: 30px;
+background: url(/images/login_input_bg.png) #FFF no-repeat 0 -60px;
+color: #333;
+width: 256px;
+border: 1px solid #ddd;
+*margin-left:-8px;
+}
+.code .ok{
+    width:78px;
+	line-height:30px;
+	height:30px;
+	color:#333;
+		width:72px;
+		padding-left:4px;
+		border:1px solid #ddd;
+		float:left;
+		*margin-left:-8px;
+}
+/*-------用户名、密码、验证码等输入有误的提示样式--开始-----------------*/
+.username .error{
+	line-height:30px;
+	height:30px;
+	padding-left:30px;
+	background:url(/images/login_input_bg.png) #FFF no-repeat 0 -30px;
+	color:#333;
+	width:256px;
+	*margin-left:-8px;
+	border:1px solid #C00;
+}
+.password .error{
+	line-height:30px;
+	height:30px;
+	padding-left:30px;
+	background:url(/images/login_input_bg.png) #FFF no-repeat 0 -90px;
+	color:#333;
+	width:256px;
+	*margin-left:-8px;
+	border:1px solid #c00;
+}
+.code .error{
+    width:78px;
+	line-height:30px;
+	height:30px;
+	color:#333;
+		width:72px;
+		padding-left:4px;
+		background:url(/images/login_input_bg.png) #FFF no-repeat -210px -90px;
+		border:1px solid #c00;
+		float:left;
+		*margin-left:-8px;
+}
+/*-------用户名、密码、验证码等输入有误的提示样式--结束-----------------*/
+.password{
+	width:288px;
+	height:32px;
+	margin:8px;
+
+}
+.code{
+	width:288px;
+	height:32px;
+	margin:8px;
+}
+
+.code .codeimg{
+	width:76px;
+	height:30px;
+	line-height:30px;
+	padding-left:4px;
+	cursor:pointer;
+}
+.code .codets{
+	width:76px;
+	*width:78px;
+	
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+}
+.submit{
+	width:268px;
+	height:32px;
+	margin:20px 8px 0;
+}
+.submit .submit_login{
+	background:url(/images/login_button.jpg) no-repeat;
+	width:98px;
+	height:38px;
+	cursor:pointer;
+}
+.submit .submit_login:hover{
+	background:url(/images/login_button_hover.jpg) no-repeat;
+	width:98px;
+	height:38px;
+	cursor:pointer;
+}
+.submit .submit_register{
+	background: url(/images/register_bg_button.jpg)  no-repeat;
+	width:140px;
+	height:36px;
+	margin-left:10px;
+	cursor:pointer;
+}
+
+/*---------*/
+.oy_ct_cutover{
+	float:left;
+	width:1000px;
+	height:330px;
+	
+	border:1px solid #ddd;
+	margin-top:30px;
+}
+.dis {
+DISPLAY: block
+}
+.undis {
+DISPLAY: none
+}
+#cntR {
+WIDTH: 1000px;
+}
+#NewsTop {
+CLEAR: both; MARGIN-BOTTOM: 16px; height:40px; 
+}
+#NewsTop P {
+FLOAT: left; LINE-HEIGHT: 21px;
+}
+#NewsTop P.topTit {
+FONT-WEIGHT: bold; WIDTH: 200px; 
+}
+#NewsTop P.topC0 {
+BACKGROUND: url(../images/tab_bg.jpg) repeat-x;; BORDER-LEFT: #ddd 1px solid; border-bottom:1px solid #ddd; WIDTH: 199px; CURSOR: pointer; height:26px; text-align:center; padding-top:10px; font-size:12px; font-family: "微软雅黑"; font-weight:bold; color:#333;
+
+}
+#NewsTop P.topd0 {
+BACKGROUND: url(../images/tab_bg.jpg) repeat-x;; BORDER-LEFT: #ddd 1px solid; border-bottom:1px solid #ddd; WIDTH: 202px; CURSOR: pointer; height:26px; text-align:center; padding-top:10px; font-size:12px; font-family: "微软雅黑"; font-weight:bold; color:#333;
+
+}
+#NewsTop P.tope0 {
+BACKGROUND: url(../images/tab_bg.jpg) repeat-x;; BORDER-LEFT: #ddd 1px solid; border-bottom:1px solid #ddd; WIDTH: 202px; CURSOR: pointer; height:26px; text-align:center; padding-top:10px; font-size:12px; font-family: "微软雅黑"; font-weight:bold; color:#333;
+
+}
+
+#NewsTop P.topC1 {
+BACKGROUND: #fff;  WIDTH: 199px; COLOR: #bd0000;height:26px;BORDER-LEFT: #ddd 1px solid; border-bottom: none;padding-top:10px;font-size:12px; font-family: "微软雅黑"; font-weight:bold;
+text-align:center; 
+display:block;
+}
+#NewsTop P.topd1 {
+BACKGROUND: #fff;  WIDTH: 201px; COLOR: #bd0000;height:26px;BORDER-LEFT: #ddd 1px solid; border-bottom: none;padding-top:10px;font-size:12px; font-family: "微软雅黑"; font-weight:bold;
+text-align:center; 
+display:block;
+}
+#NewsTop P.tope1 {
+BACKGROUND: #fff;  WIDTH: 201px; COLOR: #bd0000;height:26px;BORDER-LEFT: #ddd 1px solid; border-bottom: none;padding-top:10px;font-size:12px; font-family: "微软雅黑"; font-weight:bold;
+text-align:center; 
+display:block;
+}
+
+#NewsTop #NewsTop_tit {
+BORDER-BOTTOM: #fff 1px solid; HEIGHT: 46px;
+}
+#NewsTop #NewsTop_cnt {
+PADDING-LEFT: 32px; LINE-HEIGHT: 26px; PADDING-TOP: 7px; HEIGHT: 260px; TEXT-ALIGN: left;
+}
+#NewsTop #NewsTop_cnt A {
+COLOR: #666; TEXT-DECORATION: none
+}
+#NewsTop #NewsTop_cnt A:hover {
+COLOR: #c2130e; TEXT-DECORATION: underline
+}
+.shop_img{
+	width:120px;
+	margin:0 auto;
+}
+.d_01 , .d_02 , .d_03{
+	display:none;
+	padding:0 10px;
+}
+.d_01 strong , .d_02 strong , .d_03 strong {
+	color:#bd0000;
+	font-weight: bold;
+	padding-left:6px;
+}
+.shop_dsp{
+	margin-top:22px;
+}
+.shop_dsp1{
+	margin-top:4px;
+}
+.shop_price{
+	margin-top:4px;
+}
+.shop_price1{
+	margin-top:7px;
+}
+.s_1{
+	display:block;
+}
+.d_01 ul {
+}
+.d_02 ul , .d_03 ul{
+	width:594px;
+}
+.d_01 li {
+	float:left;
+	width:186px;
+	padding:0 5px;
+}
+.d_02 li , .d_03 li{
+	float:left;
+	width:184px;
+	padding:0 5px  8px  5px;
+}
+.validation-summary-errors{
+	margin-top:10px;
+	padding-left:10px;
+	color:#bd0000;
+}
+ .input_error{
+	background:url(/images/delete_21.png) 214px center no-repeat;
+	 border:1px solid #F00;
+}
+ .input_ok{
+	background: url(/images/input_ok_bg.png) 214px center no-repeat;
+	  border:1px solid #0C3;
+}

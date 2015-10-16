@@ -1,0 +1,81 @@
+﻿body
+{
+	background-image: url( '../images/index_index_bg.gif' );
+	margin: 0;
+	text-align: center;
+}
+td
+{
+	font-size:12px;
+}
+#tbLogin
+{
+	margin-top: 135px;
+	width: 603px;
+	border: 0;
+}
+#tdLeft
+{
+	width: 219px;
+	height: 308px;
+	background-image: url( '../images/admin_index_login_left.gif' );
+}
+#tdMiddle
+{
+	width: 374px;
+	height: 308px;
+	vertical-align: top;
+}
+#tdRight
+{
+	width: 10px;
+	height: 308px;
+	background-image: url( '../images/admin_index_login_right.gif' );
+}
+#tbLoginForm
+{
+	height: 308px;
+}
+#tdTop
+{
+	width: 374px;
+	height: 64px;
+	background-image: url( '../images/admin_index_login_top.gif' );
+}
+#tdMain
+{
+	text-align: left;
+	vertical-align: top;
+	width: 374px;
+	height: 244px;
+	background-image: url( '../images/admin_index_login_main.gif' );
+	
+}
+#tbLoginInfo
+{
+	margin-left:50px;
+	margin-top:20px;
+	width:300px;
+}
+.txtInfo
+{
+	height:36px;
+	width:50px;
+}
+.controlInfo
+{
+	width:250px;
+}
+.userControl
+{
+	width:144px;
+}
+.checkCode
+{
+	width:38px;
+	background-color:#BBDEF2;
+}
+.pointer
+{
+	cursor:pointer;
+}

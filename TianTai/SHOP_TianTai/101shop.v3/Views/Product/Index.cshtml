@@ -1,0 +1,998 @@
+﻿@model SOSOshop.Model.ProductInfo
+@using System.Data;
+@using System.Collections.Specialized;
+@using SOSOshop.Model;
+@using SOSOshop.BLL.Common;
+@using _101shop.v3;
+@using _101shop.v3.Controllers;
+@{
+    DataRow ProductDataRow = ViewBag.ProductDataRow as DataRow;
+    //西药类别
+    NameValueCollection xyfl = ViewBag.DrugsBase_Pharm1_Of_Product as NameValueCollection;
+    //中药饮片
+    DataSet ds_zyc = null; //new SOSOshop.BLL.DbBase().ExecuteDataSetForCache("SELECT cast(z1.ProductionClassId as varchar)+','+z1.ProductionClassName,(SELECT ProductionLevelName FROM DrugsBase_ZYC_ProductionLevel WHERE ProductionLevelId=z.ProductionLevelId),(SELECT ProductionMethodName FROM DrugsBase_ZYC_ProductionMethod WHERE ProductionMethodId=z.ProductionMethodId),(SELECT ProductionBrandName FROM DrugsBase_ZYC_ProductionBrand WHERE ProductionBrandId=z.ProductionBrandId),z.ProductionAddress FROM DrugsBase_ZYC z LEFT JOIN DrugsBase_ZYC_ProductionClass z1 ON z.ProductionClassId=z1.ProductionClassId WHERE z.DrugsBase_ID=" + ProductDataRow["DrugsBase_ID"], DateTime.Now.AddDays(1));
+    bool is_zyc = (ds_zyc != null && ds_zyc.Tables.Count > 0 && ds_zyc.Tables[0].Rows.Count > 0);
+    //中药饮片类别
+    int zyflid = 0; object zyfl = is_zyc ? ds_zyc.Tables[0].Rows[0][0] : null;
+    if (zyfl != null && zyfl.ToString().Contains(",")) { int.TryParse(zyfl.ToString().Split(',')[0], out zyflid); zyfl = zyfl.ToString().Split(',')[1]; }
+
+    string otcStr = "";
+    if (ViewBag.is_pf == true) { otcStr += "批发"; }
+    if (ViewBag.is_cl == "是") { otcStr += "&拆零"; }
+    if (ViewBag.is_cx == true) { otcStr += "&促销"; }
+
+    string Specification = Model.DrugsBase_Specification + " ×" + Model.Goods_ConveRatio + Model.Goods_ConveRatio_Unit + "/" + Model.Goods_Unit;
+    ViewBag.Title = string.Format("{0}【批发 价格 批准文号 功能主治 说明书 】,{1},{2},【{3}】国家药监局批准的正规网上药品采购、批发、销售交易网站",
+    zyflid > 0 ? Model.DrugsBase_DrugName + " - " + zyfl : xyfl != null && xyfl.Count > 1 ? Model.DrugsBase_DrugName + " - " + xyfl.Keys[1] : Model.DrugsBase_DrugName,
+    Model.DrugsBase_Manufacturer, Specification, System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]);
+    ViewBag.keywords = string.Format("{0}【批发 价格 批准文号 功能主治 说明书 】,{1},{2},【{3}】国家药监局批准的正规网上药品采购、批发、销售交易网站", Model.DrugsBase_DrugName, Model.DrugsBase_Manufacturer, Specification, System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]);
+    ViewBag.description = string.Format("{0}-批发、批发价格,{1},{2},{3},【{4}】国家药监局批准的正规网上药品采购、批发、销售网站；平台保证您的货款安全和药品质量。", Model.DrugsBase_DrugName, Model.DrugsBase_Manufacturer, Specification, Model.DrugsBase_ApprovalNumber, Specification, System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]);
+
+
+    ViewBag.ActuationValue = Model.Product_Name;
+
+    Public.WebSiteInfo wsi = Public.GetNetSiteInfo();
+}
+@section head
+{<!--StatisticalTime(ms[InitData])=[@(ViewBag.InitData)]-->
+    <link rel="stylesheet" type="text/css" href="/Content/101shopDetail.css?v=@MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/tab.js?v=@MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/productDetail.js?v=@MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js?v=@MvcApplication.ModifiedNo()"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css?v=@MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/jquery.jcarousellite.js?v=@MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".topC0").hover(function () {
+                $(".topC0").removeClass("topC1");
+                $(this).addClass("topC1");
+                $(".NewsTop_cnt_product .d_01_product").hide();
+                $(".NewsTop_cnt_product .d_01_product").eq($(this).index()).show();
+            });
+        });
+        function showpic() {
+            $("#showbigpic").attr("href", $('#lb_img').attr("src"));
+        }
+    </script>
+    <script type="text/javascript">
+        /*买家*/var member = { uid: @ViewBag.UID, name: '@ViewBag.TrueName', mobilePhone: '@ViewBag.MobilePhone' };
+
+    </script>
+    <script type="text/javascript">
+        //隐藏多余的厂家
+        $(document).ready(function () {
+            var otherManufacturer = document.getElementById("otherManufacturer");
+            var manufacturers = otherManufacturer.getElementsByTagName("li");
+            if (manufacturers != undefined) {
+                if (manufacturers.length >= 7) {
+                    for (var i = 6; i < manufacturers.length - 1; i++) {
+                        manufacturers[i].style.display = "none";
+                    }
+                }
+            }
+
+            var otherManufacturerCount = document.getElementById("otherManufacturerCount");
+            if (otherManufacturerCount.value == 0) {
+                otherManufacturer.style.display = "none";
+            }
+        });
+
+        //热销榜处理
+        $(document).ready(function () {
+            var hotSailed = document.getElementById("hotSailed");
+            var hotSailList = hotSailed.getElementsByTagName('li');
+            if (hotSailList.length > 2) {
+                hotSailList[0].style.display = "none";
+                hotSailList[1].style.display = "";
+            }
+
+        });
+
+        //热销榜鼠标滑动效果
+        function showDrugInfo(idStyle, id, hotSailedId) {
+            var hotSailed = document.getElementById(hotSailedId);
+            var list = hotSailed.getElementsByTagName('li');
+
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].id == ("drugInfo" + idStyle + id)) {
+                    list[i].style.display = "";
+                }
+                else if (list[i].id.indexOf('drugInfo') >= 0) {
+                    list[i].style.display = "none";
+                }
+            }
+
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].id == ("drugTitle" + idStyle + id)) {
+                    list[i].style.display = "none";
+                }
+                else if (list[i].id.indexOf('drugTitle') >= 0) {
+                    list[i].style.display = "";
+                }
+            }
+        }
+
+        //点击更多展示剩余的生产厂家
+        function showMoreManufacturer() {
+            var otherManufacturer = document.getElementById("otherManufacturerUl");
+            var manufacturers = otherManufacturer.getElementsByTagName("li");
+            var more = document.getElementById("more");
+
+            if (manufacturers != undefined) {
+                if (manufacturers.length >= 7) {
+                    if (more.innerHTML == "更多&gt;&gt;") {
+                        for (var i = 6; i < manufacturers.length - 1; i++) {
+                            manufacturers[i].style.display = "";
+                        }
+
+                        more.innerHTML = "收起&gt;&gt;";
+                    }
+                    else {
+                        for (var i = 6; i < manufacturers.length - 1; i++) {
+                            manufacturers[i].style.display = "none";
+                        }
+
+                        more.innerHTML = "更多&gt;&gt;";
+                    }
+                }
+            }
+        }
+
+        //最近浏览的商品
+        $(document).ready(function () {
+            var latestBrowsedUl = document.getElementById("latestBrowsedUl");
+            var latestBrowsed = latestBrowsedUl.getElementsByTagName("li");
+            var browseMore = document.getElementById("browseMore");
+
+            if (latestBrowsed != undefined) {
+                if (latestBrowsed.length >= 5) {
+                    for (var i = 4; i < latestBrowsed.length; i++) {
+                        latestBrowsed[i].style.display = "none";
+                    }
+                }
+                else {
+                    browseMore.style.display = "none";
+                }
+            }
+            else {
+                browseMore.style.display = "none";
+            }
+        });
+
+        //点击更多展示剩余的最近浏览的商品
+        function showMoreBrowsed() {
+            var latestBrowsedUl = document.getElementById("latestBrowsedUl");
+            var latestBrowsed = latestBrowsedUl.getElementsByTagName("li");
+            var browseMore = document.getElementById("browseMore");
+
+            if (latestBrowsed != undefined) {
+                if (latestBrowsed.length >= 5) {
+                    if (browseMore.innerHTML == "更多&gt;&gt;") {
+                        for (var i = 4; i < latestBrowsed.length; i++) {
+                            latestBrowsed[i].style.display = "";
+                        }
+
+                        browseMore.innerHTML = "收起&gt;&gt;";
+                    }
+                    else {
+                        for (var i = 4; i < latestBrowsed.length; i++) {
+                            latestBrowsed[i].style.display = "none";
+                        }
+
+                        browseMore.innerHTML = "更多&gt;&gt;";
+                    }
+                }
+            }
+        }
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    @{
+        string yaoliType = null;
+        if (ViewBag.DrugsBase_Pharm1_Of_Product != null)
+        {
+            NameValueCollection na = ViewBag.DrugsBase_Pharm1_Of_Product;
+            for (int i = 0; i < na.Count; i++)
+            {
+                if (i == 2)
+                {
+                    yaoliType += "<a href='" + HomeController.SearchUrl(int.Parse(na[i]), 0) + "' >" + na.Keys[i] + "</a>  ";
+                }
+        <li><a href="@HomeController.SearchUrl(int.Parse(na[i]), 0)">@na.Keys[i]</a></li>
+            }
+        }
+        if (yaoliType == null)
+        {
+            if (zyflid > 0)
+            { <li><a href="@HomeController.SearchUrl(zyflid, 8)">@(zyfl)</a></li>}
+        }
+    }
+    <li><a href="/@(Model.Product_ID).html">@Model.DrugsBase_DrugName</a></li>
+</ul>
+<div class="list_left_detail">
+    <div class="info_Retrieval0 irf">
+        <div class="Retrieval2_gghu">
+            <img src="/images/detail_bz.jpg" style="height: 100px;">
+        </div>
+    </div>
+    <input type="hidden" value="@ViewBag.DrugsBase_Manufacturer_Count" id="otherManufacturerCount" />
+    @if (ViewBag.SyzList != null)
+    {
+        DataTable syz = ViewBag.SyzList;
+
+        if (syz.Rows.Count > 0)
+        {
+        <div class="menu_Head">
+            <h3>@syz.Rows[0]["name"]</h3>
+            <ul id="OTC_Menu">
+                @if (syz.Rows.Count > 11)
+                {
+                    int isyz = 0;
+                    foreach (DataRow dr in syz.Rows)
+                    {
+                        if (isyz++ > 0)
+                        {
+                            string url = HomeController.SearchUrl((int)dr["id"], 1);
+
+                    <li class="menu_Over_Li"><span style="padding-left: 0px; padding-right: 10px;">&gt;</span><a href="@url">@dr["name"]</a></li>
+                        }
+                    }
+                }
+                else
+                {
+                    int isyz = 0;
+                    foreach (DataRow dr in syz.Rows)
+                    {
+                        if (isyz++ > 0)
+                        {
+                            string url = HomeController.SearchUrl((int)dr["id"], 1);
+
+                    <li class="menu_Below_Li"><span style="padding-left: 5px; padding-right: 10px;">&gt;</span><a href="@url">@dr["name"]</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        }
+    }
+    <div class="info_Retrieval2 irf" id="otherManufacturer">
+        <h3>
+            该商品其他生产企业</h3>
+        <div class="Retrieval2_gghu">
+            <ul id="otherManufacturerUl">
+                @if (ViewBag.DrugsBase_Manufacturer_Of_ProductList != null)
+                {
+                    DataTable dt = ViewBag.DrugsBase_Manufacturer_Of_ProductList;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        object cj = dr["DrugsBase_Manufacturer"];
+
+                    <li><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode(cj.ToString())" title="@cj" style="text-overflow:ellipsis; white-space:nowrap">@Library.Lang.Input.GetSubString(cj, 15, "...")</a></li>
+                    }
+                    if (dt.Rows.Count >= 6)
+                    {
+                    <li style="text-align: right; padding-right: 10px;"><span id="more" onclick="showMoreManufacturer()"
+                        style="cursor: pointer;">更多&gt;&gt;</span></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="info_Retrieval3 irf">
+        <h3>
+            本月热销排行榜</h3>
+        <div class="Retrieval3_gghu">
+            <ul id="hotSailed">
+                @if (ViewBag.ThisMonthRanking_ProductList != null)
+                {
+                    DataTable dt = ViewBag.ThisMonthRanking_ProductList;
+                    int j = 0;
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        j++;
+                        DataRow dr = dt.Rows[i];
+                    <li id="drugTitle-@j" onmouseover="showDrugInfo('-', '@j', 'hotSailed')"><span class="shuzi">@j</span>
+                        <a class="prduct_name" href="@{@dr["Product_ID"]}.html" target="_blank" title="@dr["Product_Name"]">@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")</a>
+                        <span class="guige">已售<span style="color: #00a539; font-weight: bold">@dr["SaleNum"]</span>@dr["Goods_Unit"]</span>
+                    </li>
+                    <li class="hover" id="drugInfo-@j" style="display:none; clear:both;">
+                        <div class="pic">
+                            <a href="@{@dr["Product_ID"]}.html">
+                                <img  style="margin:3px 3px 3px 3px; border:1px solid #ebebeb;" width="58px" height="58px" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" src="@Public.RawImage(dr["Image"])" class="pImage" width="70" height="70" />
+                            </a>
+                        </div>
+                        <div class="title">
+                            <i>@j</i><a class="hov_til_pdu_nam" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" href="@{@dr["Product_ID"]}.html">@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 9, "...")</a>
+                            <p class="guige2">
+                                规格：@Public.GetSpecificationAndS(dr)</p>
+                            <p class="price">
+                                @{@Price.GetPriceShowString()}
+                                <span>@Html.Raw(dr["showPrice"].ToString())</span></p>
+                        </div>
+                    </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <!---------------->
+    <div class="info_Retrieval4 irf">
+        <h3>
+            最近浏览过的商品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                id="browseMore" onclick="showMoreBrowsed()" style="font-weight: normal; cursor: pointer;">更多&gt;&gt;</span></h3>
+        <div class="Retrieval4_gghu">
+            <div class="c_01">
+                <ul id="latestBrowsedUl">
+                    @if (ViewBag.History_Of_ProductList != null)
+                    {
+                        DataTable dt = ViewBag.History_Of_ProductList;
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            DataRow dr = dt.Rows[i];
+                        <li>
+                            @if (dr["is_cl"].ToString() == "是")
+                            {
+                                <div class="img_div_111">
+                                    <a href="@{@dr["Product_ID"]}.html" target="_blank">
+                                        <div class="detail_img_ico">
+                                            <span class="bkcl_ico">拆零</span></div>
+                                        <img src='@Public.RawImage(dr["Image"])' class="pImage"  width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <a href="@{@dr["Product_ID"]}.html" target="_blank">
+                                        <img src='@Public.RawImage(dr["Image"])' class="pImage"  width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" />
+                                    </a>
+                                </div>
+                            }
+                            <div class="shop_dspExx">
+                                <a href="@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                    <span>
+                                        @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                        @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                    </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                </a>
+                            </div>
+                            <div class="shop_price">
+                                <div class="price_title">
+                                    @{@Price.GetPriceShowString()}
+                                    :</div>
+                                <div class="detail_c01_shop_price">
+                                    @Html.Raw(dr["showPrice"].ToString())
+                                </div>
+                            </div>
+                        </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--list_left_detail-->
+<div class="list_right_detail">
+    <div class="info_Retrieval7 irf">
+        <h3>@Model.DrugsBase_DrugName <span>
+            @{
+                if (!string.IsNullOrEmpty(Model.DrugsBase_ProName))
+                {
+                    string DrugsBase_ProName = "（" + Model.DrugsBase_ProName + "） ";
+                @DrugsBase_ProName
+                }
+            }
+            @Html.Raw(ViewBag.SyzName)
+        </span>
+        </h3>
+        <p class="shop_mx">@Model.Product_SellingPoint</p>
+    </div>
+    <!--商品名-->
+    <div class="info_Retrieval8 irf">
+        <div class="detail_left_con" style="position: relative;">
+            <div class="detail_shopimg" style="position: relative;">
+                @Html.Raw(Public.Tag(ViewBag.ProductDataRow as DataRow))
+                <img id="lb_img" title="@Model.DrugsBase_DrugName" alt="@Model.DrugsBase_DrugName" src='@Public.RawImage(ViewBag.pro_Image)' width="290" height="290" class="pImage"  onerror="this.src='/images/nopic1.jpg'" />
+            </div>
+            <div class="detail_spimg01 imgSwitch">
+                <a style=" float:left;padding:0 10px" href="#" json="@Public.RawImage(ViewBag.pro_Image)">
+                    样盒</a>
+                @if (ViewBag.pro_Picture != null)
+                {
+                    if (ViewBag.pro_Picture.ToString() != "")
+                    {
+                    <a style=" float:left;padding:0 10px" href="#" json='@Public.RawImage(ViewBag.pro_Picture)'>
+                        彩页</a>
+                    }
+                }
+                <a id="showbigpic" target="_blank" style=" background:url(../images/detail_mgf.jpg) no-repeat left center; padding:0 15px; margin-left: 120px;" href="@Public.RawImage(Model.Original)" onclick="return showpic()">
+                    查看大图</a>
+                @if (ViewBag.ISExpirationTime)
+                { 
+                    <span class="pro_gq"></span>
+                        
+                }
+            </div>
+            <div class="detail_share">
+                <span class="share_p_1">分享到：</span>
+                <div class="shareDisplay">
+                    <ul>
+                        <li><a class="sharePic_QZone" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/@{@ViewBag.ProductID}.html&title=@{@ViewBag.DrugsBase_DrugName}&desc=&summary=&site=" target="_blank">
+                            QQ空间</a> </li>
+                        <li><a class="sharePic_QBlog" href="http://share.v.t.qq.com/index.php?c=share&a=index&url=http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/@{@ViewBag.ProductID}.html&title=@{@ViewBag.DrugsBase_DrugName}" target="_blank">
+                            腾讯微博 </a></li>
+                        <li><a class="sharePic_SinaBlog" href="http://service.weibo.com/share/share.php?url=http://@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/@{@ViewBag.ProductID}.html&title=@{@ViewBag.DrugsBase_DrugName}&appkey=1343713053" target="_blank">
+                            新浪微博 </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--左侧部分-->
+        <div class="detail_shopdsp">
+            <ul class="detail_shopdsp_info01">
+                <li>生产企业：<span>@Model.DrugsBase_Manufacturer</span></li>
+                @if (is_zyc)
+                {
+                    string zydj = ds_zyc.Tables[0].Rows[0][1] + "", zyzf = ds_zyc.Tables[0].Rows[0][2] + "", zypp = ds_zyc.Tables[0].Rows[0][3] + "", zycd = ds_zyc.Tables[0].Rows[0][4] + "";
+                    <li class="zyyp-tag">
+                        @if (zyzf != "")
+                        {<span>制法：@zyzf</span>}
+                        @if (zydj != "")
+                        {<span>等级：@zydj</span>}
+                        @if (zypp != "")
+                        {<span>品牌：@zypp</span>}
+                        @if (zycd != "")
+                        {<span>产地：@zycd</span>}
+                    </li> }
+                <li>批准文号：<span>@Model.DrugsBase_ApprovalNumber</span></li>
+                <li>规格：@if (is_zyc)
+                       {<text>@Model.DrugsBase_Specification</text>}
+                       else
+                       {<span>
+                           @Model.DrugsBase_Specification
+                       </span>}
+                </li>
+                <li>剂型：<span>@Model.DrugsBase_Formulation</span></li>
+                <li>件装：
+                    @if (Model.Goods_Pcs >= 1)
+                    {
+                        <span id="Goods_Pcs">@Model.Goods_Pcs</span><font> @Model.Goods_Unit / 件 </font>
+                    }
+                    else
+                    {
+                        <span>无</span>
+                    }
+                    <strong style="padding-left: 20px; font-weight: normal;">中包装：
+                        @if (Model.Goods_Pcs_Small > 0)
+                        {
+                            <span id="Goods_Pcs_Small">@Model.Goods_Pcs_Small</span><span> @Model.Goods_Unit</span>
+                        }
+                        else
+                        {
+                            <span>无</span>
+                        }
+                    </strong>
+                    <input type="hidden" id="sellType" name="sellType" value="@Model.sellType" /></li>
+            </ul>
+            <ul class="detail_shopdsp_info02">
+                <li>
+                    @if (Convert.ToBoolean(ViewBag.ISExpirationTime))
+                    {
+                        <span style="padding-left: 0px;">
+                            @{@Price.GetPriceShowString()}
+                            ：</span>
+                    }
+                    else if (Convert.ToBoolean(ViewBag.IsProp))
+                    {
+                        <span style="margin-left: -3px" class="yuanjia">原价：@string.Format("{0:C2}", ViewBag.OldPrice)</span>
+                        <br />
+                        <span style="margin-left: -3px;">促销价：</span>
+                    }
+                    else if (ViewBag.OldPrice > ViewBag.Price)
+                    {
+                        <span style="margin-left: -3px" class="yuanjia">原价：@string.Format("{0:C2}", ViewBag.OldPrice)</span>
+                        <br />
+                        <span style="margin-left: -3px;">折扣价：</span>
+                    }
+                    else
+                    {
+                        <span style="padding-left: 0px;">
+                            @{@Price.GetPriceShowString()}
+                            ：</span>
+                    }
+                    @if (Model.Product_bShelves == 0)
+                    {
+                        <span style="color: #00a539; padding-left: 10px; font-weight: bold;">商品已经下架</span>
+                    }
+                    else
+                    {
+                        <span class="detail_price_121" style="color: #00a539; font-weight: bold;">@Html.Raw(ViewBag.ShowPrice)</span>
+                    }
+                    @if (Convert.ToBoolean(ViewBag.ISExpirationTime))
+                    {
+                        <span style="color: #F60; font-weight: bold;">此产品于@(ViewBag.sxrq)过期</span>
+                    }
+                    @if (Convert.ToBoolean(ViewBag.IsProp))
+                    {
+                        if (ViewBag.MaxSell != "0")
+                        {
+                        <span>每人限购：@ViewBag.MaxSell@Model.Goods_Unit</span>
+                        }
+
+                    }
+                    @{
+                        DataTable dt1 = new DataTable();
+                        dt1.Columns.Add("spid", typeof(string));
+                        dt1.Columns.Add("pihao", typeof(string));
+                        dt1.Columns.Add("sxrq", typeof(string));
+                        var dr1 = dt1.NewRow();
+                        dr1["spid"] = ViewBag.spid;
+                        dr1["pihao"] = ViewBag.pihao;
+                        dr1["sxrq"] = ViewBag.sxrq;
+                        dt1.Rows.Add(dr1);
+                        
+                    }
+                </li>
+            </ul>
+            @if (Model.Product_bShelves == 0 || Model.drug_sensitive == true)
+            {
+                <input id="Product_ID" type="hidden" value="0" />
+            }
+            else
+            {
+                <div class="detail_shopdsp_info03" id="addCartDiv">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td style="text-align: center; padding: 10px 0 10px 0; width: 18%">
+                                库存情况
+                            </td>
+                            <td style="text-align: center; padding: 10px 0 10px 0; width: 28%">
+                                效期
+                            </td>
+                            <td style="text-align: center; padding: 10px 0 10px 0; width: 23%">
+                                件装
+                            </td>
+                            <td style="text-align: left; padding: 10px 0 10px 20px; width: 31%" colspan="2">
+                                购买数量
+                                @if (Model.sellType == 2)
+                                { <span style="display: block">输入中包装的整数倍</span>}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                @{
+                                string pfotc = "";
+                                int maxsell = Convert.ToInt32(ViewBag.MaxSell);
+                                int stock = ViewBag.Product_Stock;
+
+                                if (ViewBag.is_pf == true)
+                                {
+                                    pfotc = "批发";
+                                }
+                                if (ViewBag.is_cl == "是")
+                                {
+                                    if (ViewBag.is_pf == true) { pfotc = "&拆零"; }
+                                    else { pfotc = "拆零"; }
+                                }
+                                else
+                                {
+                                    if (maxsell != 0)
+                                    {
+                                        maxsell = maxsell / Convert.ToInt32(Model.Goods_Pcs);
+                                        if (maxsell <= 0)
+                                        {
+                                            maxsell = 1;
+                                        }
+                                    }
+                                }
+                                if (pfotc != "")
+                                {
+                                    <span style="background: #00a539; color: #fff; padding: 2px 4px;">@pfotc.Trim('&')</span>
+                                }
+
+                                if (stock > 0)
+                                {
+                                    <span>有货</span>
+                                }
+                                else
+                                {
+                                    if (ViewBag.Member_Class == 1)
+                                    { 
+                                    <span>无货</span> 
+                                    }
+                                    else
+                                    { 
+                                    <span>可预购</span> 
+                                    }
+                                }                                
+                                }
+                            </td>
+                            <td style="text-align: center;">
+                                @dt1.Rows[0]["sxrq"]
+                            </td>
+                            <td style="text-align: center;">
+                                @if (Model.Goods_Pcs >= 1)
+                                {
+                                    <span>@Model.Goods_Pcs</span><span>@Model.Goods_Unit/件</span>
+                                }
+                                else
+                                {
+                                    <span>无</span>
+                                }
+                            </td>
+                            <td class="zk_info_input">
+                                <span class="jianshao">
+                                    <img onclick="DelQuantity1(@ViewBag.BagCapacity)" style="padding: 2px 0;" src="/images/jianshao_bg.jpg"
+                                        width="16" height="16" />
+                                </span>
+                                @{
+                                Decimal minsell = ViewBag.BagCapacity;
+
+                                if (Model.sellType == 2)
+                                {
+                                    minsell = Math.Max(Model.Goods_Pcs_Small, minsell);
+                                }
+
+                                //if (minsell < ViewBag.BagCapacity) { minsell = ViewBag.BagCapacity; }
+                                }
+                                <input id="h-@(Model.Product_ID)" class="AddQuantity" type="text" value="@(minsell)" oldvalue="@(minsell)"
+                                        pro_name="@Model.DrugsBase_DrugName" minsell="@minsell" maxsell="@maxsell"
+                                       jz="@(Model.Goods_Pcs)" zbz="@(Model.Goods_Pcs_Small)" selltype="@(Model.sellType)"
+                                       onblur="henum(@(Model.Product_ID))" stock="@stock" memberclass="@ViewBag.Member_Class" />
+                                <span class="zhengjia">
+                                    <img onclick="AddQuantity1(@ViewBag.BagCapacity)" style="padding: 2px 0;" src="/images/zhengjia_bg.jpg"
+                                        width="16px" height="16px" />
+                                </span>
+                            </td>
+                            <td style="text-align: left; width: 50px;">
+                                @{
+                                bool is_cl_buy = (Model.sellType == 1 || Model.sellType == 2);
+                                if (ViewBag.ISExpirationTime)
+                                {
+                                    <span>@ViewBag.Goods_Unit</span>
+                                }
+                                else if (is_cl_buy)
+                                {
+                                    <span>@Model.Goods_Unit</span>
+
+                                }
+                                else
+                                {
+                                    <span>件</span>
+                                }
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                    <input id="Product_ID" type="hidden" value="@Model.Product_ID" />
+                    <ul class="info03_03" style="width: 365px;">
+                        <li><a class="detail_cart" onclick="addShopCar(@(Model.Product_ID),@Price.GetMember_Class(),@(ViewBag.ISExpirationTime ? '1' : '0'))">
+                            <span>加入购物车</span></a> </li>
+                        <li style="margin-top: 4px;"><a href="#" class="detail_guanzhu" onclick="shore(@(Model.Product_ID))">
+                            <span>关注</span></a> </li>
+                        <li style="margin-right: 0pt; text-align: right; width: 131px; cursor: default;">
+                            @if (is_cl_buy && minsell > 1)
+                            { <span style="line-height: 40px; height: 40px; font-weight: normal;">最小采购量：@minsell
+                                <span>@Model.Goods_Unit</span></span>}</li>
+                    </ul>
+                </div>
+            }
+        </div>
+        <!--右侧详情描述-->
+    </div>
+    <div class="info_Retrieval5 irf">
+        <h3>
+            @if (ViewBag.ThisClassID != null)
+            {
+                <a href="@HomeController.SearchUrl(ViewBag.ThisClassID, 0)" target="_blank"><span
+                    class="h3_01">“@ViewBag.ThisClass”类</span></a>@Html.Raw("热销品种")<span class="h3_02">(@ViewBag.ThisClass_ProductList_Count)</span>
+            }
+            else
+            {
+                <span class="h3_02">热销品种</span>
+            }
+        </h3>
+        <div class="Retrieval4_gghu">
+            <div class="c_02">
+                <ul>
+                    @helper Show_ThisClass_ProductList()
+                        {
+                            if (ViewBag.ThisClass_ProductList != null)
+                            {
+                                DataTable dt = ViewBag.ThisClass_ProductList;
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                        <li>
+                            <div class="img_div_111">
+                                <a href="@{@dr["Product_ID"]}.html" target="_blank">
+                                    @Html.Raw(Public.Tag(dr))
+                                    <img src='@Public.RawImage(dr["Image"])' width="168px" height="168px"
+                                        title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" class="pImage"  />
+                                </a>
+                            </div>
+                            <div class="shop_dspEx">
+                                <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                    <span>
+                                        @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                        @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                    </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 6, "...")
+                                </a>
+                            </div>
+                            <div class="shop_price">
+                                @{@Price.GetPriceShowString()}
+                                ：<span>@Html.Raw(dr["showPrice"].ToString())</span>
+                            </div>
+                        </li>
+                                }
+                            }
+                    }@Show_ThisClass_ProductList()
+                </ul>
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.SyzTj != null && ViewBag.ThisClassID != null)
+    {
+        <div class="info_Retrieval5 irf">
+            <h3>
+                <a href="@ViewBag.OtcLink" target="_blank"><span class="h3_01">“@ViewBag.SyzTjTitle”类</span></a>@Html.Raw("相关品种")<span
+                    class="h3_02">(@ViewBag.SyzTjCount)</span>
+            </h3>
+            <div class="Retrieval4_gghu">
+                <div class="c_02">
+                    <ul>
+                        @helper Show_Syz_ProductList()
+                            {
+                                if (ViewBag.SyzTj != null)
+                                {
+                                    DataTable dt = ViewBag.SyzTj;
+                                    foreach (DataRow dr in dt.Rows)
+                                    {
+                            <li>
+                                <div class="img_div_111">
+                                    <a href="@{@dr["Product_ID"]}.html" target="_blank">
+                                        @Html.Raw(Public.Tag(dr))
+                                        <img src='@Public.RawImage(dr["Image"])' width="168px" height="168px"
+                                            title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" class="pImage"/>
+                                    </a>
+                                </div>
+                                <div class="shop_dspEx">
+                                    <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                        <span>
+                                            @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                            @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 6, "...")
+                                    </a>
+                                </div>
+                                <div class="shop_price">
+                                    @{@Price.GetPriceShowString()}
+                                    ：<span>@Html.Raw(dr["showPrice"].ToString())</span>
+                                </div>
+                            </li>
+                                    }
+                                }
+                        }@Show_Syz_ProductList()
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    @if (ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList_Count != 0)
+    {
+        <div class="info_Retrieval5 irf" style="position: relative !important">
+            @{
+        bool jCarouselLite01 = ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList != null && ((DataTable)ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList).Rows.Count > 4;
+        string c_02_class = jCarouselLite01 ? "c_02 jCarouselLite" : "c_02";
+            }
+            @if (ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList_Count > 4)
+            {
+                <a id="j001_btnPrev" class="new_left_cat" href="#" style="z-index: 1000"></a>
+                <a id="j001_btnNext" class="new_right_cat" href="#" style="z-index: 1000"></a>
+            }
+            <h3>
+                <a href="@(HomeController.SearchUrl(0, 0))?q=@(System.Web.HttpUtility.UrlEncode(Model.DrugsBase_Manufacturer))" target="_blank">
+                    <span class="h3_01">“@Model.DrugsBase_Manufacturer”</span></a>的其他产品<span class="h3_02">(@(ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList_Count))</span>
+            </h3>
+            <div class="Retrieval4_gghu">
+                <div class="@c_02_class" id="j001">
+                    <ul>
+                        @helper Show_ThisDrugsBase_Manufacturer_Of_ProductList()
+                            {
+                                if (ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList != null)
+                                {
+                                    DataTable dt = ViewBag.ThisDrugsBase_Manufacturer_Of_ProductList;
+                                    foreach (DataRow dr in dt.Rows)
+                                    {
+                            <li>
+                                <div class="img_div_111">
+                                    <a href="@{@dr["Product_ID"]}.html" target="_blank">
+                                        @Html.Raw(Public.Tag(dr))
+                                        <img src='@Public.RawImage(dr["Image"])' width="168px" height="168px"
+                                            title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" class="pImage"  />
+                                    </a>
+                                </div>
+                                <div class="shop_dspEx">
+                                    <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" alt="@dr["Product_Name"]" target="_blank">
+                                        <span>
+                                            @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                            @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 6, "...")
+                                    </a>
+                                </div>
+                                <div class="shop_price">
+                                    @{@Price.GetPriceShowString()}
+                                    ：<span>@Html.Raw(dr["showPrice"].ToString())</span>
+                                </div>
+                            </li>
+                                    }
+                                }
+                        }@Show_ThisDrugsBase_Manufacturer_Of_ProductList()
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    <!------商品详情------>
+    <div class="oy_ct_cutover_product">
+        <div id="NewsTop_product">
+            <div id="NewsTop_tit_product">
+                <!--<P class=topTit>新闻排行</P>-->
+                <p class="topC0 topC1">
+                    商品详情</p>
+                @if (!string.IsNullOrEmpty(ViewBag.Drugsbase_Direct))
+                {
+                    <p class="topC0">
+                        药品说明书</p>
+                }
+                <p class="topC0">
+                    资质信誉</p>
+                <p class="topC0">
+                    售后保障</p>
+            </div>
+            <div class="NewsTop_cnt_product">
+                <span title="Don't delete me"></span>
+                <div class="s_1_product d_01_product">
+                    <ul class="detail_list">
+                        @if (ProductDataRow.IsNull("zbj") || ProductDataRow.IsNull("drj") || (decimal.Parse(ProductDataRow["zbj"].ToString()) <= 0 && decimal.Parse(ProductDataRow["drj"].ToString()) <= 0))
+                        {
+                            yaoliType = ViewBag.SyzName.ToString();
+                        }
+                        else
+                        {
+                            yaoliType += "&nbsp;&nbsp;&nbsp;&nbsp;" + ViewBag.SyzName.ToString();
+                        }
+                        <li>商品类别：<span>@Html.Raw(yaoliType)</span></li>
+                        <li>商品名称<span>：@Model.DrugsBase_DrugName</span></li>
+                        <li>商品编号：<span>@ViewBag.ProductID</span></li>
+                        <li>商品规格：<span>
+                            @if (!string.IsNullOrEmpty(Model.Goods_ConveRatio_Unit_Name))
+                            {
+                                <text>@Model.Goods_ConveRatio_Unit_Name</text>
+                            }
+                            else
+                            {
+                                <text>@(string.IsNullOrEmpty(Model.DrugsBase_Specification) ? "" : Model.DrugsBase_Specification + " ×")
+                                @Model.Goods_ConveRatio <font>@Model.Goods_ConveRatio_Unit</font> / @Model.Goods_Unit</text>
+                            }
+                        </span></li>
+                        <li>批准文号：<span>@Model.DrugsBase_ApprovalNumber</span></li>
+                        <li>生产企业：<span>@Model.DrugsBase_Manufacturer</span></li>
+                        <li>上架时间：<span>@ViewBag.AddedDate </span></li>
+                    </ul>
+                    @if (!string.IsNullOrEmpty(Convert.ToString(ViewBag.pro_Picture)))
+                    {
+                        <div class="detail_list_img">
+                            <img src="@Public.RawImage(ViewBag.pro_Picture)" width="760" alt="@Model.DrugsBase_DrugName">
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Convert.ToString(ViewBag.pro_Image)))
+                    {
+                        <div class="detail_list_img">
+                            <img src="@Public.RawImage(ViewBag.pro_Image)" width="760" alt="@Model.DrugsBase_DrugName">
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(ViewBag.Drugsbase_Direct))
+                    {
+                        <div class="detail_list_img">
+                            <div class="detail_list_title">
+                                <span>药品说明书</span>
+                            </div>
+                            <div class="detail_pm">
+                                @Html.Raw(ViewBag.Drugsbase_Direct)@*说明书内容*@
+                            </div>
+                        </div>
+                    }
+                    <div class="detail_list_img">
+                    </div>
+                    <div class="detail_list_img">
+                        <div class="detail_list_title">
+                            <span>售后保障</span>
+                        </div>
+                        <div class="ProductManual_title1">
+                            <p class="h4_title">
+                                <strong>服务说明：</strong></p>
+                            <p class="h4_title">
+                                <strong>药品验收：</strong></p>
+                            <p class="pm_t_3">
+                                用户在收到药品时，签字确认前须对药品进行开箱检验，核实药品数量、药品规格是否相符，药品外包装等。如果您验货时发现药品包装破损、药品短缺或错误、药品存在表面质量问题、药品剩余保质期少于6个月（活动、促销、赠送或事先有明确的除外）等其中一项，同时三方货运公司出具相关证明，且证实属实的可拒收；严重问题请拍照上传，便于界定责任并处理。</p>
+                            <p class="h4_title">
+                                <strong>商品退换货政策：</strong></p>
+                            <p class="pm_t_3">
+                                用户收到药品起的7天内，符合下列药品退换货要求的，可以退货。拨打@(@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"])服务热线（@wsi.Phone）进行联系确认后安排第二次发货。</p>
+                            <span class="clear"></span>
+                            <ol style="margin-left: 12px; font-family: '微软雅黑'; font-size: 14px; color: #333;">
+                                <li>（1）由于产品本身存在质量原因，经质量管理部门检验，确属质量问题的； </li>
+                                <li>（2）国家权威管理部门发布公告的产品（如停售、收回等）。 </li>
+                            </ol>
+                            <p class="h4_title">
+                                <strong>对不具备下列条件的，甲方将不予退换货：</strong></p>
+                            <ol style="margin-left: 12px; font-family: '微软雅黑'; font-size: 14px; color: #333;">
+                                <li>（1）在退换货之前未与客户服务中心取得联系； </li>
+                                <li>（2）除非确有质量问题，否则销售的商品包装一经拆封将不予退换； </li>
+                                <li>（3）采购的商品因非正常使用和储藏而出现质量问题的； </li>
+                                <li>（4）退回商品外包装或其他商品附属物不完整或有毁损； </li>
+                                <li>（5）超出质量保证期的商品； </li>
+                                <li>（6）所需退货商品的批号、型号与售出时不符的； </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(ViewBag.Drugsbase_Direct))
+                {
+                    <div class="d_01_product">
+                        <div class="detail_pm">
+                            @Html.Raw(ViewBag.Drugsbase_Direct)
+                        </div>
+                    </div>
+                }
+                <div class="d_01_product">
+                    <div class="detail_list_img">
+                    </div>
+                </div>
+                <div class="d_01_product">
+                    <div class="detail_list_img">
+                        <div class="detail_list_title2">
+                            <span>售后保障</span>
+                        </div>
+                        <div class="ProductManual_title1">
+                            <p class="h4_title">
+                                <p class="h4_title">
+                                    <strong>药品验收：</strong></p>
+                                <p class="pm_t_3">
+                                    用户在收到药品时，签字确认前须对药品进行开箱检验，核实药品数量、药品规格是否相符，药品外包装等。如果您验货时发现药品包装破损、药品短缺或错误、药品存在表面质量问题、药品剩余保质期少于6个月（活动、促销、赠送或事先有明确的除外）等其中一项，同时三方货运公司出具相关证明，且证实属实的可拒收；严重问题请拍照上传，便于界定责任并处理。</p>
+                                <p class="h4_title">
+                                    <strong>商品退换货政策：</strong></p>
+                                <p class="pm_t_3">
+                                    用户收到药品起的7天内，符合下列药品退换货要求的，可以退货。拨打@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]服务热线（@wsi.Phone）进行联系确认后安排第二次发货。</p>
+                                <span class="clear"></span>
+                                <ol style="margin-left: 12px; font-family: '微软雅黑'; font-size: 14px; color: #333;">
+                                    <li>（1）由于产品本身存在质量原因，经质量管理部门检验，确属质量问题的； </li>
+                                    <li>（2）国家权威管理部门发布公告的产品（如停售、收回等）。 </li>
+                                </ol>
+                                <p class="h4_title">
+                                    <strong>对不具备下列条件的，甲方将不予退换货：</strong></p>
+                                <ol style="margin-left: 12px; font-family: '微软雅黑'; font-size: 14px; color: #333;">
+                                    <li>（1）在退换货之前未与客户服务中心取得联系； </li>
+                                    <li>（2）除非确有质量问题，否则销售的商品包装一经拆封将不予退换； </li>
+                                    <li>（3）采购的商品因非正常使用和储藏而出现质量问题的； </li>
+                                    <li>（4）退回商品外包装或其他商品附属物不完整或有毁损； </li>
+                                    <li>（5）超出质量保证期的商品； </li>
+                                    <li>（6）所需退货商品的批号、型号与售出时不符的； </li>
+                                </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------->
+<!--list_right_detail-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.post("/Api/clickNum/@ViewContext.RouteData.Values["id"]");
+    });
+</script>
