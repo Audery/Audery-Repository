@@ -1,0 +1,112 @@
+﻿.containerSlider
+{
+    width: 544px;
+    height: 360px;
+}
+.containerSlider A IMG
+{
+    width: 544px;
+    height: 360px;
+}
+.containerSlider IMG
+{
+    border-bottom-style: none;
+    border-right-style: none;
+    border-top-style: none;
+    border-left-style: none;
+}
+.containerSlider2
+{
+    width: 588px;
+    height: 367px;
+}
+.containerSlider2 A IMG
+{
+    width: 588px;
+    height: 367px;
+}
+.containerSlider2 IMG
+{
+    border-bottom-style: none;
+    border-right-style: none;
+    border-top-style: none;
+    border-left-style: none;
+}
+.td_f A IMG
+{
+    padding-bottom: 0px;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+}
+.num
+{
+    position: absolute;
+    top: 324px;
+	/*background:url(/images/index_curser_bg.png) repeat-x;*/
+	padding:8px 0 8px 400px;
+    float: right;
+
+}
+.num LI
+{
+    text-align: center;
+    line-height: 18px;
+    list-style-type: none;
+    margin: -1px 4px 0;
+    width: 18px;
+    font-family: Arial;
+   /* background: url(/images/flashbutton.png) no-repeat -21px 0px;*/
+    float: left;
+    height: 18px;
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+	background:#f5f5f5;
+	border:1px solid #999;
+}
+.num LI.on
+{
+    line-height: 18px;
+    width: 18px;
+    /*background: url(/images/flashbutton.png) no-repeat;*/
+    height: 18px;
+    color: #ffffff;
+	font-weight:bold;
+	background:#000;
+    opacity: 0.65;
+	border:1px solid #00733b;
+}
+.num1
+{
+    position: absolute;
+    top: 336px;
+	padding:8px 0 8px 380px;
+    float: right;
+
+}
+.num1 LI
+{
+    text-align: center;
+    line-height: 18px;
+    list-style-type: none;
+    margin: -1px 4px 0;
+    width: 18px;
+    font-family: Arial;
+    background: url(/images/otc_banner_qh.png) no-repeat -21px 0px;
+    float: left;
+    height: 18px;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+}
+.num1 LI.on
+{
+    line-height: 18px;
+    width: 18px;
+    background: url(/images/otc_banner_qh.png) no-repeat 0px 0px;
+    height: 18px;
+    color: #ffffff;
+	font-weight:bold;
+}

@@ -1,0 +1,163 @@
+﻿@using System.Data
+@using _101shop.v3.Controllers
+@using SOSOshop.BLL.Common;
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["Zyyp_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["Zyyp_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["Zyyp_Key"];  
+    ViewBag.PriceInfo = Price.GetPriceShowString();
+    SOSOshop.BLL.Product.Product bll = new SOSOshop.BLL.Product.Product();
+    DataTable f1 = bll.Get_ZYYPHomeList(5, "2973", 1, true);//1F 活动专区
+    DataTable f1_rxb = bll.Get_ZYYPHomeList(5, "2973", 0, true);//热销榜
+    DataTable f2 = bll.Get_ZYYPHomeList(5, "2974", 1);//2F 常规饮片
+    DataTable f2_rxb = bll.Get_ZYYPHomeList(5, "2974", 0);//热销榜
+    DataTable f3 = bll.Get_ZYYPHomeList(5, "2985", 1);//2F 精品饮片
+    DataTable f3_rxb = bll.Get_ZYYPHomeList(5, "2985", 0);//热销榜
+    DataTable f4 = bll.Get_ZYYPHomeList(5, "2991", 1);//2F 药食同源
+    DataTable f4_rxb = bll.Get_ZYYPHomeList(5, "2991", 0);//热销榜
+    DataTable f5 = bll.Get_ZYYPHomeList(5, "2990", 1);//2F 特殊饮片
+    DataTable f5_rxb = bll.Get_ZYYPHomeList(5, "2990", 0);//热销榜
+    DataTable f6 = bll.Get_ZYYPHomeList(5, "2995", 1);//2F 中药相关
+    DataTable f6_rxb = bll.Get_ZYYPHomeList(5, "2995", 0);//热销榜
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/category.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/jquery.lazyload.min.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/index_tab.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/index_zyyp.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/category.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link href="/Content/slide.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/zyyp-101.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+}
+<div class="content">
+    @{Html.RenderPartial("Nav");}
+    @{Html.RenderPartial("Navigate");}
+    <div class="focus">
+        <ul>
+            <li><a href="/zyyp"><img src="/AdImage/zyyp/index/003.jpg"></a></li>
+            @*<li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3082, 0)?show=1" target="_blank"><img src="/AdImage/zyyp/index/01.jpg"></a></li>
+            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3083, 0)?show=1" target="_blank"><img src="/AdImage/zyyp/index/02.jpg"></a></li>*@
+        </ul>
+    </div>
+    <div class="new-ship">
+        <a href="/19761.html" target="_blank">
+            <img src="AdImage/zyyp/index/03.jpg" width="110" height="110">
+        </a>
+            <p><span>热门推荐</span></p>
+        <a href="/19762.html" target="_blank">
+            <img src="AdImage/zyyp/index/04.jpg" width="110" height="110">
+        </a>
+</div>
+    <div class="clear"></div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>1F&nbsp;活动专区</strong><span><a href="/Promotions/C158AABC_005E">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f1.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f1_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>2F&nbsp;常规饮片</strong><span><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2974, 0)?show=1">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f2.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f2_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>3F&nbsp;精品饮片</strong><span><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2985, 0)?show=1">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f3.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f3_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>4F&nbsp;药食同源</strong><span><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2991, 0)?show=1">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f4.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f4_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>5F&nbsp;特殊饮片</strong><span><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2990, 0)?show=1">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f5.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f5_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+    <div class="zyyp-sale">
+        <div class="zyyp-sale-title"><strong>6F&nbsp;中药相关</strong><span><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2995, 0)?show=1">查看更多>></a></span></div>
+        <div class="sale-list-box">
+            @product(f6.GetPriceTable())
+            <dl class="hotPh ProductHotList">
+                <dt>热销榜</dt>
+                @productHot(f6_rxb.GetPriceTable())
+            </dl><div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+@helper product(DataTable dt)
+{
+    foreach (DataRow item in dt.Rows)
+    {
+        int minsell = (int)item["minsell"]; if (2 == (int)item["sellType"]) { minsell = Math.Max((int)item["Goods_Pcs_Small"], minsell); }
+        <div class="shop-list cur">
+            <div class="shop-img">
+                <a href="@{@item["Product_ID"]}.html" target="_blank">
+                    <img class="pImage pImage_index" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" data-original="@Public.RawImage(item["Image"])" src="/images/grey.gif" width="160" height="160" />
+                </a>
+            </div>
+            <div class="shop-info-box-1">
+                <div class="shop-info-1"><a href="@{@item["Product_ID"]}.html" target="_blank">@item["Product_Name"]</a><span>@item["ProductionAddress"]</span><span>@item["ProductionMethodName"]</span></div>
+                <div class="shop-info-1">@Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)</div>
+                <div class="shop-price"><p class="sale-price"><span style="color:#666;font-weight:normal;">@(ViewBag.PriceInfo):</span>
+                    <span>@Html.Raw((string)item["showPrice"])</span>
+                    @if (0 < (decimal)item["Price"]) {<text>/ @item["Goods_Unit"]</text>}</p></div>
+                <div class="shop-cz" onclick="otc_AddShopCar('@item["Product_ID"]',@(minsell),@(item["Goods_Pcs"]),@(item["Goods_Pcs_Small"]),@(item["sellType"]))"><a href="javascript:;" class="addtocart">加入购物车</a></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+}
+@helper productHot(DataTable dt)
+{
+    int i = 1;
+    foreach (DataRow item in dt.Rows)
+    {
+        <dd>
+            <div class="gght-list-title">
+                <span style="background-position: -8px -309px;">@(i++)</span><a href="@{@item["Product_ID"]}.html" target="_blank" title="@item["Product_Name"] @(Convert.ToString(item["ProductionMethodName"]).Trim().Length > 0 ? "（" + @item["ProductionMethodName"] + "）" : "")">@item["Product_Name"] @(Convert.ToString(item["ProductionMethodName"]).Trim().Length > 0 ? "（" + @item["ProductionMethodName"] + "）" : "")</a>
+            </div>
+            <div style="@(i == 2 ? "" : "display:none;")" class="gght-list-2" onmouseover="jQuery('img[data-original]',this).each(function(){if(jQuery(this).attr('src').indexOf('/grey.gif')!=-1)jQuery(this).attr('src',jQuery(this).attr('data-original'))})">
+                <div class="pic">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        <img class="pImage pImage_index" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" data-original="@Public.RawImage(item["Image"])" src="/images/grey.gif" width="45" height="45" />
+                    </a>
+                </div>
+                <div class="title">
+                    <div class="guige2"> 规格：@Public.GetSpecificationAndS(item) </div>
+                    <div class="price"> @(ViewBag.PriceInfo)<span>@Html.Raw((string)item["showPrice"])</span></div>
+                    <div class="guige">  <span class="guige">已售<span>@item["Product_SaleNum"] </span>@item["Goods_Unit"] </span> </div>
+                </div>
+                <div class="clear"> </div>
+            </div>
+        </dd>
+    }
+}

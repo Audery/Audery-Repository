@@ -1,0 +1,509 @@
+﻿/*选项卡切换*/
+.titlemouseover
+{
+    background-image: url('../images/titlebg1.gif');
+    width: 80px;
+    height: 26px;
+    text-align: center;
+    font-size: 12px;
+    cursor: hand;
+}
+.tabtitle
+{
+    background-image: url('../images/titlebg2.gif');
+    width: 80px;
+    height: 26px;
+    text-align: center;
+    font-size: 12px;
+    cursor: hand;
+}
+table
+{
+    font-size: 9pt;
+    color: #222222;
+}
+table caption
+{
+    text-align: left;
+    color: #CCC;
+    font-weight: bold;
+}
+
+form
+{
+    margin: 0;
+    padding: 0;
+}
+
+.form_head_row
+{
+    color: #000000;
+    font-weight: bold;
+    height: 26px;
+    background-color: #F5F5F5;
+    cursor: hand;
+}
+.form_text_row
+{
+    padding-left: 9px;
+    color: #000000;
+    background-color: #F5F5F5;
+}
+.form_ctrl_row
+{
+    background-color: #FFFFFF;
+    height: 28px;
+    padding-left: 9px;
+    color: #777;
+}
+
+.page_toolbar
+{
+    border: 1px solid #bac9c6;
+    padding: 8px;
+    background-color: #F5F5F5;
+    margin-bottom: 5px;
+}
+.page_sarch
+{
+    font-size: 12px;
+    color: #000000;
+    padding-top: 2px;
+    margin-top: 4px;
+}
+/*.page_sarch input
+{
+	margin:0;
+	padding:0;
+	border: 1px solid #DDDDDD;
+	height: 24px;
+}*/
+.page_sarch a
+{
+    border: 1px solid #DDDDDD;
+    background-color: #fff;
+    text-decoration: none;
+    color: #000;
+    padding: 4px 6px 1px 6px;
+}
+.page_sarch a:hover
+{
+    border-style: inset;
+    border-width: 1px;
+    padding: 4px 6px 1px 6px;
+}
+
+.page_title
+{
+    padding: 0 0 4px 0;
+    font-size: 14px;
+    color: #0066FF;
+    font-weight: bold;
+}
+.page_info
+{
+    font-size: 12px;
+    color: #000000;
+    padding-top: 2px;
+    margin-top: 0px;
+}
+/*.page_info input
+{
+	margin:0;
+	padding:0;
+	border: 1px solid #DDDDDD;
+	background-color:White;
+	height:19px;
+}*/
+
+
+.inputbutton
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 65px;
+    cursor: hand;
+    height: 23px;
+    color: #000;
+    background-image: url('../images/button.jpg');
+    cursor: pointer;
+    padding-top: 2px;
+}
+.inputbutton_a
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 65px;
+    height: 24px;
+    color: #666666;
+    cursor: hand;
+    background-image: url('../images/button_a.jpg');
+}
+.page_bottom
+{
+    border-bottom: 1px solid #bac9c6;
+    padding: 2px;
+    background-color: #F5F5F5;
+    margin-bottom: 2px;
+    text-align: center;
+}
+.page_bottom a
+{
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    vertical-align: text-bottom;
+    line-height: 24px;
+}
+.page_bottom a:hover
+{
+    color: #666666;
+}
+.page_button
+{
+    padding: 2px;
+    margin-bottom: 2px;
+}
+.page_button a
+{
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+    color: #000OOO;
+    text-align: center;
+    vertical-align: text-bottom;
+    line-height: 24px;
+}
+.page_button a:hover
+{
+    color: #666666;
+}
+.page_title a
+{
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+    vertical-align: text-bottom;
+    line-height: 24px;
+    margin-bottom: -5px;
+}
+.page_title a:hover
+{
+    color: #666666;
+}
+.page_info a
+{
+    border: 1px solid #DDDDDD;
+    background-color: #fff;
+    text-decoration: none;
+    color: #000;
+    padding: 4px 6px 1px 6px;
+}
+
+.page_info a:hover
+{
+    border-style: inset;
+    border-width: 1px;
+    padding: 4px 6px 1px 6px;
+}
+.page_main a
+{
+    color: #0099CC;
+    text-decoration: none;
+}
+.page_main a:hover
+{
+    color: Red;
+    text-decoration: none;
+}
+.toolmune
+{
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666;
+    white-space: nowrap;
+    position: absolute;
+    background-color: #FFFFFF;
+    padding: 5px;
+    display: none;
+    width: 110px;
+}
+.toolmunel
+{
+    float: right;
+    width: 53px;
+    height: 1px;
+    border-top: 1px solid #DDDDDD;
+    margin: -5px -2px 0 0;
+    text-align: right;
+}
+.toolmune ul
+{
+    padding: -10px 0 0 0;
+    margin: 0;
+}
+.toolmune li
+{
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    color: #990000;
+}
+.toolmune li a
+{
+    text-decoration: none;
+    color: #990000;
+}
+.actionErr
+{
+    background: #FFF2E9 url(../images/validate_error.gif) no-repeat;
+    padding-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    border: #f60 1px solid;
+    font-size: 12px;
+}
+.actionOk
+{
+    background: #E9FFEB url(../images/validate_success.gif) no-repeat;
+    padding-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    border: #00be00 1px solid;
+    font-size: 12px;
+}
+
+
+/*带验证的数据数据输入格式*/
+.form_table_input
+{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #EEEEEE;
+}
+.form_table_input td
+{
+    border-top: 1px solid #EEEEEE;
+}
+.form_table_input .form_table_input_info
+{
+    text-align: right;
+    padding-right: 10px;
+    color: #0099FF;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+.form_table_input textarea
+{
+    width: 250px;
+    height: 50px;
+}
+
+.long_input
+{
+    width: 250px;
+    height: 18px;
+}
+.short_input
+{
+    width: 40px;
+    height: 18px;
+}
+.date_input
+{
+    width: 63px;
+    height: 18px;
+}
+
+
+
+
+/*数据表*/
+.datatable th
+{
+    color: #000000;
+    font-weight: bold;
+    height: 24px;
+    background-image: url(../images/head_bg.gif);
+    cursor: hand;
+}
+.datatable td
+{
+    height: 23px;
+    padding-left: 9px;
+}
+
+.datatable a
+{
+    color: #0066CC;
+    text-decoration: none;
+}
+.tabs
+{
+    display: none;
+}
+
+.textcontent
+{
+    padding-left: 5px;
+}
+
+.table_label_parameter
+{
+    background-color: #EEEEEE;
+}
+.table_label_parameter td
+{
+    background-color: #FFFFFF;
+}
+.datatable
+{
+    border-collapse: collapse;
+}
+
+.datatable tr
+{
+    cursor: pointer;
+}
+.datatable td
+{
+    line-height: 115%;
+    padding: 4px;
+    border: 1px solid #BAC9C6;
+}
+.datatable th
+{
+    line-height: 115%;
+    padding: 4px;
+    border: 1px solid #BAC9C6;
+    text-align: left;
+}
+
+.FormBase, .FormFocus, .FormCode, .formnoborder
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    padding: 0.2em 0;
+    border: 1px double #ccc;
+    padding-left: 2px;
+}
+
+
+.FormFocus
+{
+    border: 1px double #3399ff;
+    background-color: #c0ddfc;
+}
+
+/*分页*/
+.pager1
+{
+    text-align: right;
+    color: #555;
+    font-family: arial,simsun;
+    font-size: 12px;
+    font-weight: normal;
+    height: 23px;
+    line-height: 23px;
+    padding: 10px 10px 10px 0;
+}
+.pager1 .disabled
+{
+    color: #DDD;
+    border: 1px solid #EEEEEE;
+    margin: 2px;
+    padding: 2px 5px;
+    cursor: default;
+}
+.pager1 .current
+{
+    color: #F60;
+    font-weight: bold;
+    border: 1px solid #EEEEEE;
+    margin: 2px;
+    padding: 2px 5px;
+    cursor: default;
+}
+.pager1 a
+{
+    border: 1px solid #DEDFDE;
+    color: #0061DE;
+    margin: 2px;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+}
+.pager1 a:hover
+{
+    background: #EEEFDE;
+    border: 1px solid #DEDFDE;
+    color: #FF6600;
+    margin: 2px;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+}
+.pager1 .jump
+{
+    color: #678;
+    font-weight: normal;
+    cursor: pointer;
+    padding: 2px;
+}
+.pager1 .jump input
+{
+    color: #F60;
+    font-weight: normal;
+    width: 25px;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    border: 0;
+}
+.pager1 .jump:hover
+{
+    border-color: #FDA;
+}
+.quotes
+{
+    padding-bottom: 3px;
+    padding-left: 3px;
+    font-size: 180;
+    text-align: right;
+    padding-top: 3px;
+    padding-right: 3px;
+    font: 12px/12pt Verdana, Arial, Helvetica, sans-serif;
+    margin: 3px;
+}
+.mbox
+{
+    color: Red;
+}
+.datatable tr td
+{
+    line-height: 23px;
+}
+.datatable
+{
+    background-color: White;
+}
+.form_table_input tr td
+{
+    height: 23px;
+}
+.quotes
+{
+    padding-bottom:5px;    
+    height:30px;
+}

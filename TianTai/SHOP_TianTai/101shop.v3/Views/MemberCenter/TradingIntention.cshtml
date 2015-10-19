@@ -1,0 +1,293 @@
+﻿@model PagedList<System.Data.DataRow>
+@using System.Data;
+@using SOSOshop.Model.Order;
+@using Webdiyer.WebControls.Mvc
+@using _101shop.v3.Controllers
+@{
+    ViewBag.Title = "我的交易意向";
+    DataTable list = ViewBag.List;    
+}
+  <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_TradingIntention.css" />
+  <style type="text/css"> 
+.xstooltip 
+{ 
+    background:#efefef;
+visibility: hidden; 
+position: absolute; 
+top: 0; 
+left: 20; 
+z-index: 2; 
+padding-left:2px;
+padding-top:2px;
+display:none;
+}
+.xstooltip th
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+    text-align:center;
+} 
+.xstooltip td
+{
+    padding:2px 4px 2px 4px;
+    border:1px solid #aeaeae;
+}
+.xstooltip .right
+{   
+    text-align:right;
+}
+.xstooltip .center
+{   
+    text-align:center;
+}
+.zk_info_1 {
+    width: 130px;
+}
+.zk_info_2 {
+    width: 100px;
+}
+.zk_info_4 {
+    width: 115px;
+}
+.zk_info_5 {
+    width: 80px;
+}
+.zk_info_6 {
+    width: 40px;
+}
+.zk_info_7 {
+    width: 65px;
+}
+.zk_info_8 {
+    width: 160px;
+}
+.zk_info_9 {
+    width: 48px;
+}
+.list_shop_title .ls_01 {
+    width:120px;
+}
+.list_shop_title .ls_02 {
+    width: 90px;
+}
+.list_shop_title .ls_04 {
+    width: 105px;
+}
+.list_shop_title .ls_05 {
+    width: 70px;
+}
+.list_shop_title .ls_06 {
+    width: 30px;
+}
+.list_shop_title .ls_07 
+{
+    border-right: 1px solid #DDDDDD;
+    width: 55px;
+}
+.list_shop_title .ls_08 {
+    width: 150px;
+}
+.list_shop_title .ls_09 {
+    border-right:0 none;
+    width: 38px;
+}
+.zhb{color:#3344EE;}
+.zk_info li { height:53px;padding: 2px 0;}
+.zk_info li span.liner{ display: block; cursor: default; line-height: 100%; height: 18px;}
+</style> 
+    <script language="javascript" type="text/javascript">
+        function fnArrivalPeriod(i, a) {
+            var s = ""; a = parseInt(a);
+            if (!isNaN(a)) {
+                switch (a) {
+                    case 7: s = "7天"; break;
+                    case 15: s = "半个月"; break;
+                    case 30: s = "1个月"; break;
+                    case 365: s = "1个月以上"; break;
+                    default: s = "未知"; break;
+                }
+            } else {
+                s = "未知";
+            }
+            jQuery('#' + i).html('<font title="可接受到货周期: ' + s.replace(/["']|\s/, '') + '">可接受到货周期: ' + s + '</font>');
+        }
+        function fnDetail(i, a) {
+            if (a.length == 0) {
+                jQuery('#' + i).remove();
+            } else {
+                var b = a, j = 11;if (i.indexOf('d3') == 0) { b = "回复: " + b; j = 13; }  if (b.length > j) b = b.substring(0, j) + "...";
+                jQuery('#' + i).html('<font onclick="alert(this.title)" title="' + a.replace(/["']|\s/, '') + '" style="' + (b == a ? '' : 'cursor:pointer') + '">' + b + '</font>');
+            }
+        }
+    </script>
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>交易意向</span></li>
+</ul>
+ <div class="mc_left">
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind"><div>我的交易意向</div>
+    </div>
+    <div class="search_01" style="float:left; font-size:14px;">操作 > <a href="/MemberCenter/TradingIntentionAdd" style="color:Blue">提交品种交易意向</a></div>
+      <div class="search_01">
+      搜索品种：
+      <input class="text def" name="search" id="search" type="text" placeholder="药品名称(拼音缩写) | 商品名称 | 生产企业" def="药品名称(拼音缩写) | 商品名称 | 生产企业" value="@ViewBag.search" />
+      <input type="button" value="查 询" class="bti" onclick="search()"/>
+      </div>
+    
+    <div class="list_shop_title">
+  <ul>
+      <li class="ls_01">通用名</li>
+      <li class="ls_02">规格</li>
+      <li class="ls_03">剂型</li>
+      <li class="ls_04">生产企业</li>
+      <li class="ls_05">批准文号</li>
+      <li class="ls_06">件装</li>
+      <li class="ls_07">日期</li>
+      <li class="ls_08">说明</li>
+      <li class="ls_09">操作</li>
+  </ul>
+  </div>
+  @{
+      foreach (DataRow dv in list.Rows)
+      {
+          SOSOshop.Model.memberTradingIntention m = new SOSOshop.Model.memberTradingIntention();
+          m = new SOSOshop.BLL.memberTradingIntention().GetModelByDataRow(dv);
+        <ul class="zk_info">
+        <li class="zk_info_1"><span>@m.DrugsBase_Name</span></li>
+        <li class="zk_info_2">@m.Guige</li>
+        <li class="zk_info_3">@m.JiXing</li>
+        <li class="zk_info_4">@m.QiYe</li>
+        <li class="zk_info_5">@m.pzwh</li>
+        <li class="zk_info_6">@m.jz</li>
+        <li class="zk_info_7">@(((DateTime)m.AddDate).ToString("yyyy/MM/dd"))</li>
+        <li class="zk_info_8">
+            <span class="liner" id="d1@(m.ID)"><script type="text/javascript">fnArrivalPeriod('d1@(m.ID)','@(m.ArrivalPeriod)')</script></span>
+            <span class="liner" id="d2@(m.ID)"><script type="text/javascript">fnDetail('d2@(m.ID)','@(Convert.ToString(m.Detail).Replace("\r", " ").Replace("\n", " ").Replace("'", ""))')</script></span>
+            @if (Convert.ToString(m.Disposition) != string.Empty)
+            { <span class="liner" id="d3@(m.ID)" style="border-top:1px solid #DDDDDD; color:Green;"><script type="text/javascript">fnDetail('d3@(m.ID)','@(Convert.ToString(m.Disposition).Replace("\r", " ").Replace("\n", " ").Replace("'", ""))')</script></span> }
+        </li>
+        <li class="zk_info_9">
+            @if ((int)m.State == 0)
+            {
+            <span style="color:Gray">已取消</span>
+            }
+            else
+            {
+            <span style="display:block;text-align:center;">
+            @if ((int)m.State == 1)
+            {
+            <span> <a href="javascript:canel(@(m.ID))">取消</a></span>
+                
+            if ((int)m.State == 2) { <span style="color:Green">已处理</span> }
+            }
+            </span>
+            }
+        </li>
+        </ul>
+      }
+    
+    }
+
+    <div>
+   @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })           
+    </div>
+     </div>
+<!--content---------content------>
+
+<script language="javascript" type="text/javascript">
+    function canel(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/MemberCenter/TradingIntentionCancel',
+            data: { id: id },
+            dataType: "json",
+            success: function (msg, textStatus) {
+                switch (msg["state"]) {
+                    case 1:
+                        alert(msg["message"]);
+                        document.location.reload();
+                        break;
+                    default:
+                        alert(msg["message"]);
+                        break;
+                }
+            }
+        });
+    }
+
+    function search() {
+        var s = $("#search").val();
+        if (s == "" || s == "药品名称(拼音缩写) | 商品名称 | 生产企业") {
+            alert("请输入要查询的内容！");
+        }
+        else {
+            document.location.href = "?search="+s;
+        }
+    }
+
+</script>
+
+<script language="javascript" type="text/javascript">
+    function xstooltip_findPosX(obj) {
+        var curleft = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curleft += obj.offsetLeft
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.x)
+            curleft += obj.x;
+        return curleft;
+    }
+    function xstooltip_findPosY(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            while (obj.offsetParent) {
+                curtop += obj.offsetTop
+                obj = obj.offsetParent;
+            }
+        }
+        else if (obj.y)
+            curtop += obj.y;
+        return curtop;
+    }
+    function xstooltip_show(tooltipId, parentId, posX, posY) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "";
+            }
+        }
+        it = document.getElementById(tooltipId);
+        if ((it.style.top == '' || it.style.top == 0) && (it.style.left == '' || it.style.left == 0)) {
+            // need to fixate default size (MSIE problem) 
+            it.style.width = it.offsetWidth + 'px';
+            it.style.height = it.offsetHeight + 'px';
+            img = document.getElementById(parentId);
+            // if tooltip is too wide, shift left to be within parent 
+            if (posX + it.offsetWidth > img.offsetWidth) posX = img.offsetWidth - it.offsetWidth;
+            if (posX < 0) posX = 0;
+            x = xstooltip_findPosX(img) + posX;
+            y = xstooltip_findPosY(img) + posY;
+            it.style.top = y + 'px';
+            it.style.left = x + 'px';
+        }
+        it.style.visibility = 'visible';
+	it.style.display = 'block';
+    }
+    function xstooltip_hide(id) {
+        var table = document.getElementsByTagName("table");
+        for (var i = 0; i < table.length; i++) {
+            if (table[i].className == "detailTable") {
+                table[i].style.display = "none";
+            }
+        }
+        it = document.getElementById(id);
+        it.style.visibility = 'hidden';
+	it.style.display = 'none';
+    } 
+</script> 

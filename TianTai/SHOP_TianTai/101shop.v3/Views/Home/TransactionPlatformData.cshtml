@@ -1,0 +1,29 @@
+﻿@using System.Data;
+@using SOSOshop.Model;
+@using System.Collections.Specialized;
+@using _101shop.v3.Controllers;
+@{
+    DataTable TransantionNewData = ViewBag.交易大厅新数据;
+    Layout = null;
+}
+@foreach (DataRow row in TransantionNewData.Rows)
+{
+    //string addTime2 = row["rq"].ToString() + row["ontime"].ToString();
+    <span style="float: left; text-align: center; padding-top: 5px; height: 18px; padding-bottom: 5px;
+        border-bottom: 1px dashed #ddd; width: 259px; text-overflow: ellipsis; white-space: nowrap;">
+        <a id="@row["Id"]|@row["OrderDate"]" title="@row["Product_Name"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["Product_Name"].ToString().TrimEnd(), 18, "...")</a></span>
+    <span style="float:left;text-align:center;padding-top:5px;height:18px;padding-bottom:5px;border-bottom:1px dashed #ddd;width:176px;text-overflow:ellipsis;white-space:nowrap;" title="@row["DrugsBase_Specification"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["DrugsBase_Specification"].ToString().TrimEnd(), 20, "...")</span>
+    <span style="float:left;text-align:center;padding-top:5px;height:18px;padding-bottom:5px;border-bottom:1px dashed #ddd;width:247px;text-overflow:ellipsis;white-space:nowrap;" title="@row["DrugsBase_Manufacturer"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(@row["DrugsBase_Manufacturer"].ToString().TrimEnd(), 17, "...")</span>
+    if ("1".Equals(Request.QueryString["type"]))
+    { 
+    <span style="float:left;text-align:center;padding-top:5px;height:18px;padding-bottom:5px;border-bottom:1px dashed #ddd;width:247px;text-overflow:ellipsis;white-space:nowrap;" title="@row["dywldwname"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(@row["dywldwname"].ToString().TrimEnd(), 17, "...")</span>
+    }
+    <span style="float: left; text-align: center; padding-top: 5px; height: 18px; padding-bottom: 5px;
+        border-bottom: 1px dashed #ddd; width: 120px;">@row["ReceiveAddress"].ToString().TrimEnd()
+       </span>
+    <span style="float: left; text-align: center; padding-top: 5px; height: 18px; padding-bottom: 5px;
+        border-bottom: 1px dashed #ddd; width: 78px; padding-left: 20px; text-align: left !important;">@string.Format("{0:C2}", row["cost"])
+    </span>
+    <span style="float: left; text-align: center; padding-top: 5px; height: 18px; padding-bottom: 5px;
+        border-bottom: 1px dashed #ddd; width: 95px;">@Convert.ToDateTime(row["OrderDate"]).ToShortDateString()</span>
+}

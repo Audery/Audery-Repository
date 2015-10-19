@@ -1,0 +1,82 @@
+﻿@using AdvertisingManagement.Models;
+@using System.Data;
+@model Ad_Config
+@{
+    ViewBag.Title = "创建广告位";
+    DataTable list = new AdvertisingManagement.Controllers.ADController().getConfigDataTable();
+}
+@section Header{}
+<div class="page_toolbar">
+    <h2 class="page_title">创建广告位</h2>
+    <form action="Config" method="post">
+        <div class="c_adImg_con">
+            <div><span>广告名称：</span><span>@Html.TextBoxFor(x => x.AdName)</span>    </div>
+            <div><input name="NetName" id="NetName" type="hidden" /></div>
+            <div><span>站点名称：</span><span>@Html.DropDownList("NetName1")</span></div>
+            <div><span>广告宽度：</span><span>@Html.TextBoxFor(x => x.Width)</span></div>
+            <div><span>广告高度：</span><span>@Html.TextBoxFor(x => x.Height)</span></div>
+            <div><span>资源类型：</span><span>@Html.DropDownList("Resource")</span></div>
+            <div><span>所在频道：</span><span>@Html.TextBoxFor(x => x.Channel)</span></div>
+            <div><span>站点编号：</span><span>@Html.TextBoxFor(x => x.NetNo)</span></div>
+            <div><input type="submit" value="提交" /></div>
+        </div>
+    </form>
+    <div class="clear"></div>
+</div>
+<table>
+    <tr class="datatable">
+        <th>序号</th>
+        <th>名称</th>
+        <th>站点</th>
+        <th>频道</th>
+        <th>宽度</th>
+        <th>高度</th>
+        <th>类型</th>
+
+        @*<th>修改</th>
+            <th>删除</th>*@
+    </tr>
+    @foreach (DataRow ad in list.Rows)
+    {
+        <tr class="datatable">
+            <td>@ad["ConfigID"]</td>
+            <td>@ad["AdName"]</td>
+            <td>@ad["NetName"]</td>
+            <td>@ad["Channel"]</td>
+            <td>@ad["Width"]</td>
+            <td>@ad["Height"]</td>
+            <td>
+                @{
+        int res = 0;
+        int.TryParse(ad["Resource"].ToString(), out res);
+        switch (res)
+        {
+            case 0:
+                <text></text>
+                break;
+            case 1:
+            <text>jpg</text>
+                break;
+            case 2:
+            <text>flash</text>
+                break;
+        }
+                }
+            </td>
+
+            @*<td>修改</td>
+                <td>删除</td>*@
+        </tr>
+    }
+</table>
+<script type="text/javascript">
+    $(function () {
+        $("#NetName1").change(function () {
+            $("#NetName").val($("#NetName1").find("option:selected").text());
+            $("#NetNo").val($("#NetName1").val());
+        });
+    });
+    function modify() {
+
+    }
+</script>

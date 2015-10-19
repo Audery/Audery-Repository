@@ -1,0 +1,113 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Recorder.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
+    xmlns:local="clr-namespace:Recorder"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    >
+
+    <phone:PhoneApplicationPage.Resources>
+        <local:DateTimeConvertor x:Key="datetimeCvt" />
+        <DataTemplate x:Key="nomalTmp">
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu>
+                        <toolkit:MenuItem DataContext="{Binding FileName}" Click="Delete_Click" Header="删除" />
+                        <toolkit:MenuItem DataContext="{Binding FileName}" Header="短信分享" Click="SMS_Share_Click" />
+                        <toolkit:MenuItem DataContext="{Binding FileName}" Header="邮件分享" Click="Email_Share_Click"/>
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+                <StackPanel Grid.Column="1">
+                    <TextBlock FontSize="28" Text="{Binding FileName}" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SaveTime,Converter={StaticResource datetimeCvt}}"/>
+                </StackPanel>
+                <Button Grid.Column="0" BorderThickness="1" Padding="0" Tag="{Binding FileName}" Click="onPlay">
+                    <Image Source="images/play.png" Stretch="Uniform"/>
+                </Button>
+                <!--<HyperlinkButton Grid.Column="2" Content="删除" Tag="{Binding FileName}" Click="onDelete"/>-->
+            </Grid>
+        </DataTemplate>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Padding" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <!-- 当ListBoxItem处于选定状态时显示该矩形 -->
+                                <Rectangle x:Name="bgRect" Opacity="0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="MediumOrchid" Offset="0"/>
+                                            <GradientStop Color="DarkBlue" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <!-- ListBoxItem的内容部分 -->
+                                <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}"/>
+                            </Grid>
+                            <!-- 状态 -->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected"/>
+                                    <VisualState x:Name="SelectedUnfocused"/>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="bgRect" Storyboard.TargetProperty="Opacity" Duration="0:0:0.5" To="1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="root" >
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="手机录音机" FontSize="65" Margin="15,0,0,20"/>
+        <ListBox Grid.Row="1" x:Name="fileList" ItemTemplate="{StaticResource nomalTmp}"/>
+    </Grid>
+
+    <!-- 应用程序栏 -->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar BackgroundColor="Green">
+            <shell:ApplicationBarIconButton Text="新建录音" IconUri="images/new.png" Click="onNew"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="关于..." Click="onAbout"/>
+                <shell:ApplicationBarMenuItem Text="亲，给个好评吧" Click="MarketplaceReview_Click"></shell:ApplicationBarMenuItem>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

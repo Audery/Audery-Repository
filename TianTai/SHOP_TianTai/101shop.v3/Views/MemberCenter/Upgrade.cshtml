@@ -1,0 +1,123 @@
+﻿@using System.Data;
+@using System.Collections;
+@using System.Collections.Generic;
+@using System.Collections.Specialized;
+@using SOSOshop.Model;
+@using SOSOshop.BLL.Common;
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) + "的会员中心";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101register-Success3.css" />
+}
+@{Html.RenderPartial("Nav");}
+@if (ViewBag.Msg != null)
+{
+    <script>        alert("@ViewBag.Msg");</script>
+}
+@{
+    Public.WebSiteInfo wsi = Public.GetNetSiteInfo();
+    string tel = wsi.Phone;
+    string qq = "1009411622";
+    string name = "蒋瑞";
+    System.Data.DataTable dt = new SOSOshop.BLL.Db().ExecuteTable(string.Format("SELECT OfficePhone,QQ,name FROM dbo.yxs_administrators WHERE adminid=(SELECT Editer FROM dbo.memberinfo WHERE UID={0})", Public.GetUserId()));
+    if (dt.Rows.Count > 0)
+    {
+        if (!Library.Lang.DataValidator.isNULL(dt.Rows[0][0], dt.Rows[0][1]))
+        {
+            tel = dt.Rows[0][0].ToString();
+            qq = dt.Rows[0][1].ToString();
+            name = dt.Rows[0][2].ToString();
+        }
+    }
+    else
+    {
+        int memberClass;
+        Price.GetMemberpermission(out memberClass);
+        if (memberClass == 0)
+        {
+            //tel = "028-66321989";
+            //qq = "1937513269";
+            //name = "赵娟";
+        }
+    }
+}
+<ul class="list_nav">
+    <li><a href="#">会员注册</a></li>
+    <li><a href="#">提交纸质资质</a></li>
+</ul>
+<div class="register_left">
+    <div class="register2_title">
+        尊敬的<span>@(new SOSOshop.BLL.Db().ExecuteScalar("SELECT TrueName FROM dbo.memberinfo WHERE UID=" + _101shop.v3.Controllers.BaseController.GetUserId()))</span></div>
+    @{
+        object CompanyClass = new SOSOshop.BLL.Db().ExecuteScalar(string.Format("SELECT CompanyClass FROM dbo.memberaccount where uid={0}", Public.GetUserId()));
+        if (CompanyClass != null)
+        {
+            CompanyClass = CompanyClass.ToString().TrimEnd('A').TrimEnd('B');
+        <div class="register2_call">
+            您好，您注册账户的企业类型是： <span>@CompanyClass.ToString()</span><br />
+            请尽快与@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]在线客服或电话联系进行相关的资质审核。
+        </div>   
+        <div class="register2_qicq">
+            <div class="register2_qq_cnt">
+                云南省昆明市马街电机路99号
+                <br />
+                @System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]<span> @tel</span>
+                @name（收）</div>
+            <p style="font-size: 14px; color: #8e8e8e; margin-top: 20px;">
+                收到资质后我们会短信提示审核通过,即可专享会员权益。</p>
+        </div>
+        <div class="reg_info1">
+            <p class="reg_wxts_01">
+                <span>@CompanyClass</span>需要提供的材料：</p>
+            <ul class="reg_wxts_02">
+                @{
+            try
+            {
+                string kid = string.Format(",{0},", SOSOshop.Model.KeyValue.GetMemberTypeList().Where(x => x.Name == (CompanyClass as string)).First().Value);
+                var li = SOSOshop.Model.KeyValue.GetQualificationsList().Where(x => x.Contain.Contains(kid));
+                int i = 1;
+                foreach (var item in li)
+                {   
+                    <li class="@(i == 1 ? "reg_wxts_li_frist" : "")">@i、@item.Name</li>      
+                    i++;
+                }
+            }
+            catch (Exception)
+            {
+
+                Response.Redirect("/");
+            }
+                
+                
+                }
+                <p class="reg_wxts_03">
+                    <span></span>以上资质资料须在有效期内且必须加盖企业红章</p>
+        </div>
+        }
+        else
+        {
+        <div class="register2_call">
+            您好，请尽快与@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]在线客服或电话联系进行相关的资质审核。
+        </div> 
+        <div class="register2_qicq">
+            <div class="register2_qq_cnt">
+                昆明市新都区大丰蓉北路一段1号
+                <br />
+                @System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]<span> @tel</span>
+                @name（收）</div>
+            <p style="font-size: 14px; color: #8e8e8e; margin-top: 20px;">
+                收到资质后我们会短信提示审核通过,即可专享会员权益。</p>
+        </div>
+        }
+    }
+</div>
+<div class="register_right">
+    <div class="register_Process_new">
+    </div>
+    <div style="padding: 50px 0 0 20px; color: #999; font-size: 13px;">
+        <span>如您对用户注册有任何疑问可查看<a style="color: #fc5a5a;" href="/help/133.html" target="_blank">用户须知</a></span>
+    </div>
+</div>

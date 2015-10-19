@@ -1,0 +1,326 @@
+﻿@using System.Linq
+@using SOSOshop.BLL
+@using System.Data
+@using SOSOshop.BLL.DrugsBase
+@using _101shop.v3.Controllers
+<script type="text/javascript">
+    function showMenu() {
+        var pageAddress = document.getElementById('isHidenMenu');
+        if (pageAddress.value != "Home") {
+
+            var menu = $('#itemMenu');
+
+            if (menu[0].style.display == "")
+                menu[0].style.display = "none";
+            else
+                menu[0].style.display = "";
+        }
+    }
+</script>
+<style type="text/css">
+    .oy_categorys
+    {
+        float: left;
+        height: 366px;
+        width: 220px;
+        border: 2px solid #bd0000;
+        margin-top: -8px;
+        position: relative;
+        background: none repeat scroll 0 0 #D9222F;
+        color: #FFFFFF;
+        margin-right: 4px;
+        z-index: 11;
+    }
+    .otc_category_show2_1
+    {
+        background: #D9222F;
+        color: #F6DDDD;
+        float: left;
+        height: 33px;
+        width: 216px;
+        font-size: 12px;
+        padding: 5px 2px 6px;
+    }
+    .otc_category_show2_1 span
+    {
+        color: #fff;
+        font-weight: bold;
+    }
+</style>
+<script type="text/javascript" src="/Scripts/category.js"></script>
+<link rel="Stylesheet" type="text/css" href="/Content/category.css" />
+<input type="hidden" value="@ViewContext.RouteData.Values["Controller"]" id="isHidenMenu" />
+<script type="text/javascript" src="/Scripts/wbox/wbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css" />
+<div class="menu_radio">
+    <div class="oy_menuBar">
+        <div class="c1_nm_radio">
+            <div style="cursor: pointer;" class="nav_cl_nm" onclick="showMenu()">
+                <h2>
+                    查看全部分类</h2>
+            </div>
+            <div id="itemMenu" style="position: absolute !important; display: none; top: 48px;
+                left: 0px">
+                <div class="box box1">
+                    <div class="allsort">
+                        <div class="mc">
+                            @{
+                                //中西药品 
+                                SOSOshop.BLL.DrugsBase.Tag_PharmAttribute bll = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute();
+                                var dt_otc = bll.GetList(71).AsEnumerable().Where(a => a.Field<int>("ParentId") == 0);    
+            
+                                <div class="item">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico1 font">中西药品(@(bll.GetTotalCount(1) + bll.GetTotalCount(583)))</a>
+                                            <p class="cate2">
+                                                @foreach (var item in dt_otc.Where(x => x.Field<int>("id") == 16 || x.Field<int>("id") == 19))
+                                                {
+                                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)">
+                                                        @{@item["name"]}
+                                                        (@item["count"])</a>
+                                                }
+                                            </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            <dl class="fore">
+                                                <dd>
+                                                    @foreach (var item in dt_otc)
+                                                    {<em> <a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)">
+                                                        @{@item["name"]}
+                                                        (@item["count"])</a></em>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+           
+                                //进口药品
+                                SOSOshop.BLL.Category.Menu menu = new SOSOshop.BLL.Category.Menu();
+                                var m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.进口药品);
+                                <div class="item">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico2 font">进口药品(@m.Sum(x => x.Count))</a><p class="cate2">
+                                                @foreach (var item in m.Where(x => x.Pharm_ID == 1821 || x.Pharm_ID == 1838))
+                                                {
+                                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 9)">
+                                                        @{@item.Title}
+                                                    </a>
+                                                }
+                                            </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            <dl class="fore">
+                                                <dd>
+                                                    @foreach (var item in m.Where(x => x.Count > 0 && x.parentId != "0"))
+                                                    {
+                                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 9)">
+                                                            @{@item.Title}
+                                                            (@item.Count)</a></em>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                //中药饮片                                 
+                                m = menu.GetList_Zyyp("2973");
+                                <div class="item">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico3 font">中药饮片(@{@m.Sum(x => x.Count)}
+                                                )</a><p class="cate2">
+                                                    @foreach (var item in m.Take(2))
+                                                    {
+                                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 8)">
+                                                            @{@item.Title}
+                                                            (@item.Count)</a>
+                                                    }
+                                                </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            <dl class="fore">
+                                                <dd>
+                                                    @foreach (var item in m)
+                                                    {
+                                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 8)">
+                                                            @{@item.Title}
+                                                            (@item.Count)</a></em>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                //医疗器械
+                                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.医疗器械);
+                                <div class="item">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico4 font">医疗器械(@{@m.Where(x => x.parentId == "0").Sum(x => x.Count)}
+                                                )</a><p class="cate2">
+                                                    @foreach (var item2 in m.Where(x => x.Pharm_ID == 3018 || x.Pharm_ID == 3022))
+                                                    {
+                                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                            (@item2.Count)</a>
+                                                    }
+                                                </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            @foreach (var item in m.Where(x => x.parentId == "0"))
+                                            {
+                                                <dl class="fore">
+                                                    <dt><em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)">@item.Title
+                                                        (@m.Where(x => x.parentId == item.Pharm_ID.ToString()).Sum(x => x.Count))</a></em></dt>
+                                                    <dd>
+                                                        @foreach (var item2 in m.Where(x => x.parentId == item.Pharm_ID.ToString()))
+                                                        {
+                                                            <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                                (@item2.Count)</a></em>
+                                                        }
+                                                    </dd>
+                                                </dl>          
+                                            }
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                //保健品
+                                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.保健品);
+                                <div class="item ">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico5 font">保健品(@{@m.Sum(x => x.Count)}
+                                                )</a><p class="cate2">
+                                                    @foreach (var item2 in m.Where(x => x.Pharm_ID == 3074 || x.Pharm_ID == 3071))
+                                                    {
+                                                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                            (@item2.Count)</a>
+                                                    }
+                                                </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            <dl class="fore">
+                                                <dd>
+                                                    @foreach (var item2 in m)
+                                                    {
+                                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                            (@item2.Count)</a></em>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                //计生用品
+                                m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.计生用品);
+                                <div class="item fore">
+                                    <span>
+                                        <h3>
+                                            <a class="title h3-ico6 font">计生用品(@{@m.Sum(x => x.Count)}
+                                                ) </a>
+                                            <p class="cate2">
+                                                @foreach (var item2 in m.Where(x => x.Pharm_ID == 3076 || x.Pharm_ID == 3077))
+                                                {
+                                                    <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                        (@item2.Count)</a>
+                                                }
+                                            </p>
+                                        </h3>
+                                    </span>
+                                    <div class="i-mc">
+                                        <div class="subitem">
+                                            <dl class="fore">
+                                                <dd>
+                                                    @foreach (var item2 in m)
+                                                    {
+                                                        <em><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item2.Pharm_ID, 0)">@item2.Title
+                                                            (@item2.Count)</a></em>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="cat-right-con">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="extra">
+                                    <a href="#">全部商品分类</a></div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(".allsort").hoverForIE6({ current: "allsorthover", delay: 200 });
+                    $(".allsort .item").hoverForIE6({ delay: 150 });
+                </script>
+            </div>
+        </div>
+        <ul class="navitems-101yao">
+            <li><a href="/" @BaseController.GetSelectNav(ViewContext, "Home")>首页</a></li>
+            <li><a href="/OTC" @BaseController.GetSelectNav(ViewContext, "OTC")>OTC</a></li>
+            <li><a href="/Promotions/C158AABC_005E" @BaseController.GetSelectNav(ViewContext, "Promotions")>
+                促销活动</a></li>
+            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)?new=1">最新上架</a></li>
+            <li><a target="_blank" href="/JF/Index">积分商城</a></li>
+            <li><a href="/article/list" @BaseController.GetSelectNav(ViewContext, "article")>行业资讯</a></li>
+        </ul>
+        <dl class="shop_cart" style="cursor: pointer;" onclick="goToPay()">
+            <dt class="cart_buy_v">@*<a href="javascript:goToPay()"></a>*@<span class="shopping">
+                <span class="shopping-amount"></span></span></dt>
+            <dd class="cart_drop_loading">
+                <p>
+                    我们正在努力加载...</p>
+            </dd>
+            <dd class="cart_drop_noshopping">
+                <p>
+                    你的购物车中还没商品，赶快采购吧！</p>
+            </dd>
+            <dd class="cart_drop">
+                <div class="drop_title">
+                    最新加入的商品</div>
+                <div id="orderlist">
+                </div>
+                <div class="drop_Settlement">
+                    <div style="float: left; padding: 10px 0px 10px 0;">
+                        共<b class="shoppingnum"></b>件商品 共计<strong class="tprice"></strong></div>
+                    <div style="padding-top: 7px; float: right;">
+                        <a class="drop_cart" href="javascript:goToPay()"></a>
+                    </div>
+                </div>
+            </dd>
+            <!----购物车下拉---->
+        </dl>
+    </div>
+</div>

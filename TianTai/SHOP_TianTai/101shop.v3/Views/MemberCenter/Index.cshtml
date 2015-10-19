@@ -1,0 +1,285 @@
+﻿@using System.Data;
+@using System.Collections.Specialized;
+@using SOSOshop.Model;
+@using _101shop.v3.Controllers;
+@using SOSOshop.BLL.Common;
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) + "的会员中心";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_Security.css" />
+    <style type="text/css">
+        .icon-s-01
+        {
+            background-position: 0 -16px;
+            margin: 4px 0;
+            float: left;
+        }
+        .icon-s-02
+        {
+            background-position: 0 -33px;
+            margin: 4px 0;
+            float: left;
+        }
+        .icon-s-03
+        {
+            background-position: 0 -49px;
+            margin: 4px 0;
+            float: left;
+        }
+        .s0 s
+        {
+            background-position: -17px -17px;
+        }
+        .s1 s
+        {
+            background-position: -17px 0;
+        }
+    </style>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/tab.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.jcarousellite.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".topC0").click(function () {
+                $(".topC0").removeClass("topC1");
+                $(this).addClass("topC1");
+                $(".NewsTop_cnt .d_01").hide();
+                $(".NewsTop_cnt .d_01").eq($(this).index()).show();
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>首页</span></li>
+</ul>
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+<div class="mc_right">
+    <div class="Remind">
+        你好<span class="cj_title">@(string.IsNullOrEmpty(ViewBag.IncName) ? (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) : ViewBag.IncName)</span>欢迎来到@System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"]</div>
+    <div class="userinfo">
+        <div class="user">
+            <div class="user_bg_border">
+                <div class="user_logo">
+                    <img src="/images/zz_bg.jpg" width="100" height="100" alt="企业logo或者企业形象照" /></div>
+            </div>
+            <p class="smhome">
+                <a href="/MemberCenter/">查看我的主页</a></p>
+        </div>
+        <div class="user_info_01">
+            <span class="qy_bz"></span><span class="hy_dj">
+                @(ViewBag.UserType = "尊贵的会员")
+            </span><span class="hy_ms">
+                @{
+                    <span>今年已采购<span style="color: #f00; padding: 0 4px; font-weight: bold;">@(((decimal)ViewBag.ThisYearMoney).ToString("f2"))</span>元，月购<span
+                        style="color: #f00; padding: 0 4px; font-weight: bold;">50000.00</span>元以上可申请资信客户。</span>
+                }
+            </span>
+        </div>
+        <div class="user_info_01">
+            <span class="hy_dj2">账户安全</span>
+            @if (ViewBag.membercheckE == true && ViewBag.membercheckM == true)
+            { <span class="ir icon-s-03"></span>}
+            else if (ViewBag.membercheckE == true || ViewBag.membercheckM == true)
+            { <span class="ir icon-s-02"></span>}
+            else
+            { <span class="ir icon-s-01"></span>}
+            @if (ViewBag.membercheckE == true)
+            { <span class="email s1"><s></s><a href="/MemberCenter/SafetyCenter">邮箱已验证</a></span> }
+            else
+            { <span class="email s0"><s></s>
+                @if (!string.IsNullOrEmpty(ViewBag.Email))
+                { <a href="/MemberCenter/Email?Step=2" title="点击进行验证">邮箱未验证</a> }
+                else
+                { <a href="/MemberCenter/Info">邮箱未添加</a> }
+            </span>
+            }
+            @if (ViewBag.membercheckM == true)
+            { <span class="tel s1"><s></s><a href="/MemberCenter/SafetyCenter">手机已验证</a></span> }
+            else
+            { <span class="tel s0"><s></s>
+                @if (!string.IsNullOrEmpty(ViewBag.MobilePhone))
+                { <a href="/MemberCenter/MobilePhone?Step=2" title="点击进行验证">手机未验证</a> }
+                else
+                { <a href="/MemberCenter/Info">手机未添加</a> }
+            </span>
+            }
+        </div>
+        <div class="user_info_03">
+            <div class="hy_dj3">
+                <span class="dj_title">订单提醒：</span><span class="dj_detail"><a href="Orders/?wait=1">待处理订单（@{int xp = new MemberCenterController().WaitProcessOrders();}@xp）</a></span><span
+                    class="dj_detail">待评价商品（?）</span><span class="dj_detail">待晒单（?）</span></div>
+            <div class="hy_dj3">
+                <span class="dj_title">我的关注：</span><span class="dj_detail dj_detail_hv ">降价商品（?）</span><span
+                    class="dj_detail">促销商品（?）</span><span class="dj_detail"><a href="/MemberCenter/StockOutInfo">新到货商品（@ViewBag.新品到货）</a></span></div>
+            <div class="hy_dj3">
+                <span class="dj_title">消息精灵：</span><span class="dj_detail">提醒/通知（?）</span><span class="dj_detail">已回复的资讯（?）</span></div>
+        </div>
+        <div class="user_info_04">
+            <div class="hy_dj4">
+                <span class="dj_title2">账户余额：</span><span class="dj_detail2">?</span><span class="dj_detail2 dj_detail_hv2">立即充值?</span></div>
+            <div class="hy_dj4">
+                <span class="dj_title2">我的积分：</span><span class="dj_detail2"><span class="jf_num">?</span>分</span></div>
+            <div class="hy_dj4">
+                <span class="dj_title2">优惠劵：</span><span class="dj_detail2"><span class="jf_num">?</span>张</span><span
+                    class="dj_title">礼品卡：</span><span class="dj_detail2"><span class="jf_num">?</span>张</span>
+            </div>
+        </div>
+    </div>
+    <div class="oy_ct_cutover">
+        <div id="NewsTop">
+            <div id="NewsTop_tit">
+                @helper Show_1_ProductList(string ids)
+                    {
+                    SOSOshop.BLL.Product.Product bll = new SOSOshop.BLL.Product.Product();
+                    DataTable dt = bll.GetList(ids, "drug_sensitive, Product_ID,Product_Name,Image,DrugsBase_Manufacturer,Product_Advertisement,Goods_ConveRatio_Unit_Name,Goods_ConveRatio_Unit,Goods_ConveRatio,Goods_Unit,DrugsBase_Specification,Price_01,Price_02");
+                    dt = dt.GetPriceTable();
+                    if (dt != null)
+                    {
+                    <ul>
+                        @foreach (DataRow dr in dt.Rows)
+                        {
+                            <li>
+                                <div>
+                                    <a href="/@(@dr["Product_ID"]).html" target="_blank">
+                                        <img src='@System.Configuration.ConfigurationManager.AppSettings["imageUrl"]@dr["Image"]' width="168px" height="168px"
+                                         title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" class="pImage" alt="" onerror="this.src='/images/nopic1.jpg'" />
+                                    </a>
+                                </div>
+                                <div class="shop_dspEx">
+                                    <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" target="_blank">
+                                        <span>
+                                            @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                            @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                    </a>
+                                </div>
+                                <div class="shop_price" style="margin-top: 5px; width: 170px; text-align: center;">
+                                    @{@Price.GetPriceShowString()}：<span style="color: #d00; font-weight: bold;">@Html.Raw((string)dr["showPrice"])</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    }
+                }
+                <!--<P class=topTit>新闻排行</P>-->
+                <p class="topC0">
+                    本周特供</p>
+                <p class="topC0 topC1">
+                    您关注的商品</p>
+                <p class="topC0">
+                    新品推荐</p>
+                <p class="topC0">
+                    疯狂抢购</p>
+            </div>
+            <div class="NewsTop_cnt">
+                <span></span>
+                <div class="d_01">
+                    @Show_1_ProductList("586,21105,25825,12344")
+                </div>
+                <div class="s_1 d_01">
+                    @helper Show_MemberFavorite_ProductList()
+                        {
+                        if (ViewBag.MemberFavorite_ProductList != null)
+                        {
+                            DataTable dt = ViewBag.MemberFavorite_ProductList;
+                        <ul>
+                            @foreach (DataRow dr in dt.Rows)
+                            {
+                                <li>
+                                    <div>
+                                        <a href="/@(@dr["Product_ID"]).html" target="_blank">
+                                            <img src='@System.Configuration.ConfigurationManager.AppSettings["imageUrl"]@dr["Image"]' width="168px" height="168px"
+                                            title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" class="pImage" alt="" onerror="this.src='/images/nopic1.jpg'" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dspEx">
+                                        <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 8, "...")
+                                        </a>
+                                    </div>
+                                    <div class="shop_price" style="margin-top: 5px; width: 170px; text-align: center;">
+                                        @{@Price.GetPriceShowString()}：<span style="color: #d00; font-weight: bold;">@Html.Raw((string)dr["showPrice"])</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        }
+                    }@Show_MemberFavorite_ProductList()
+                </div>
+                <div class="d_01">
+                    @Show_1_ProductList("23018,26350,248,26675")
+                </div>
+                <div class="d_01">
+                    @Show_1_ProductList("530,17461,1195,1292")
+                </div>
+            </div>
+        </div>
+    </div>
+    @helper Show_History_Of_ProductList()
+        {
+                if (ViewBag.History_Of_ProductList != null)
+                {
+                    DataTable dt = ViewBag.History_Of_ProductList;
+                    if (dt.Rows.Count > 0)
+                    {
+        <div class="oy_ct_cutover">
+            <a id="j001_btnPrev" class="new_left_cat" href="#" style="z-index: 1000"></a><a id="j001_btnNext"
+                class="new_right_cat" href="#" style="z-index: 1000"></a>
+            <div id="NewsTop">
+                <div id="NewsTop_tit">
+                    <p class="topC2">
+                        最近浏览</p>
+                    <style type="text/css">
+                        .d_001 li
+                        {
+                            list-style: none;
+                            float: left;
+                            padding: 0 5px;
+                            width: 186px;
+                        }
+                    </style>
+                </div>
+                <div class="NewsTop_cnt" style="overflow: hidden;">
+                    <span></span>
+                    <div class="s_1 d_001 jCarouselLite" id="j001" style="margin: 0 21px;">
+                        @for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            DataRow dr = dt.Rows[i];
+                            <ul>
+                                <li>
+                                    <div>
+                                        <a href="/@(@dr["Product_ID"]).html" target="_blank">
+                                            <img src='@System.Configuration.ConfigurationManager.AppSettings["imageUrl"]@dr["Image"]' width="168" height="168" 
+                                                title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" class="pImage" alt="" onerror="this.src='/images/nopic1.jpg'" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dspEx">
+                                        <a href="/@(@dr["Product_ID"]).html" title="@dr["Product_Name"]  规格：@Public.GetSpecificationAndS(dr)  @dr["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(dr["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(dr["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(dr["Product_Name"].ToString(), 6, "...")
+                                        </a>
+                                    </div>
+                                    <div class="shop_price" style="margin-top: 5px; width: 170px; text-align: center;">
+                                        @{@Price.GetPriceShowString()}：<span style="color: #d00; font-weight: bold;">@Html.Raw((string)dr["showPrice"])</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+                    }
+                }
+    }@Show_History_Of_ProductList()
+</div>
+<!---------mc_right------------>

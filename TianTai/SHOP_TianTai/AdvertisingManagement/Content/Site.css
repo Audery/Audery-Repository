@@ -1,0 +1,155 @@
+body {
+    font-size: .85em;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+header,
+footer,
+nav,
+section {
+    display: block;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #ff0000;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+table {
+    border: 1px solid #d8cccc;
+    width: 100%;
+    border-spacing: 0px;
+}
+
+th {
+    background-color: bisque;
+    padding: 3px;
+}
+
+td {
+    border: 1px solid #d8cccc;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+
+.tip {
+    height: 20px;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 10px;
+}
+
+.uploadify-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.uploadify:hover .uploadify-button {
+    background-color: transparent;
+}
+
+#showpicture {
+    border: 1px solid #808080;
+}
+
+.window {
+    background-color: #bbb;
+    position: absolute;
+    padding: 1px;    
+    display: none;
+}
+
+.content {
+   padding:9px;
+    height: 150px;
+    background-color: #FFF;
+    font-size: 14px;
+    overflow: auto;
+}
+
+.title {
+    padding: 2px;
+    color: #444;
+    font-size: 14px;
+    height: 26px;
+}
+
+    .title img {
+        float: right;
+    }
+/*--------------------------下面是添加广告位的样式------------------------------------------------------*/
+
+.page_toolbar{border: 1px solid #bac9c6;padding: 8px;background-color: #F5F5F5;clear: both;margin: 0 auto 5px auto;}
+.page_title{padding: 0 0 4px 0;font-size: 14px;color: #0066FF;font-weight: bold;}
+.page_info {font-size: 12px;color: #000000;padding-top: 2px;margin-top: 0px;}
+.c_adImg_con div{ float:left; margin-right:5px;}
+.clear{ clear:both;}
+.inputbutton {height: 23px;text-align: center;border: 0;width: 65px;cursor: pointer;height: 24px;color: #000;
+background-image: url('../images/button.jpg');}
+.inputbutton_a {margin: 0;padding: 0;border: 0;width: 65px;height: 24px;color: #666666;cursor: pointer;
+background-image: url('../images/button_a.jpg');}
+.datatable th {line-height: 150%;cursor: pointer;padding: 5px 4px 4px 4px;color: #000000;font-weight: bold;border-bottom: 1px solid #BAC9C6;background:#f5f5f5;text-align: left;}
+.datatable td {line-height: 115%;padding: 4px;border: 1px solid #BAC9C6;}
+
+
+
+
+
+
+
+
+
+
+
+
+

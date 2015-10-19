@@ -1,0 +1,79 @@
+﻿@using System.Data
+@using System.Linq
+@using _101shop.v3.Controllers
+@using SOSOshop.BLL.Common;
+@model List<_101shop.v3.Models.ExpirationTimeModel>
+@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["ExpirationTime_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["ExpirationTime_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["ExpirationTime_Key"];
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/sales.css" />
+}
+@{Html.RenderPartial("Nav");}
+<div class="con-box">
+    <div class="thzt_banner" id="ad_49">
+    </div>
+    <div class="cnt-title-box">
+        <div class="cnt_title_03">
+            <div class="cnt_link" id="xt">
+            </div>
+        </div>
+    </div>
+    <div class="thzt_cnt">
+        <div class="lm">
+            <ul class="lm_sp" id="zsp1">
+                @if (Model != null && Model.Count > 0)
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        string frist = "";
+                        if (i % 4 == 0)
+                        {
+                            frist = "frist";
+                        }
+                        string url = "/" + Model[i].Product_ID + ".html?Expiration=1";
+                    <li class="@{@frist}">
+                        <div class="lm_shop_title">
+                            <a href="@url" class="shop_title_in1" target="_blank">@Library.Lang.Input.GetSubString(Model[i].Product_Name, 14, "...")
+                            </a><span class="shop_title_md"></span>
+                        </div>
+                        <div class="shop_img2">
+                            <a href="@url" target="_blank">
+                                <img src="@Public.RawImage(Model[i].Image)"
+                                    alt="@Model[i].Product_Name" width="239" height="239"/>
+                            </a>
+                            <div class="lm_sp_ico">
+                                <a href="@url" style="color:white">过期时间：@Model[i].ExpirationTime</a>
+                            </div>
+                        </div>
+                        <div class="shop_price">
+                            <span class="price_fh">¥</span><span style="font-size: 30px; font-weight: bold; color: #fff;">
+                                @Model[i].ShowPrice</span><span class="price_jz">/@Model[i].Goods_Unit</span>
+                            <input class="qg_button" name="" type="button" value="抢购" onclick="javascript:location='@url'"/>
+                        </div>
+                        <div class="shop_dsp2">
+                        </div>
+                        <div class="sccj">
+                            @Model[i].DrugsBase_Manufacturer
+                        </div>
+                    </li>
+                    }
+
+                }
+            </ul>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div class="clear">
+</div>
+<script language="javascript" type="text/javascript">
+    //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+    getAdContent("49");
+</script>

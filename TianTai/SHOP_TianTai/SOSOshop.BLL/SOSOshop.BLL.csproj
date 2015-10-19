@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D7D251F1-D039-4C19-811E-09BC236DEE3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOSOshop.BLL</RootNamespace>
+    <AssemblyName>SOSOshop.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ChangeHope">
+      <HintPath>..\Lib\ChangeHope.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Library">
+      <HintPath>..\Lib\Library.dll</HintPath>
+    </Reference>
+    <Reference Include="Library.Data">
+      <HintPath>..\Lib\Library.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\Lib\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\Lib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\Lib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data.SqlCe">
+      <HintPath>..\Lib\Microsoft.Practices.EnterpriseLibrary.Data.SqlCe.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\Lib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging.Database">
+      <HintPath>..\Lib\Microsoft.Practices.EnterpriseLibrary.Logging.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\Lib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\Lib\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Lib\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Lib\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administrators.cs" />
+    <Compile Include="AdministrorManager.cs" />
+    <Compile Include="AdminLoginLog.cs" />
+    <Compile Include="Advertising.cs" />
+    <Compile Include="Cart.cs" />
+    <Compile Include="Category\Menu.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\GetPY.cs" />
+    <Compile Include="Common\ICSharpZipHelper.cs" />
+    <Compile Include="Common\ImageWater.cs" />
+    <Compile Include="Common\Price.cs" />
+    <Compile Include="Common\Public.cs" />
+    <Compile Include="Common\SmtpMail.cs" />
+    <Compile Include="CustomerSetting.cs" />
+    <Compile Include="Db.cs" />
+    <Compile Include="DbBase.cs" />
+    <Compile Include="DrugsBase\BLL_product_online_v.cs" />
+    <Compile Include="DrugsBase\BLL_Region.cs" />
+    <Compile Include="DrugsBase\DrugsBase_Enterprise.cs" />
+    <Compile Include="DrugsBase\Goods.cs" />
+    <Compile Include="DrugsBase\DrugsBase_Manufacturer.cs" />
+    <Compile Include="DrugsBase\Goods_Package.cs" />
+    <Compile Include="DrugsBase\Tag_PharmAttribute.cs" />
+    <Compile Include="DrugsBase\DrugsBase_Pharm.cs" />
+    <Compile Include="DrugsBase_Enterprise.cs" />
+    <Compile Include="ImportedDrugs\BLL_ImportedDrugs.cs" />
+    <Compile Include="Integral\MemberIntegralGift.cs" />
+    <Compile Include="Integral\MemberIntegral.cs" />
+    <Compile Include="Integral\MemberIntegralDetail.cs" />
+    <Compile Include="Integral\MemberIntegralLock.cs" />
+    <Compile Include="Integral\MemberIntegralRank.cs" />
+    <Compile Include="Integral\MemberIntegralTemplate.cs" />
+    <Compile Include="Integral\MemberIntegralGiftExchange.cs" />
+    <Compile Include="Integral\MemberIntegralNotification.cs" />
+    <Compile Include="Integral\OtcIntegralDay.cs" />
+    <Compile Include="JF\Jf.cs" />
+    <Compile Include="JTTX\Price.cs" />
+    <Compile Include="KongXiao.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\RecycleLog.cs" />
+    <Compile Include="MailReceiver.cs" />
+    <Compile Include="MailSetting.cs" />
+    <Compile Include="MemberAccount.cs" />
+    <Compile Include="MemberBrowserProductContentLog.cs" />
+    <Compile Include="MemberBusinessScope.cs" />
+    <Compile Include="Memberfavorite.cs" />
+    <Compile Include="MemberInfo.cs" />
+    <Compile Include="MemberRank.cs" />
+    <Compile Include="MemberReceAddress.cs" />
+    <Compile Include="memberTradingIntention.cs" />
+    <Compile Include="Member\MemberAction.cs" />
+    <Compile Include="Member\BLL_MemberFeedback.cs" />
+    <Compile Include="Member\MemberinfoTemp.cs" />
+    <Compile Include="Order\OrderTransOnline.cs" />
+    <Compile Include="Order\OrderProductCart.cs" />
+    <Compile Include="Order\OrderProductCartPro.cs" />
+    <Compile Include="ProductState.cs" />
+    <Compile Include="Product\ExpirationTime.cs" />
+    <Compile Include="Report\DrugTestingReport.cs" />
+    <Compile Include="Report\DrugTestingReportDownloadOrder.cs" />
+    <Compile Include="Report\DrugTestingReportDownloadCount.cs" />
+    <Compile Include="Report\Qualification.cs" />
+    <Compile Include="SearchEngines.cs" />
+    <Compile Include="Sms.cs" />
+    <Compile Include="Stockout.cs" />
+    <Compile Include="MongoHelper.cs" />
+    <Compile Include="Navigate.cs" />
+    <Compile Include="Order\OrderProduct.cs" />
+    <Compile Include="Order\Orders.cs" />
+    <Compile Include="PowerPass.cs" />
+    <Compile Include="Product\Product.cs" />
+    <Compile Include="PromptInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="provinces.cs" />
+    <Compile Include="Qualifications.cs" />
+    <Compile Include="ReceAddress.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Roles_Permissions.cs" />
+    <Compile Include="SearchModel.cs" />
+    <Compile Include="ShopSetting.cs" />
+    <Compile Include="SysParameter.cs" />
+    <Compile Include="ThumbnailsSetting.cs" />
+    <Compile Include="WebSetting.cs" />
+    <Compile Include="MemberLoginLog.cs" />
+    <Compile Include="MemberPermission.cs" />
+    <Compile Include="SysLog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\101Shop.Common\101shop.Common.csproj">
+      <Project>{89F25529-5F96-47FE-8B39-B6DC154CFEDD}</Project>
+      <Name>101shop.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOSOshop.Model\SOSOshop.Model.csproj">
+      <Project>{4155A92F-1852-430A-AB33-5ED09EA15576}</Project>
+      <Name>SOSOshop.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOSOshop.MSG\SOSOshop.MSG.csproj">
+      <Project>{CB8B9B96-1FD8-4973-8DBA-EE2FD1603649}</Project>
+      <Name>SOSOshop.MSG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOSOYY.Cached\SOSOYY.Cached.csproj">
+      <Project>{B74E7A87-9421-465C-A93B-DA52A8472746}</Project>
+      <Name>SOSOYY.Cached</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

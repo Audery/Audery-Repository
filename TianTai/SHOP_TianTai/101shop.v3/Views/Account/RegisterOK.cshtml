@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "注册成功-开通快捷交易权限";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="/Content/101register-Success2.css" />
+@{Html.RenderPartial("Nav");}
+@using SOSOshop.BLL.Common;
+<ul class="list_nav">
+    <li><a href="#">会员注册</a></li>
+    <li><a href="#">开通快捷交易权限</a></li>
+</ul>
+@{
+  
+    Public.WebSiteInfo wsi = Public.GetNetSiteInfo();
+}
+<div class="register_left">
+    <div class="register2_title">
+    </div>
+    <div class="reg_info1">
+        <p class="reg_wxts_02" style="width: 500px;">
+            客服QQ：1009411622</p>
+        <p class="reg_wxts_02">
+            咨询热线：@wsi.Phone</p>
+    </div>
+    @*<div class="register2_qicq">        
+        <div class="register2_qq_cnt"><span>QQ:</span><a href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank" ><img src="/images/REG_QQ.jpg" width="140" height="38"/></a></div>
+    </div>*@
+    <div class="reg_info1">
+        <p class="reg_wxts_01">
+            温馨提示：</p>
+        <p class="reg_wxts_02">
+            快捷交易权限仅7天内有效，请尽快提交纸质资质审核，享 永久会员权益。</p>
+        @*<a class="reg_wxts_03" href="/MemberCenter/Upgrade" target="_blank">立即提交资质</a>*@
+    </div>
+</div>
+<div class="register_right">
+    <div class="register_Process_new">
+    </div>
+    <div style="padding: 50px 0 0 20px; color: #999; font-size: 13px;">
+        <span>如您对用户注册有任何疑问可查看<a style="color: #fc5a5a;" href="/help/133.html" target="_blank">用户须知</a></span>
+    </div>
+</div>
+<div class="clear">
+</div>

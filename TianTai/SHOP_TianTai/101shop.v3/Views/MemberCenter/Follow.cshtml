@@ -1,0 +1,172 @@
+﻿@using System.Data;
+@using SOSOshop.Model;
+@using System.Collections.Specialized;
+@using _101shop.v3.Controllers;
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) + "的会员中心";
+    Layout = "~/Views/Shared/_Master.cshtml";
+
+    DataTable MemberFavoriteList = ViewBag.MemberFavoriteList;
+}
+@section head
+{
+    <script type="text/javascript" src="/Scripts/tab.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Content/101MemberCenter_MyFavorite.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_address.css" />
+    <script language="javascript" type="text/javascript" src="/Scripts/shopcart-num.js"></script>
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css" />
+
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>我的关注</span> </li>
+</ul>
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+<script type="text/javascript">
+    //全部删除
+    function deleteAll() {
+        if (window.confirm("您确认要删除关注的全部商品信息吗？")) {
+            $.post("/MemberCenter/DeleteAll", "", function (val) {
+                window.location.href = "/MemberCenter/Follow";
+            });
+        }
+    }
+
+    //取消关注
+    function cancelAttention(id) {
+        id = "id=" + id;
+        if (window.confirm("您确认要取消关注该商品吗？")) {
+            $.post("/MemberCenter/MemberFavorite_CancelAttention", id, function (val) {
+                window.location.href = "/MemberCenter/Follow";
+            });
+        }
+    }
+
+    //设置合法的购买数量值
+    function setCountInLaw(id) {
+        var count = document.getElementById("h-" + id);
+
+        if (count.value == "" || isNaN(count.value) || parseInt(count.value) <= 0) return;
+
+        var minsell = $("#h-" + id).attr("minsell");
+        if (count.value < parseInt(minsell)) {
+            count.value = parseInt(minsell);
+        }
+    }
+
+    //减少数量
+    function subCount(id) {
+        var count = document.getElementById("h-" + id);
+        
+        if (count.value == "" || isNaN(count.value) || parseInt(count.value) <= 0) return;
+
+        var minsell = $("#h-" + id).attr("minsell");
+        var newCount;
+
+        if (count.value > parseInt(minsell)) {
+            newCount = parseInt(count.value) - parseInt(minsell);
+        }
+        else {
+            newCount = parseInt(count.value);
+        }
+
+        count.value = newCount;
+    }
+
+    //增加数量
+    function addCount(id) {
+        var count = document.getElementById("h-" + id);
+
+        if (count.value == "" || isNaN(count.value) || parseInt(count.value) <= 0) return;
+
+        var minsell = $("#h-" + id).attr("minsell");
+        var newCount;
+        newCount = parseInt(count.value) + parseInt(minsell);
+        count.value = newCount;
+    }
+
+    //加入购物车
+    function joinShoppingCar(pid) {
+        var count = document.getElementById('h-' + pid);
+
+        if (count != undefined) {
+            if (count.length == 0 || isNaN(count.value) || parseInt(count.value) <= 0) {
+                alert("请输入正确的购买数量[必须大于零]");
+                count.focus();
+
+                return false;
+            }
+        }
+
+        addShopCar(pid);
+    }
+</script>
+<div style="float: left; width: 790px" class="favorite_main_back">
+    <div class="favorite_head_bg">
+        <div class="favorite_important_text">
+            管理我的关注</div>
+        <div>
+            <a onclick="deleteAll()" class="favorite_function_button">全部删除</a></div>
+    </div>
+    <div class="favorite_head_bottom_bg">
+    </div>
+    <div class="favorite_list_head_bg">
+        <div class="favorite_text_head" style="width: 158px">
+            药品</div>
+        <div class="favorite_text_head" style="width: 152px">
+            厂家</div>
+        <div class="favorite_text_head" style="width: 77px">
+            价格</div>
+        <div class="favorite_text_head" style="width: 133px; padding-left:5px">
+            数量</div>
+        <div class="favorite_text_head" style="width: 65px; padding-left: 25px">
+            收藏时间</div>
+        <div class="favorite_text_head" style="width: 120px; text-align: center">
+            操作</div>
+    </div>
+    @if (MemberFavoriteList != null)
+    {
+        if (MemberFavoriteList.Rows.Count > 0)
+        {
+            foreach (DataRow row in MemberFavoriteList.Rows)
+            {
+        <form action="" method="post" id="form-@row["ProId"]">
+        <div style="clear: both; height: 100%; width: 792px">
+            <div class="favorite_text_body_first" style="width: 158px">
+                <a href="/@(@row["ProId"]).html" title="@row["Product_Name"]" style="color:#005ea7;cursor:pointer;text-decoration:none;">@Library.Lang.Input.GetSubString(row["Product_Name"], 11, "...")</a>
+            </div>
+            <div class="favorite_text_headEx" title="@row["DrugsBase_Manufacturer"]" style="width: 152px">@Library.Lang.Input.GetSubString(row["DrugsBase_Manufacturer"], 11, "...")</div>
+            <div class="favorite_text_body" style="width: 79px">
+                <span style="color: Red">@Html.Raw(Convert.ToString(row["showPrice"]))</span>
+            </div>
+            <div class="favorite_text_body" style="width: 150px">
+                @{
+                    string minsell = string.Empty;
+                    string unit = string.Empty;
+                    if (row["is_cl"].ToString() == "是")
+                    {
+                        minsell = row["minsell"].ToString();
+                        unit = row["Goods_Unit"].ToString();
+                    }
+                    else 
+                    {
+                        minsell = "1";
+                        unit = "件";
+                    }
+                }
+                <span onclick="subCount(@row["ProId"])" style="background-color:#D3D3D3; margin-right:4px; padding:0 2px 0 1px; cursor:pointer;" id="add-@row["ProId"]">-</span><input onblur="setCountInLaw(@row["ProId"])" type="text" class="favorite_input_textbox" style="width:40px;" id="h-@row["ProId"]" value="@minsell"  minsell="@minsell" /><span onclick="addCount(@row["ProId"])" style="background-color:#D3D3D3; cursor:pointer;" id="sub-@row["ProId"]">+</span><span>@unit</span>@if (!@row["Goods_Pcs"].ToString().Equals("1")){<span>(@row["Goods_Pcs"]盒/件)</span>}
+            </div>
+            <div class="favorite_text_body" style="width: 66px;">@row["AddDate"]</div>
+            <div class="favorite_text_body" style="width: 120px">
+                <a onclick="cancelAttention('@row["id"]')" style="color:#005ea7;cursor:pointer;text-decoration:none;">取消关注</a>
+                <a onclick="joinShoppingCar('@row["ProId"]')" style="color:#005ea7;cursor:pointer;text-decoration:none;">
+                    加入购物车</a>
+            </div>
+        </div>
+        </form>
+            }
+        }
+    }
+</div>

@@ -1,0 +1,60 @@
+
+@charset "utf-8";
+/* CSS Document */
+
+.fl{ float:left;}
+.cur{ background:#F00 !important;}
+.zyyp-menu-box{ width:100%; height:28px; background:#F30;}
+.zyyp-menu{ width:1000px; margin:0 auto; height:28px;}
+.zyyp-menu li{ float:left;}
+.zyyp-menu li a{ display:block; padding:5px 12px; color:#FFF;}
+.zyyp-menu li a:hover{ background: #C00;}
+.shop_cart-1{width: 192px;height: 28px;float: right;;position: relative; background:#C00;}
+.shop_cart-1 span{ color:#fff; display:block; padding:5px 30px;}
+.gqxx{ float:right;}
+.gqxx a{ color:#fff; display:block; padding:5px 10px;}
+.gqxx a:hover{ text-decoration:underline;}
+
+.menu-crumb{ margin:10px 0;}
+
+.shop-img{ float:left;}
+.tb-wrap{ margin-left:10px; float:left;}
+.tb-title-h2{ font-size:16px; font-weight:bold; color:#333;}
+.tb-title-h3{ font-size:16px; font-weight:bold; color:#F00;}
+
+.td-Attribute{ border-bottom:1px dashed #ddd; padding:0 10px 10px 10px;}
+.td-Stock{ padding:2px 0;}
+.td-Stock span{ color:#F00 !important; padding:0px 5px; font-weight:bold !important;}
+.td-Stock-1 li{float:left; padding:2px 0px;}
+.td-Stock-1 .ts-cur{ border:1px solid #ddd; padding:1px 6px; margin:0px 4px;  }
+.ts-cur:hover{ border:1px solid #F00;}
+.ts-cur-click{ border:1px solid #F00;}
+.td-price{ background: url(/images/zyyp-price-bg.png) repeat; padding:10px 4px; margin:5px 0; color:#fff;}
+.td-price-1{ color:#fff;}
+.td-price-1 span{ font-size:24px; font-weight:bold; color:#fff; }
+.td-price-2{ padding-left:20px; margin-top:12px; text-decoration:line-through; color:#ffc5c5;}
+.td-price-2 span{ color:#ffc5c5;}
+.td-price-3 , .td-price-3 span{ clear:both; color:#fff;}
+
+.td-shop-buy{ margin:5px 0; border-bottom:1px dashed #ddd; padding:10px;}
+.td-buy-input input{border:1px solid #ddd; margin-right:10px; padding:5px;}
+
+.shop-cart{margin:5px 0; padding:10px;}
+.addtocart{ background: url(/images/101yy_btn_dx_sec.jpg) no-repeat 0px 0px;display: block;width: 137px;height: 38px; float:left;}
+.addtocart:hover{background: url(/images/101yy_btn_dx_sec.jpg) no-repeat 0px -48px;display: block;width: 137px;height: 38px;}
+.addtocart span , .detail-guanzhu span{ display:none;}
+.detail-guanzhu{background: url(/images/101yy_btn_dx_sec.jpg) no-repeat 0px -96px;display: block;width: 77px;height: 34px; float:left; margin-left:20px;}
+.detail-guanzhu:hover{background: url(/images/101yy_btn_dx_sec.jpg) no-repeat 0px -140px;display: block;width: 77px;height:                      34px;}
+
+.left-bar{ width:240px; margin-top:40px; float:left;}
+.left-con {  border:1px solid #999; margin-bottom:10px;}
+.left-con-title , .right-con-title { background:#ddd; padding:6px 4px;}
+
+.right-bar{ float:left; margin-top:40px; margin-left:10px; width:750px;}
+.right-con-title-1{ background:#fff; border:1px solid #ddd;border-top:2px solid #ddd;}
+.c-title{ display:block; padding:6px 16px; border-top: 2px solid #ddd; margin:-2px 2px 0px 2px; float:left;}
+.c-title:hover{ border-top: 2px solid #F00;}
+.c-title-click{ border-top: 2px solid #F00; color:#F00 !important;}
+.shop-table-info{ width:700px; border:1px solid #ccc; margin:5px 20px;}
+.shop-table-info td{ padding:8px 10px; border:1px solid #ccc;}
+.tr-01{ background:#ddd; color:#666 !important;}

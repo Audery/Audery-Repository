@@ -1,0 +1,172 @@
+@charset "utf-8";
+/* CSS Document */
+.containner{
+	width:1000px;
+	height:auto;
+	margin:0 auto;
+}
+.banner{
+	/*height:300px;
+	border:1px solid #ddd;*/
+}
+.cate-menu{ margin-left:5px;}
+.cate-menu a{ display:block; float:left; margin:4px 4px 4px 0px ;}
+.cate-menu a span{ display:none;} 
+.cate-menu .c-m-1{ background:url(/AdImage/winter-banner-link.jpg) -8px -4px; width:149px; height:54px;}
+.cate-menu .c-m-1:hover{background:url(/AdImage/winter-banner-link.jpg) -8px -66px; width:149px; height:54px;}
+
+.cate-menu .c-m-2{ background:url(/AdImage/winter-banner-link.jpg) -160px -4px; width:167px; height:54px;}
+.cate-menu .c-m-2:hover{background:url(/AdImage/winter-banner-link.jpg) -160px -66px; width:167px; height:54px;}
+
+.cate-menu .c-m-3{ background:url(/AdImage/winter-banner-link.jpg) -330px -4px; width:147px; height:54px;}
+.cate-menu .c-m-3:hover{background:url(/AdImage/winter-banner-link.jpg) -330px -66px; width:147px; height:54px;}
+
+.cate-menu .c-m-4{ background:url(/AdImage/winter-banner-link.jpg) -480px -4px; width:168px; height:54px;}
+.cate-menu .c-m-4:hover{background:url(/AdImage/winter-banner-link.jpg) -480px -66px; width:168px; height:54px;}
+
+.cate-menu .c-m-5{ background:url(/AdImage/winter-banner-link.jpg) -651px -4px; width:168px; height:54px;}
+.cate-menu .c-m-5:hover{background:url(/AdImage/winter-banner-link.jpg) -651px -66px; width:168px; height:54px;}
+
+.cate-menu .c-m-6{ background:url(/AdImage/winter-banner-link.jpg) -822px -4px; width:168px; height:54px;}
+.cate-menu .c-m-6:hover{background:url(/AdImage/winter-banner-link.jpg) -822px -66px; width:168px; height:54px;}
+
+
+
+
+
+
+.lm{
+	/*border:1px solid #ddd;*/
+	margin:30px 0 0 0;
+	
+}
+.lm_tt{
+	/*height:40px;*/
+	/*background:#bd0000 repeat-x;*/
+	border-bottom: 2px solid rgb(230, 230, 230);
+	height:28px;
+}
+.more{
+	float:right;
+	margin-top: 4px;
+}
+.more span{
+	padding-left: 4px;
+line-height: 24px;
+font-size: 13px;
+color: #999;
+}
+.more span a{
+	color:#bd0000;
+}
+.lm_tt .lm_tt_nm{
+	color: rgb(142, 153, 190);
+	font-weight:bold;
+	width:100px;
+height: 28px;
+font: 17px/28px "微软雅黑";
+padding: 0 33px 0 1px;
+/*background: #cf0006 url(/images/m_sub_tit.png) top right no-repeat;*/
+text-indent: 0;
+border-bottom: 2px solid rgb(182, 187, 204);
+float:left;
+}
+ .lm_tt_nm SPAN , .lm_tt_nm strong{
+	padding-right:6px;
+	font-weight:bold;
+	color:#bdc1cf;
+font-size: 16px;
+display: none;
+}
+.n1{ background:url(/AdImage/winter-banner-link.jpg) -18px -132px;}
+.n2{ background:url(/AdImage/winter-banner-link.jpg) -18px -158px;}
+.n3{ background:url(/AdImage/winter-banner-link.jpg) -18px -186px;}
+.n4{ background:url(/AdImage/winter-banner-link.jpg) -18px -214px;}
+.n5{ background:url(/AdImage/winter-banner-link.jpg) -18px -240px;}
+.n6{ background:url(/AdImage/winter-banner-link.jpg) -18px -264px;}
+.lm_sp{
+	margin-top:4px;
+}
+.lm_sp li{
+	float: left;
+width: 194px;
+border: 1px solid #ddd;
+margin: 0 0 0 5px;
+	
+}
+.lm_sp li.sp_frist{
+	margin: 0;
+	border:none;
+}
+.shop_dsp {
+
+height: 36px;
+width: 186px;
+_width: 186px;
+margin: 40px auto 0px;
+overflow: hidden;
+background: #f0f0f0;
+padding: 4px 4px 0px 4px;
+}
+.shop_dsp span{
+	padding-right:4px;
+}
+.shop_price{
+
+margin: 0px auto;
+overflow: hidden;
+padding: 12px 4px 8px;
+background:#f0f0f0;
+width: 186px;
+_width: 186px;
+
+}
+.shop_price span{
+	padding-right:4px;
+	color:#bd0000;
+	font-weight: bold;
+	font-size:14px;
+	}
+.shop_price	.price_jz{
+		color:#777;
+		font-weight:normal;
+		font-size:12px;
+	}
+	.shop_price	.price_fh{
+	
+		font-weight:bold;
+		font-size:12px;
+	}
+	.addtocart{
+		margin-left:14px;
+	}
+	.addtocart a{
+		background:url(/images/sum_zt_atc.jpg) no-repeat;
+		padding: 4px 38px;
+	}
+	.addtocart a:hover{
+		background:url(/images/sum_zt_atc.jpg) no-repeat 0 -26px;
+		padding: 4px 40px;
+	}
+	
+	
+	.zt_link{
+		margin-top:20px;
+	}
+	.zk_border{
+		border-bottom:1px solid #ddd;
+	}
+	.zk_con{
+	background: #fff;
+padding: 2px 4px;
+margin-top: -12px;
+float: left;
+margin-left: 40px;
+color:#777;
+	}
+	.zk_link1 , .zk_link2 , .zk_link3 {
+		float:left;
+		margin-right:6px;
+		display:block;
+	}
+	.zk_link4{float:left;display:block;}

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4155A92F-1852-430A-AB33-5ED09EA15576}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOSOshop.Model</RootNamespace>
+    <AssemblyName>SOSOshop.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Lib\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Lib\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminInfo.cs" />
+    <Compile Include="Administrators.cs" />
+    <Compile Include="AdminLoginLog.cs" />
+    <Compile Include="CartItemInfo.cs" />
+    <Compile Include="CompanyClass.cs" />
+    <Compile Include="CustomerSetting.cs" />
+    <Compile Include="DrugsBase\DrugsBase_Enterprise.cs" />
+    <Compile Include="DrugsBase\DrugsBase_Manufacturer_Model.cs" />
+    <Compile Include="DrugsBase\Goods.cs" />
+    <Compile Include="DrugsBase\Goods_Package.cs" />
+    <Compile Include="DrugsBase\product_online_v_Model.cs" />
+    <Compile Include="DrugsBase_Enterprise.cs" />
+    <Compile Include="GodownReceipts.cs" />
+    <Compile Include="Integral\MemberIntegralDetail.cs" />
+    <Compile Include="Integral\MemberIntegralGift.cs" />
+    <Compile Include="Integral\MemberIntegralGiftExchange.cs" />
+    <Compile Include="JF\Jf_Model.cs" />
+    <Compile Include="KeyValue.cs" />
+    <Compile Include="KeyValueItem.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="MailReceiver.cs" />
+    <Compile Include="MailSetting.cs" />
+    <Compile Include="Member.cs" />
+    <Compile Include="MemberAccount.cs" />
+    <Compile Include="MemberCheck.cs" />
+    <Compile Include="Member\MemberFeedbackModel.cs" />
+    <Compile Include="MemberInfo.cs" />
+    <Compile Include="MemberRank.cs" />
+    <Compile Include="MemberReceAddress.cs" />
+    <Compile Include="Member\MemberAction.cs" />
+    <Compile Include="Order\OrderStatis_Model.cs" />
+    <Compile Include="Order\OrderTransOnline.cs" />
+    <Compile Include="Order\OrderProductCart.cs" />
+    <Compile Include="Order\OrderProductCartPro.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductState.cs" />
+    <Compile Include="Stockout.cs" />
+    <Compile Include="Order\OrderProduct.cs" />
+    <Compile Include="Order\Orders.cs" />
+    <Compile Include="ProductInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Qualifications.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Roles_Permissions.cs" />
+    <Compile Include="SearchModel.cs" />
+    <Compile Include="ShopSetting.cs" />
+    <Compile Include="ThumbnailsSetting.cs" />
+    <Compile Include="UserAddress.cs" />
+    <Compile Include="VerifyRegular.cs" />
+    <Compile Include="WebSetting.cs" />
+    <Compile Include="MemberPermission.cs" />
+    <Compile Include="memberTradingIntention.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

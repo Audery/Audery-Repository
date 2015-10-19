@@ -1,0 +1,125 @@
+﻿@using AdvertisingManagement.Models;
+@model Ad_Config
+@{
+    ViewBag.Title = "创建广告位";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Header{
+<script src="@Url.Content("~/Scripts/Uploadify/jquery.uploadify.min.js")" type="text/javascript"></script>
+    }
+
+<h2>创建广告位</h2> <a href="javascript:void(0)" id="add">添加广告位</a>
+
+<form action="Config" method="post">
+    <div class="window" id="center">
+        <div id="title" class="title">创建广告位<img src="" alt="关闭" /></div>
+        <div class="content">
+
+            <div>
+                <span>广告名称：</span><span>@Html.TextBoxFor(x => x.AdName)</span>
+            </div>
+            <input name="ConfigID" id="ConfigID" type="hidden" value="0" />
+            <input name="NetName" id="NetName" type="hidden" />
+            <div><span>站点名称：</span><span>@Html.DropDownList("NetName1")</span></div>
+            <div><span>广告宽度：</span><span>@Html.TextBoxFor(x => x.Width)</span></div>
+            <div><span>广告高度：</span><span>@Html.TextBoxFor(x => x.Height)</span></div>
+            <div><span>资源类型：</span><span>@Html.DropDownList("Resource")</span></div>
+            <div><span>所在频道：</span><span>@Html.TextBoxFor(x => x.Channel)</span></div>
+            <div><span>站点编号：</span><span>@Html.TextBoxFor(x => x.NetNo)</span></div>
+            <div><input type="submit" value="提交" id="submit" /></div>
+
+        </div>
+    </div>
+</form>
+        <div id="table">
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>名称</th>
+            <th>站点</th>
+            <th>频道</th>
+            <th>宽度</th>
+            <th>高度</th>
+            <th>类型</th>
+            <th>修改</th>
+            <th>删除</th>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    //移动窗口
+    $("#center").MoveBox({ out: true });
+</script> 
+
+<script language="javascript" type="text/javascript">
+    
+    var json = jQuery.parseJSON('@Html.Raw(ViewBag.json)');
+    $.each(json, function (index, item) {
+        //解析添加DOM
+        var t = "";
+        t += "<tr>";
+        t += "<td>" + item.ConfigID + "</td>";
+        t += "<td>" + item.AdName + "</td>";
+        t += "<td>" + item.NetName + "</td>";
+        t += "<td>" + item.Channel + "</td>";
+        t += "<td>" + item.Width + "</td>";
+        t += "<td>" + item.Height + "</td>";
+        t += "<td>" + (item.Resource == 0 ? "" : item.Resource == 1 ? "jpg" : item.Resource == 2 ? "flash" : "") + "</td>";
+        t += "<td><a href='javascript:void(0)' onclick='modify(" + index + ")'>修改</a></td>";
+        t += "<td>删除</td>";
+        t += "</tr>";
+        $("table tr:eq(" + index + ")").after(t);
+
+    });
+
+    function modify(index) {
+       // alert($(document).scrollTop()+" " + $('#table').scrollTop());
+        $(".title img").parent().parent().hide("slow");
+        
+        $("#ConfigID").val(json[index].ConfigID);
+        $("#AdName").val(json[index].AdName);
+        $("#NetName").val(json[index].NetName);
+        $("#Channel").val(json[index].Channel);
+        $("#Width").val(json[index].Width);
+        $("#Height").val(json[index].Height);
+        $("#Channel").val(json[index].Channel);
+        $("#NetNo").val(json[index].NetNo);
+        var count = $("#NetName1 option").length;
+        for (var i = 0; i < count; i++) {
+            if ($("#NetName1 ").get(0).options[i].text == json[index].NetName) {
+                $("#NetName1 ").get(0).options[i].selected = true;
+                break;
+            }
+        }
+
+        count = $("#Resource option").length;
+        for (var i = 0; i < count; i++) {
+            if ($("#Resource ").get(0).options[i].value == json[index].Resource) {
+                $("#Resource ").get(0).options[i].selected = true;
+                break;
+            }
+        }
+        popCenterWindow();
+        $(".content").height(220);
+        $(".window").width(280);
+        $("#submit").val("修改");
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#NetName1").change(function () {
+            $("#NetName").val($("#NetName1").find("option:selected").text());
+            $("#NetNo").val($("#NetName1").val());
+        });
+        $("#add").click(function () {
+            popCenterWindow();
+            $(".content").height(220);
+            $(".window").width(280);
+            $("#submit").val("添加");
+        });
+    });
+</script>
+

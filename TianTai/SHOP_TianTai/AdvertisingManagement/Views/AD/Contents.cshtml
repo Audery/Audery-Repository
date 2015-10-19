@@ -1,0 +1,183 @@
+﻿@using AdvertisingManagement.Models;
+@model Ad_Content
+@{
+    ViewBag.Title = "广告内容管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var contents = ViewBag.data;
+
+}
+@section Header{
+    <link href="@Url.Content("~/Scripts/Uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Uploadify/jquery.uploadify.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#file_upload').uploadify({
+                'buttonText': '请选择上传图片',
+                'buttonImage': '@Url.Content("~/Content/upload.png")',
+                'swf': '@Url.Content("~/Scripts/uploadify/uploadify.swf?var=" + (new DateTime()).Date))',
+                'uploader': '/ad/Upload?var' + (new Date()).getTime(),
+                'buttonText': '请选择上传文件',
+                fileTypeDesc: '图片文件',
+                fileTypeExts: '*.gif; *.jpg; *.png', //ie中才有效
+                'onUploadSuccess': function (file, Data, Response) {
+                    if (Response) {
+                        var json = JSON.parse(Data);
+                        $("#Picture").val(json.SaveName);
+                        $("#showpicture").attr("src", json.SaveName);
+                    }
+                    else {
+                        alert("上传失败！");
+                    }
+                }
+            });
+        });
+    </script>}
+<div class="page_toolbar">
+    <h3 class="page_title">@ViewBag.Title</h3>
+</div>
+<table>
+    <tr class="datatable">
+        <th>
+            序号
+        </th>
+        <th>
+            名称
+        </th>
+        <th>
+            站点
+        </th>
+        <th>
+            频道
+        </th>
+        <th>
+            宽度
+        </th>
+        <th>
+            高度
+        </th>
+        <th>
+            查看
+        </th>
+        <th>
+            设置广告图片
+        </th>
+    </tr>
+    @foreach (Ad_Config c in contents)
+    {
+        <tr class="datatable">
+            <td>@c.ConfigID
+            </td>
+            <td>@c.AdName
+            </td>
+            <td>@c.NetName
+            </td>
+            <td>@c.Channel
+            </td>
+            <td>@c.Width
+            </td>
+            <td>@c.Height
+            </td>
+            <td id="u-@c.ConfigID" url="@c.Url" picture="@c.Picture">@(c.Picture == "" ? "无" : "查看")
+            </td>
+            <td>
+                <a href="javascript:void(0)" onclick="openwin(@c.ConfigID,@c.ContentID)">设置</a>
+                @if (c.ContentID > 0)
+                {
+                    if (new AdvertisingManagement.Controllers.ADController().getIsStop(c.ContentID))
+                    {
+                    <a href="javascript:void(0)" onclick="isstop(@c.ContentID,0)">启用</a>
+                    }
+                    else
+                    {
+                    <a href="javascript:void(0)" onclick="isstop(@c.ContentID,1)">停用</a>
+                    }
+                }
+            </td>
+        </tr>           
+    }
+</table>
+<div class="window" id="center">
+    <div id="title" class="title">
+        上传广告图片<img src="" alt="关闭" /></div>
+    <div class="content">
+        <form action="Contents" method="post">
+        <div>
+            @Html.HiddenFor(x => x.ConfigID)
+            @Html.HiddenFor(x => x.ContentID)
+            @Html.HiddenFor(x => x.NetNo)
+            @Html.HiddenFor(x => x.Picture)
+            @Html.Hidden("domain")
+        </div>
+        <img id="showpicture" src="">
+        <div>
+            <input type="file" id="file_upload" name="file_upload" /></div>
+        <div>
+            请输入跳转链接：@Html.TextBoxFor(x => x.Url)</div>
+        <div>
+            <input type="submit" value="提交" /></div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    //移动窗口
+    $("#center").MoveBox({ out: true });
+</script>
+<script type="text/javascript">
+
+    $(function () {
+        $('#config').change(function () {
+            $(".title img").parent().parent().hide("slow");
+
+            getJson($(this).children('option:selected').val());
+        });
+        $("#showpicture").click(function () {
+            window.open($("#Url").val());
+        });
+    });
+    function openwin(id, cid) {
+        $(".title img").parent().parent().hide("slow");
+        $("#ConfigID").val(id);
+        $("#ContentID").val(cid);
+        $("#Picture").val($("#u-" + id).attr("picture"));
+        $("#showpicture").attr("src", $("#u-" + id).attr("picture"));
+        $("#Url").val($("#u-" + id).attr("url"));
+        getJson(id);
+    }
+    function getJson(id) {
+        var data = { "ConfigID": id }
+        var winWidth = 200;
+        $.ajax({
+            type: "post", url: "/ad/GetConfigJson", data: data, success: function (message) {
+                $("#showpicture").css("width", message.Width);
+                $("#showpicture").css("height", message.Height);
+                $("#showpicture").css("border", "1px solid #808080");
+                $(".content").height(120 + message.Height);
+                if (message.Width >= winWidth) {
+                    $("#Url").width(message.Width);
+                    $(".title").width(message.Width + 2);
+                    $(".content").width(message.Width);
+                    $(".window").width(18 + message.Width);
+                }
+                else {
+                    $("#Url").width(winWidth - 18);
+                    $(".title").width(winWidth - 2);
+                    $(".content").width(winWidth - 18);
+                    $(".window").width(winWidth);
+                }
+                popLeftWindow();
+            }, dataType: "json"
+        });
+    }
+
+    function isstop(contentId, stop) {
+        var data = { contentId: contentId, stop: stop };
+        $.ajax({
+            type: "post", url: "/Ad/setStop", data: data, success: function (info) {
+                if (info.success) {
+                    location.reload();
+                }
+            }, dataType: "json"
+        });
+    }
+
+</script>

@@ -1,0 +1,735 @@
+﻿@using System.Data;
+@using SOSOshop.BLL.Common;
+@model SOSOshop.Model.UserAddress
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("/account/logon");
+    }
+    Response.Buffer = true;
+    Response.ExpiresAbsolute = DateTime.Now.AddDays(-1);
+    Response.Expires = 0;
+    Response.CacheControl = "no-cache";
+}
+@{
+    ViewBag.Title = "填写订单核对信息";
+    SOSOshop.Model.MemberPermission memberpr = ViewBag.member;
+    DataTable product = ViewBag.product;
+    DataTable address = ViewBag.Address;
+    double countPrice = 0;
+    string ext = ".html";
+    string pdn3 = "pdn3";
+    string pdn4 = "pdn4";
+}
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<link type="text/css" href="/Content/wee.css" />
+<script type="text/javascript" src="/Scripts/bgiframe.js"></script>
+<script type="text/javascript" src="/Scripts/weebox.js"></script>
+<link rel="stylesheet" type="text/css" href="/Content/order_sure.css" />
+<script src="/scripts/LocationJson.js" type="text/javascript"></script>
+<script src="/scripts/YlChinaArea.js" type="text/javascript"></script>
+<script type="text/javascript">    jQuery(document).ready(function () { jQuery("#ChinaArea").jChinaArea({ aspnet: 0, s1: "<%=ConsigneeProvince %>", s2: "<%=ConsigneeCity %>", s3: "<%=ConsigneeBorough %>" }) })</script>
+<script type="text/javascript">
+
+    $(function () {
+        // GetallPrice();
+    });
+    function GetallPrice() {
+        var allprice = 0;
+        var prices = $(".price");
+        for (var i = 0; i < prices.length; i++) {
+            allprice = allprice + parseFloat($(prices[i]).html());
+        }
+        $(".allprice").html(allprice);
+    }
+    function hidetable() {
+        if ($(".orders_table").css("display") == "none")
+            $(".orders_table").css("display", "block");
+        else
+            $(".orders_table").css("display", "none");
+    }
+</script>
+@{Html.RenderPartial("Nav");}
+@if (ViewBag.error != null)
+{
+    @Html.Raw(ViewBag.error)
+}
+else
+{
+    <form action="/shoppingcart/ordersok" id="myform" method="post">
+    <div class="clear">
+    </div>
+    <div class="content">
+        <div class="order_sure">
+            <div class="o_s_01">
+                <div class="radio_left">
+                    <div class="radio_right">
+                        <h2>
+                            填写并核对订单信息
+                        </h2>
+                    </div>
+                </div>
+                <div class="ifo_border">
+                </div>
+            </div>
+            <!--o_s_01----->
+            <div class="Receive_address">
+                <h3>
+                    1、确认收货地址
+                </h3>
+                @if (address.Rows.Count != 0)
+                {
+                    foreach (DataRow row in address.Rows)
+                    {
+                        SOSOshop.Model.UserAddress ua = new SOSOshop.Model.UserAddress();
+                        SOSOshop.BLL.ReceAddress ra = new SOSOshop.BLL.ReceAddress();
+                        ua = ra.getModel(row);
+                    <div class="now_add now_add_click" id="addr-@ua.ID">
+                        <input class="hookbox fl" type="radio" name="listaddress" value="@row["id"]" p="@(ua.Province)" checked="@ua.Stat.ToString()" />
+                        <p class="rcv_add fl">
+                            <span class="" id="u-@row["id"]">@ua.Name</span><span class="pdn">@ua.Province@ua.Address</span><span
+                                class="pdn">@ua.Mobile&nbsp;@ua.Phone</span>
+                        </p>
+                        <p class="fl pdn2">
+                            <span class="pdn"><a href="javascript:void(0)" onclick="modify(@row["id"]);$('.new_add_edit').show();">
+                                修改 </span><span class="pdn"><a href="javascript:void(0)" onclick="delete_addr(@ua.ID)">
+                                    删除</a></span>
+                        </p>
+                    </div>
+                    }
+                }
+                <div class="now_add2">
+                    <!--input class="fl" name="" type="radio" value="" /-->
+                    <p class="rcv_add">
+                        <span id="shouhoudizhi" class="@if (address.Rows.Count != 0)
+                                                       {@pdn3 }
+                                                       else
+                                                       {@pdn4 }" onclick="showAddAddress(this);" style="cursor:pointer">
+                            添加新的收货地址 </span>
+                    </p>
+                    <div class="new_add_edit" @{if (address.Rows.Count > 0)
+                                                { <text> style="display:none" </text>}}>
+                        <div class="list">
+                            <span class="label"><em>*</em> 收货人：<input type="hidden" name="maid" id="maid" value="0" />
+                            </span>
+                            <div class="field">
+                                @Html.TextBoxFor(x => x.Name, new { @class = "textbox" }) <span id="s1" style="display: none">
+                                    <img src="/images/delete_sx.jpg" />
+                                </span>
+                            </div>
+                        </div>
+                        <!--list-->
+                        <div class="list">
+                            <span class="label"><em>*</em> 地 区： </span>
+                            <div class="field">
+                                <span id="ChinaArea" class="ChinaArea">
+                                    <select id="province" name="province" style="width: 94px; height: 26px;" class="textbox">
+                                    </select>
+                                    <select id="city" name="city" style="width: 108px; height: 26px;" class="textbox">
+                                    </select>
+                                    <select id="county" name="county" style="width: 108px; height: 26px;" class="textbox">
+                                    </select>
+                                </span><span id="s6" style="display: none">
+                                    <img src="/images/delete_sx.jpg" />
+                                </span>
+                            </div>
+                        </div>
+                        <!--list-->
+                        <div class="list">
+                            <span class="label"><em>*</em> 详细地址： </span>
+                            <div class="field">
+                                @Html.TextBoxFor(x => x.Address, new { @class = "textbox wdh1" })<span id="s2" style="display: none">
+                                    <img src="/images/delete_sx.jpg" />
+                                </span><span class="t_s_2">请填写详细地址，以便准确到达</span>
+                            </div>
+                        </div>
+                        <!--list-->
+                        <div class="list">
+                            <span class="label"><em>*</em> 移动电话： </span>
+                            <div class="field">
+                                @Html.TextBoxFor(x => x.Mobile, new { @class = "textbox" })
+                                &nbsp;座机：@Html.TextBoxFor(x => x.Phone, new { @class = "textbox" })<span id="s3"
+                                    style="display: none"><img src="/images/delete_sx.jpg" /></span> <span class="t_s_2"
+                                        id="ts2">移动电话和座机请保证最少填写一个</span>
+                            </div>
+                        </div>
+                        <input class="sub_button" name="sub" type="button" value="确认并提交" onclick="addAddress()" />
+                    </div>
+                </div>
+            </div>
+            <!-----Receive_address----->
+            <div class="Receive_address">
+                <h3>
+                    2、选择支付方式
+                </h3>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;付款方式
+                    <div class="now_add">
+                        @if (memberpr.IsCOD)
+                        {
+                            <p class="rcv_add">
+                                <input class="hookbox" name="payway" type="radio" value="1" onclick="checkpay(1)" />
+                                <span class="pdn_title">货到付款</span>
+                            </p>
+                        }
+                        @if (memberpr.IsMoneyAndShipping)
+                        {
+                            <p class="rcv_add">
+                                <input class="hookbox" name="payway" type="radio" value="2" onclick="checkpay(2)"
+                                    checked="checked" />
+                                <span class="pdn_title">款到发货</span>
+                            </p>
+                        }
+                        @if (memberpr.IsPeriodicalSettle)
+                        {
+                            <p class="rcv_add">
+                                <input class="hookbox" name="payway" type="radio" value="3" onclick="checkpay(3)" />
+                                <span class="pdn_title">账期结算</span>
+                            </p>
+                        }
+                    </div>
+                </div>
+                <div id="pay">
+                    <hr />
+                    &nbsp;&nbsp;&nbsp;&nbsp;支付类型
+                    <div class="now_add">
+                        <p class="rcv_add">
+                            <input class="hookbox" name="paytype" type="radio" value="2" id="yhzzan" checked="checked" />
+                            <span class="pdn_title">银行转账</span><span class="pdn"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="Receive_address">
+                <h3>
+                    3、选择配送方式
+                </h3>
+                <div class="wl_selete">
+                    <p class="w_s_02">
+                        送货方式
+                    </p>
+                    <div class="now_add">
+                        <p class="rcv_add">
+                            <input class="hookbox" name="songhuoway" type="radio" value="3" onclick="songhuo()" />
+                            <span class="pdn_title">自提（地址：昆明市新都区大丰蓉北路一段1号）</span><span class="pdn"></span>
+                        </p>
+                        @if (memberpr.IsShippingFor48h)
+                        {
+                            <p class="rcv_add">
+                                <input class="hookbox" name="songhuoway" type="radio" value="1" onclick="songhuo1()" />
+                                <span class="pdn_title">送货@*48小时内送货上门*@ <span class="pdn"></span></span>
+                            </p>
+                            <br />
+                        }
+                        <p class="rcv_add">
+                            <input class="hookbox" name="songhuoway" checked type="radio" value="4" onclick="songhuo1()" />
+                            <span class="pdn_title">托运@*第三方配送（支持配送到第三方配送可送货的区县）*@ <span class="pdn"></span></span>
+                        </p>
+                        <br />
+                    </div>
+                    <div class="shsj">
+                        <p class="w_s_03">
+                            送货时间
+                        </p>
+                        <div class="now_add">
+                            <p class="rcv_add">
+                                <input class="hookbox" name="songhuotime" id="songhuotime1" type="radio" value="1"
+                                    checked />
+                                <span class="pdn_title">任意一天</span><span class="pdn"></span>
+                            </p>
+                            <p class="rcv_add">
+                                <input class="hookbox" name="songhuotime" type="radio" value="2" />
+                                <span class="pdn_title">只工作日送货</span><span class="pdn"></span>
+                            </p>
+                            @if (ViewBag.Memberclass != 1)
+                            {
+
+                                <p class="rcv_add">
+                                    <input class="hookbox" name="songhuotime" type="radio" value="3" />
+                                    <span class="pdn_title">只双休日、假日送货</span><span class="pdn"></span>
+                                </p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Receive_address2">
+                <h3>
+                    订单详情
+                </h3>
+                <div id="cart">
+                    <table width="100%">
+                        <tr>
+                            <th>
+                                商品名
+                            </th>
+                            <th>
+                                生产企业
+                            </th>
+                            <th>
+                                规格
+                            </th>
+                            <th>
+                                件装
+                            </th>
+                            <th>
+                                单价
+                            </th>
+                            <th>
+                                购买数量
+                            </th>
+                            <th>
+                                小计
+                            </th>
+                        </tr>
+                        @foreach (DataRow row in product.Rows)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/@row["product_id"]@ext">@Html.Raw((bool)row["iscu"] ? "<span style='color:red'>[促]</span>" : "")
+                                        @row["name"]</a>
+                                </td>
+                                <td>
+                                    @row["cj"]
+                                </td>
+                                <td class="center">
+                                    @Public.GetSpecificationAndS(row)
+                                </td>
+                                <td class="center">
+                                    @row["jz"]@row["dw"]/件
+                                </td>
+                                <td class="right">
+                                    @Html.Raw(row["showPrice"].ToString())
+                                </td>
+                                <td class="center">
+                                    <span>@row["sl"]@row["dw"]</span>
+                                </td>
+                                <td class="right">
+                                    @{double price = Convert.ToDouble(row["Price"]) * Convert.ToInt32(row["sl"]);
+                                      countPrice += price;
+                                        @string.Format("{0:C}", price)}
+                                </td>
+                            </tr>
+
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="Receive_buy">
+                @if (memberpr.IsPriorDistribution)
+                {
+                    <div class="now_add">
+                        <input class="hookbox fl" name="issend" type="checkbox" value="1" />
+                        <p class="rcv_add fl">
+                            <span class="pdn_n1">先发有货商品</span><span class="pdn_h_3">（如果部分订单缺货，优先配送有货商品）</span>
+                        </p>
+                    </div>
+                }
+                @if (ViewBag.Memberclass != 1)
+                {
+                    <div style="display: block">
+                        <input class="hookbox fl" id="invoice" checked="checked" name="Invoice" type="checkbox"
+                            value="1" />
+                        <p>
+                            <span class="pdn_n1">是否索要发票</span>
+                        </p>
+                        <div class="showinvoice">
+                            <br />
+                            @{
+
+                    DataTable dt = ViewBag.WorkList;
+                    if (dt != null)
+                    {
+                        if (dt.Rows.Count > 0)
+                        {
+                            foreach (DataRow item in dt.Rows)
+                            {
+                                if (item["id"].ToString().Equals(dt.Rows[0]["id"].ToString()))
+                                {
+                                <div class="now_add">
+                                    <input class="hookbox fl" name="workid" checked="checked" type="radio" value="@item["id"]" />
+                                    <p class="rcv_add fl">
+                                        <span class="pdn">@item["name"]</span>
+                                    </p>
+                                </div>
+                                }
+                                else
+                                {
+                                <div class="now_add">
+                                    <input class="hookbox fl" name="workid" type="radio" value="@item["id"]" />
+                                    <p class="rcv_add fl">
+                                        <span class="pdn">@item["name"]</span>
+                                    </p>
+                                </div>
+                                }
+                            }
+
+                        }
+                    }
+                            }
+                        </div>
+                    </div>
+                }
+                <h3>
+                    结算信息
+                </h3>
+                <div class="order_mey_sure">
+                    <p class="oney_tog_p">
+                        商品金额：<span class="allprice">@string.Format("{0:C}", countPrice)</span><span class="yf"
+                            style="display: none">+&nbsp;&nbsp;运费：¥100</span><strong class="total">应付总额：<strong
+                                class="allpriceCount">@string.Format("{0:C}", countPrice)</strong>元</strong>
+                    </p>
+                    @{
+                int Member_Class;
+                var mp = Price.GetMemberpermission(out Member_Class);
+                if (Member_Class == 1)
+                {
+
+                }
+
+                    }
+                </div>
+                <div class="order_bz_sue">
+                    <div class="now_add_bz1">
+                        <input name="cid" id="cid" type="hidden" value="@ViewBag.cid" />
+                        <!--input class="hookbox fl" name="" type="checkbox" value="" id="chkremark" onclick="co_remark()" /-->
+                        <p class="rcv_add">
+                            <span class="pdn">订单备注</span><input class="textbox2" id="remark" name="remark" type="text"
+                                value="" />
+                        </p>
+                        <p class="dia_aadf">
+                            <span>*提示</span>请勿填写有关支付、收货等方面的信息
+                        </p>
+                    </div>
+                    <div class="now_sue_but">
+                        <a href="#" class="check_ordersbut" onclick="submit_orders(this);return false;"></a>
+                        <span class="loading" style="display: none">正在提交订单，请等待... ...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--content---------content------>
+    </form>
+    <div style="height: 1px; clear: both;">
+    </div>
+    
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            @if (memberpr.IsCOD && !memberpr.IsMoneyAndShipping)
+            {
+	        <text>checkpay(1); $("input[name=payway]").attr("checked", "checked");</text>
+            }
+            var addrs = $('input[name="listaddress"]'), addr = '@(Request["addr"])', addrOk = 0;
+            if (addr != '') { addrs.each(function () { this.checked = ($(this).val() == addr); if (this.checked) { addrOk = 1; } }); }
+            if (!addrOk && addrs.length) { addrs.get(0).checked = true; }
+        });
+        var wBox;
+        function addAddress() {
+            var nm = gv("Name");
+            var addr = gv("Address");
+            var m = gv("Mobile");
+            var p = gv("Phone");
+            //var e = gv("Email");
+            //var z = gv("Zip");
+
+            var sheng = gv("province"); //$("#province").find("option:selected").text();
+            if (sheng == "") {
+                $("#s6").show();
+                return false;
+            }
+            else {
+                $("#s6").hide();
+            }
+
+            var city = gv("city"); //$("#city").find("option:selected").text();
+            if (city == "") {
+                $("#s6").show();
+                return false;
+            }
+            else {
+                $("#s6").hide();
+            }
+
+            var xian = gv("county"); // $("#county").find("option:selected").text();
+            if (xian == "") {
+                $("#s6").show();
+                return false;
+            }
+            else {
+                $("#s6").hide();
+            }
+
+            if (nm == null || nm == "") {
+                $("#s1").show();
+                return false;
+            }
+            else {
+                $("#s1").hide();
+            }
+            if (addr == null || addr == "") {
+                $("#s2").show();
+                return false;
+            }
+            else {
+                $("#s2").css("display", "none");
+            }
+            if (m == "" && p == "") {
+                $("#s3").show();
+                $("#ts2").html("移动电话和座机请保证最少填写一个");
+                return false;
+            }
+            else {
+                $("#s3").hide();
+            }
+            if (m != "" && m.length != 11) {
+                $("#s3").show();
+                $("#ts2").html("手机号码需为11位数字");
+                return false;
+            }
+            else {
+                $("#s3").hide();
+            }
+            
+            $.ajax({
+                type: 'POST',
+                url: '/Shoppingcart/AddUseAddress',
+                data: { ID: gv("maid"), Name: nm, Address: addr, Mobile: m, Phone: p, Province: sheng, City: city, Borough: xian },
+                dataType: "json",
+                success: function (msg, textStatus) {
+                    switch (msg["state"]) {
+                        case 0:
+                            alert(msg["message"]);
+                            break;
+                        case 1:
+                            document.location.href = '/shoppingcart/checkorders?cid=' + $("#cid").val() + '&addr=' + msg["message"];
+                            break;
+                        default:
+                            alert(msg["message"]);
+                            break;
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown + " error");
+                    this;
+                }
+            });
+        }
+
+        function gv(v) {
+            return $("#" + v).val();
+        }
+
+        function delete_addr(aid) {
+            var addrs = $('input[name="listaddress"]');
+            if (addrs.length <= 1) { return alert("不能删除唯一的收货地址，请进行修改。"); }
+            if (confirm("您确认要删除该收货人地址吗？")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Shoppingcart/DeleteUseAddress',
+                    data: { aid: aid },
+                    dataType: "json",
+                    success: function (msg, textStatus) {
+                        switch (msg["state"]) {
+                            case 1:
+                                $("#addr-" + aid).css("display", "none");
+                                $("#maid").val("0");
+                                window.location.reload();
+                                break;
+                            default:
+                                alert(msg["message"]);
+                                break;
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown + " error");
+                        this;
+                    }
+                });
+            }
+        }
+
+        function checkpay(tp) {
+            switch (tp) {
+                case 1:
+                    $("#pay").css("display", "none");
+                    break;
+                case 2:
+                    $("#pay").css("display", "");
+                    break;
+                case 3:
+                    $("#pay").css("display", "none");
+                    break;
+            }
+        }
+
+        function submit_orders(event) {
+            if ($('input[name="listaddress"]:checked').val() == null) {
+                alert("请选择确认收货地址");
+                return false;
+            }
+            if ($('input[name="payway"]:checked').val() == null) {
+                alert("请选择付款方式");
+                return false;
+            }
+            else if ($('input[name="payway"]:checked').val() == 2) {
+                if ($('input[name="paytype"]:checked').val() == null) {
+                    alert("请选择支付类型");
+                    return false;
+                }
+            }
+
+            if (parseFloat("@countPrice") < 3000) {
+                //省内客户提示满500优先发货
+                if ($("input[name='listaddress']:checked").attr("p").indexOf("云南省") != -1) {
+                    if (parseFloat("@countPrice") < 800) {
+                        wBox = $("#wbox1").wBox({
+                            title: "温馨小贴士",
+                            html: "<div class='demo' style='width:500px;height:120px;padding-top:10px;margin-left:20px;font-size:14px'>亲，@(System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"])一次性采购满800包邮哟~未满800元点击<a href='http://klyp.99dcyy.com/article/127.html' target='_blank' style='color:red;font-weight: bold;'>查看邮费介绍及说明</a><br><div style='margin-top:10px;'><a href='/products/0-0-0-0-0-0-0-0-0-1.html' style='color:red;font-weight: bold;'>返回凑单</a><span style='margin-top:10px;margin-left:15px;'><a href='javascript:submitform()' style='color:red;font-weight: bold'>确认下单</a></span></div></div>"
+                        });
+                        wBox.showBox();
+                    }
+                    else {
+                        //loading
+                        $(event).hide();
+                        $(event).parent().find('span.loading').show();
+                        document.getElementById("myform").submit();
+                    }
+
+                }
+                else {
+                    //省外客户提示满3000才免运费
+                    if ("1" == "@Price.GetMember_Class()") {
+                        wBox = $("#wbox1").wBox({
+                            title: "提示",
+                            html: "<div class='demo' style='width:440px;height:120px;padding-top:10px;margin-left:20px;font-size:14px'>亲，云南省外单笔订单商品总金额满3000免运费 ，不足3000元将收取100元运费。<br><div style='margin-top:10px;'><a href='/products/0-0-0-0-0-0-0-0-0-1.html' style='color:red;font-weight: bold;'>再找找品种，凑满3000元再下单</a><span style='margin-top:10px;margin-left:15px;'>运费不是问题，<a href='javascript:submitform()' style='color:red;font-weight: bold'>确认下单</a></span></div></div>"
+                        });
+                        wBox.showBox();
+                    }
+                    else {
+                        $(event).hide(); $(event).parent().find('span.loading').show();
+                        document.getElementById("myform").submit();
+                    }
+                }
+            }
+            else {
+                //loading
+                $(event).hide();
+                $(event).parent().find('span.loading').show();
+                document.getElementById("myform").submit();
+            }
+
+        }
+        function submitform() {
+            wBox.close();
+            $(".check_ordersbut").hide();
+            $(".loading").show();
+            $("#myform").submit();
+        }
+        function modify(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Shoppingcart/GetUserAddress',
+                data: { aid: id },
+                dataType: "json",
+                success: function (msg, textStatus) {
+                    switch (msg["state"]) {
+                        case 1:
+                            $("#Name").val(msg["ua"]);
+                            $("#ChinaArea").jChinaArea({
+                                aspnet: true,
+                                s1: msg["pr"], //默认选中的省名
+                                s2: msg["ci"], //默认选中的市名
+                                s3: msg["bo"] //默认选中的县区名
+                            });
+                            $("#Address").val(msg["ad"]);
+                            $("#Mobile").val(msg["mo"]);
+                            $("#Phone").val(msg["po"]);
+                            $("#Email").val(msg["em"]);
+                            $("#Zip").val(msg["zi"]);
+                            $("#maid").val(msg["id"]);
+                            $(".new_add_edit").show();
+                            $("#shouhoudizhi").removeClass("pdn3").addClass("pdn4");
+                            break;
+                        default:
+                            alert(msg["message"]);
+                            break;
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown + " error");
+                    this;
+                }
+            });
+
+        }
+        function songhuo() {
+            $(".shsj").hide();
+            $("#songhuotime1").attr("checked", "checked");
+        }
+        function songhuo1() {
+            $(".shsj").show();
+        }
+        //控制备注是否可以录入
+        function co_remark() {
+            if ($("#chkremark").attr("checked") == true) {
+                $("#remark").removeAttr("disabled");
+            }
+            else {
+                $("#remark").attr("disabled", "disabled");
+                $("#remark").val("");
+            }
+        }
+
+        function showAddAddress(vr) {
+            if ($(".new_add_edit").css("display") == "none") {
+                $(vr).removeClass("pdn3").addClass("pdn4");
+            }
+            else {
+                $(vr).removeClass("pdn4").addClass("pdn3");
+                $("#Name").val("");
+                $("#Address").val("");
+                $("#Mobile").val("");
+                $("#Phone").val("");
+                $("#ChinaArea").jChinaArea({
+                    aspnet: true,
+                    s1: "", //默认选中的省名
+                    s2: "", //默认选中的市名
+                    s3: "" //默认选中的县区名
+                });
+            }
+            $(".new_add_edit").toggle();
+
+        }
+        //OTC客户如果收货地址为省外同步订单金额没有满3000则加100块运费
+        if (parseFloat("@countPrice") < 3000 && "@Price.GetMember_Class()" == "1") {
+            $(document).ready(function () {
+                if ($("input[name='listaddress']:checked").attr("p").indexOf("云南省") < 0) {
+                    $(".yf").show();
+                    $(".allpriceCount").text("@Html.Raw(string.Format("{0:C}", countPrice + 100))");
+                }
+                else {
+                    $(".yf").hide();
+                    $(".allpriceCount").text("@Html.Raw(string.Format("{0:C}", countPrice))");
+                }
+                $("input[name='listaddress']").click(function () {
+                    if ($("input[name='listaddress']:checked").attr("p").indexOf("云南省") < 0) {
+                        $(".yf").show();
+                        $(".allpriceCount").text("@Html.Raw(string.Format("{0:C}", countPrice + 100))");
+                    }
+                    else {
+                        $(".yf").hide();
+                        $(".allpriceCount").text("@Html.Raw(string.Format("{0:C}", countPrice))");
+                    }
+                });
+            });
+        }
+    </script>
+}

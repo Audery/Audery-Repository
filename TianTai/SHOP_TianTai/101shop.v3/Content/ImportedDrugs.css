@@ -1,0 +1,128 @@
+@charset "utf-8";
+/*------------ImportedDrugs-css---------------------*/
+
+.im-wrap-L{ float:left; width:232px; background-color:White}
+
+.letter-list{
+}
+.letter-list ul {
+width: 232px;overflow: hidden;
+}
+.letter-list ul li {
+width: 24px;height: 24px;float: left;padding: 0 5px 5px 0;
+}
+
+.letter-list ul li a {
+display: block;width: 22px;height: 22px;line-height: 22px;text-align: center;border: 1px solid #ddd;font-family: Arial;font-size: 16px;
+}
+.letter-list ul li a:hover {
+color: #fff;text-decoration: none;background-color: #FF6F6F;border: 1px solid #F33030;
+}
+
+.letter-list ul li.current a, .letter-list ul li.current a:hover {
+color: #ffffff;border: 1px solid #F33030;background-color: #FF6F6F;
+}
+
+.letter-list ul li.disabled a, .letter-list ul li.disabled a:link, .letter-list ul li.disabled a:visited, .letter-list ul li.disabled a:hover {
+color: #cccccc;background-color: #fafbfc;cursor: default;
+}
+
+.Lcd-list-box{ border:1px solid #ddd; overflow-y: scroll;overflow-x: hidden;width: 225px; height:500px
+}
+
+ .root {width: 100%;overflow: hidden;margin-top: -1px;
+}
+ .root b {width: 228px;height: 27px;border-top: 1px dashed #ddd;display: block;padding: 0 0 0 10px;
+font: normal 18px/34px Arial; color:#ff6f6f;
+}
+.root ul.tree-item-box {margin-left:32px;margin-top: -27px;
+}
+.root a.mainBrand:link,  .root a.mainBrand:visited {
+display: block;line-height: 36px;border-bottom: 1px dashed #ddd;padding: 8px 0 ;
+}
+.root a.mainBrand big{ padding-right:3px; color:#333;}
+.root a.mainBrand:hover big{ padding-right:3px; color:#ff6f6f;}
+.mainBrand-big-click big{ padding-right:10px; color:#ff6f6f !important;}
+
+.im-wrap-R{ float:right; width:763px; margin-left:5px;}
+.hotPage-y{ border:1px solid #ddd; padding:5px; }
+.hotPage-y a{ padding:0 5px; cursor: pointer;}
+.cate-sx-box{ border:1px solid #ddd; margin-top:5px; }
+.cate-sel-x{ border-bottom:1px dashed #ddd;}
+.cate-sel-x li{ float:left; padding: 10px 0 10px 5px;} 
+.cate-sel-x a{ }
+.cate-sel-x a:hover{ background:#ff6f6f url(/images/jk-sel.jpg) no-repeat center right; padding: 4px 25px 4px 6px !important; color:#fff !important;}
+.sel-x-a{ background:#ff6f6f; padding:4px 6px; color:#fff !important;}
+.sel-x-s{ background:#ff6f6f url(/images/jk-sel.jpg) no-repeat center right; padding: 4px 25px 4px 6px; color:#fff !important; cursor: pointer;}
+.sel-x-s :hover{ background:#ff6f6f url(/images/jk-sel.jpg) no-repeat center right; padding: 4px 25px 4px 6px !important; color:#fff !important; cursor:pointer;}
+.selPharm{cursor: pointer;}
+.charEnabled{cursor: pointer;}
+
+.fixed {
+position: fixed;
+top: 0px;
+margin-top: 0;
+z-index: 20;
+}
+.moreSx {
+display: none;
+}
+        
+.cate-p{ position:relative; padding:0 0 5px 0 ; }
+.cate-p li{ float:left;padding: 8px 0 0px 5px;} 
+.cate-p a{ padding:4px 6px; white-space:nowrap;}
+.cate-p a:hover{ background:#ff6f6f; padding:4px 6px; color:#fff;}
+
+.cate-all-p{ position:absolute; left:45%; top:100%; background: #fff url(/images/jk-all-sel.jpg) no-repeat 90% 37%; border-style: solid; border-color: #fff #ddd #ddd #ddd; border-width:1px; padding:2px 25px 2px 10px; cursor:pointer;
+}
+.cate-all-p-2{ position:absolute; left:45%; top:100%; background: #fff url(/images/jk-all-sel-2.jpg) no-repeat 90% 37%; border-style: solid; border-color: #fff #ddd #ddd #ddd; border-width:1px; padding:2px 25px 2px 10px; cursor:pointer;
+}
+
+
+.zyyp-sale{ margin-top:10px;}
+.sale-list-box{ border-width:0px; border-style: solid; border-color: #cc0000 #ddd #ddd;}
+.zyyp-sale-title{margin: 30px 0px 0px;background: #f5f5f5;padding: 5px;}
+.zyyp-sale-title-1{ background:url(/images/zyyp-bg.jpg) no-repeat -9px -35px; height:17px; margin: 14px 0px 10px;}
+.zyyp-sale-title strong { font-size:15px; color:#ff5f5f; font-weight:normal;  padding:3px 0 3px 3px;}
+.zyyp-sale-title span { color:#999; padding:0 4px 0 4px; font-size:13px; float:right;}
+.shop-list-1{float:left; }
+.shop-list{ width: 32%; float:left;  padding: 0px 5px 5px; border-bottom:1px dashed #E7E7E7; }
+.shop-list-1{ width:100px; height:165px;  float:left; cursor:pointer; padding:0px 5px;border:1px solid #ff0000; }
+.shop-img-1{ width:100px;}
+.shop-img-1 img{ width:80px; margin:0 auto;}
+.shop-img{ }
+.shop-info-box{}
+.shop-info-box-1{  width: 175px; background:#fff; padding:10px 0px;}
+.shop-info-1{ width:175px; overflow:hidden;}
+.shop-info-2{ width:96px; overflow:hidden; white-space:nowrap;}
+.shop-info-1 a , .shop-info-2 a{ }
+.shop-info-1 span , .shop-info-2 span { padding:0 0 0 5px;}
+.shop-info{ padding:6px 4px;}
+.sale-price-1{ padding:0px 4px;}
+.shop-price{ margin: 2px 0px 6px;}
+.shop-price-1{ margin: 1px 0px 2px; width:125px;}
+.sale-price span{ color:#FF1A1A; font-size:14px; font-weight:bold; padding-right:4px;}
+.sale-price-1 span{ color:#FF1A1A; font-size:12px; font-weight:bold; padding-right:4px;}
+.zyyp-price{ text-decoration:line-through; padding:2px 4px 0px; color:#999;}
+.zyyp-price-1{ margin-left:8px; text-decoration:line-through; padding:2px 4px 0px; color:#999;}
+.zyyp-price span , .zyyp-price-1 span{ color:#999;}
+.shop-cz{ margin-left:0px; cursor:pointer;}
+.gz-shop{ background:#757575; padding:3px 12px; color:#fff; display:block; float:left;}
+.addtocart , .sx{ float: left;height: 19px;padding: 1px 9px;border: 1px solid #ddd;border-radius: 2px;
+margin: 0 4px 0 0;background: #F7F7F7;line-height: 18px;line-height: 19px\9;text-align: center;
+text-decoration: none;color: #444 !important;
+background: -moz-linear-gradient(top,#f7f7f7,#f2f2f2);
+background: -webkit-gradient(linear,0 0,0 100%,from(#f7f7f7),to(#f2f2f2));
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#f2f2f2");
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#f2f2f2")";
+}
+.addtocart:hover , .sx:hover{ float: left;height: 19px;padding: 1px 9px;border: 1px solid #ccc;border-radius: 2px;
+margin: 0 4px 0 0;background: #F7F7F7;line-height: 18px;line-height: 19px\9;text-align: center;
+text-decoration: none;color: #444 !important;
+background: -moz-linear-gradient(top,#f7f7f7,#f2f2f2);
+background: -webkit-gradient(linear,0 0,0 100%,from(#f7f7f7),to(#f2f2f2));
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#f2f2f2");
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#f2f2f2")";
+}
+
+

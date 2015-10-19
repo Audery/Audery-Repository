@@ -1,0 +1,111 @@
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+.register{
+	position:relative;
+	width:998px;
+	margin-bottom:20px;
+	padding:20px 0 10px;
+}
+.register_ok{
+	position:relative;
+	width:998px;
+	border:1px solid #adecbf;
+	height:120px;
+	padding:20px 0 10px;
+}
+.register_error{
+	position:relative;
+	width:998px;
+	border:1px solid #fba9a9;
+	height:120px;
+	padding:20px 0 10px;
+}
+.register h2 , .register p{
+	width:700px;
+	margin:0 auto;
+	
+}
+.rst{
+	width:700px;
+	margin:0 auto;
+	margin-top:20px;
+	
+}
+.register .h2_ok{
+	background: url(/images/email_yz_ico.jpg) no-repeat 0px -29px;
+padding-left: 40px;
+height: 32px;
+padding-top: 5px;
+color:#16b141;
+}
+.register .h2_error{
+	background: url(/images/email_yz_ico.jpg) no-repeat 0px 3px;
+padding-left: 40px;
+height: 32px;
+padding-top: 5px;
+color:#f00606;
+}
+.register p{
+		padding-left:40px;
+		padding-bottom:6px;
+}
+.register p span{
+	color:#f00;
+}
+.rst01{
+	
+	margin-left:20px;
+	background:url(/images/list_btn_bg2.jpg) no-repeat;
+	padding:5px 10px 5px 10px;
+	cursor:pointer;
+}
+.rst01:hover{
+	text-decoration:none;
+	color:#000;
+}
+.rst02{
+	
+	margin-left:20px;
+	background:url(/images/list_btn_bg2.jpg) no-repeat;
+	padding:5px 20px;
+	cursor:pointer;
+}
+.rst02:hover{
+	text-decoration:none;
+	color:#000;
+}
+.rst_mx_left{
+	width:464px;
+	float:left;
+	margin-top:26px;
+	margin-left:10px;
+	}
+	.rst_mx_left p{
+		border-bottom:1px solid #ddd;
+		padding-bottom:6px;
+	
+	}
+	.rst_mx_left p span{
+		color:#888;
+	
+	}
+	.rst_mx_left li{
+		padding-top:10px;
+	}
+	.rst_mx_left li span{
+		display:block;
+		padding-left:19px;
+	}
+	/*-----------*/

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "网页无法访问";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head{
+  <link rel="stylesheet" type="text/css" href="/Content/error.css" />
+  <script type="text/javascript" src="/Scripts/tab.js"></script>
+   <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $(".topC0").click(function () {
+                  $(".topC0").removeClass("topC1");
+                  $(this).addClass("topC1");
+                  $(".NewsTop_cnt .d_01").hide();
+                  $(".NewsTop_cnt .d_01").eq($(this).index()).show();
+              });
+
+          });
+		  
+      </script>
+}
+ @{Html.RenderPartial("Nav");}
+
+    <div class="order_submit">
+      <div class="o_s_con">
+  <div class="o_s_left"></div>
+        <div class="o_s_right">
+          <h2>您访问的页面出现了异常。</h2>
+          <p><span style="padding-left:10px;">您可以 </span><a href="/" class="order_money">返回首页<span style="padding-left:8px;">></span></a></p>        
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+       
+    </div><!--order_submit-->
+    <ul class="Precautions">
+    <strong>还有可能会用到的其他提示，没有就暂时不用</strong>
+    <li>1、“订单提交成功”仅表明@(System.Configuration.ConfigurationManager.AppSettings["CompanyFullName"])收到您的订单，只有您的订单通过审核后，才代表订单正式生效；</li>
+     <li>2、 选择货到付款的客户，请您务必认真检查所收货物，如有不符，您可以拒收；</li>
+  <li>3、 选择其他方式的客户，请您认真检查外包装。如有明显损坏迹象，你可以拒收该货品，并及时通知我们。</li>
+    </ul>

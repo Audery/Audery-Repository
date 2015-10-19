@@ -1,0 +1,276 @@
+﻿.float0831
+{
+     z-index: 10000;
+    position: fixed;
+    top: 251px;
+    right: 1px;
+    _position: absolute;
+}
+.float0831 UL, .float0831 LI
+{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+.float0831 A
+{
+    color: #00a0e9;
+}
+.float0831 A:hover
+{
+    color: #ff8100;
+    text-decoration: none;
+}
+.float0831 .floatL
+{
+    position: relative;
+    width: 28px;
+    float: left;
+}
+.float0831 .floatL A
+{
+    text-indent: -9999px;
+    display: block;
+    font-size: 0px;
+}
+.float0831 .floatR
+{
+    background: url(/images/ServiceOnline/float_bg.gif);
+}
+.float0831 .tp
+{
+    background: url(/images/ServiceOnline/float_bg.gif);
+}
+.float0831 .cn
+{
+    background: url(/images/ServiceOnline/float_bg.gif);
+}
+.float0831 .floatR
+{
+    padding-bottom: 15px;
+    width: 130px;
+    background-repeat: no-repeat;
+    background-position: -131px bottom;
+    float: left;
+    overflow: hidden;
+}
+.float0831 .tp
+{
+    background-repeat: no-repeat;
+    background-position: 0% 0%;
+    height: 10px;
+}
+.float0831 .tp .close
+{
+    background: url(/images/ServiceOnline/check_error.gif) no-repeat;
+    display: block;
+    float: right;
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+}
+.float0831 .cn
+{
+    background-repeat: repeat-y;
+    background-position: -262px 0px;
+}
+.float0831 .cn H3
+{
+    text-indent: -9999px;
+    height: 36px;
+    font-size: 0px;
+}
+.float0831 .cn UL
+{
+    padding-bottom: 0px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 0px;
+}
+.float0831 .cn UL LI
+{
+    color: red;
+    border-bottom: #e6e5e4 1px solid;
+    line-height: 36px;
+    word-wrap: break-word;
+    height: 36px;
+    overflow: hidden;
+    word-break: normal;
+}
+.float0831 .cn UL LI.qqLI
+{
+    height: 45px;
+    line-height: 21px;
+}
+.float0831 .cn UL LI.qqLI a
+{
+    margin: 1px;
+}
+.float0831 .cn UL LI.qqLI a s
+{
+    float: left;
+    display: block;
+    width: 15px;
+    height: 22px;
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat scroll 0 -273px;
+}
+.float0831 .titZx
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .titDh
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .titDc
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .icoZx
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .icoTc
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .icoFf
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .icoTl
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .btnOpen
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .btnOpen_n
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .btnCtn
+{
+    background: url(/images/ServiceOnline/float_s.gif) no-repeat;
+}
+.float0831 .titZx
+{
+    background-position: 5px -10px;
+}
+.float0831 .titDh
+{
+    background-position: 5px -66px;
+}
+.float0831 .titDc
+{
+    background-position: 5px -124px;
+}
+.float0831 .icoZx
+{
+    background-position: 2px -164px;
+}
+.float0831 .icoTc
+{
+    background-position: 0px -323px;
+}
+.float0831 .qqOn
+{
+    display: block;
+    margin: 6px 0px 0px 1px;
+}
+.float0831 .qqOn img
+{
+    vertical-align: middle;
+}
+.float0831 .icoFf
+{
+    background-position: 2px -213px;
+}
+.float0831 .icoTl
+{
+    padding: 4px 0 0 20px;
+    display: block;
+    line-height: 15px;
+    background-position: 2px -266px;
+}
+.float0831 .btnOpen
+{
+    background-position: -30px -396px;
+}
+.float0831 .btnOpen_n
+{
+    background-position: 0px -530px;
+}
+.float0831 .btnCtn
+{
+    background-position: 0px -396px;
+}
+.float0831 .icoZx
+{
+    padding-left: 28px;
+    display: block;
+    float: left;
+}
+.float0831 .icoTc
+{
+    padding-left: 28px;
+    display: block;
+    float: left;
+}
+.float0831 .icoFf
+{
+    padding-left: 28px;
+    display: block;
+    float: left;
+}
+.float0831 .btnOpen
+{
+    position: relative;
+    width: 28px;
+    height: 118px;
+    top: 35px;
+    left: 2px;
+}
+.float0831 .btnOpen_n
+{
+    position: relative;
+    width: 28px;
+    height: 118px;
+    top: 35px;
+    left: 2px;
+}
+.float0831 .btnCtn
+{
+    position: relative;
+    width: 28px;
+    height: 118px;
+    top: 35px;
+    left: 2px;
+}
+.float0831 .btnOpen
+{
+    top: 35px;
+    left: 1px;
+}
+.float0831 .btnOpen_n
+{
+    top: 35px;
+    left: 1px;
+}
+.float0831 .btnCtn
+{
+    top: 35px;
+    left: 2px;
+}
+.float0831 UL LI H3.titDc A
+{
+    width: 80px;
+    display: block;
+    height: 36px;
+}
+.float0831 UL LI.top
+{
+    border-bottom: #ace5f9 1px solid;
+    background: none;
+}

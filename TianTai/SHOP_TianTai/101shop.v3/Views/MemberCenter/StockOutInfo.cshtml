@@ -1,0 +1,304 @@
+﻿@model PagedList<System.Data.DataRow>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "缺货到货通知";
+    var Per = new SOSOshop.BLL.MemberPermission().GetModel(_101shop.v3.Controllers.BaseController.GetUserId());
+    
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101Membercenter_ordermanagerDetail.css" />
+    <script type="text/javascript" src="/Scripts/wbox/wbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css" />
+    <script src="/Scripts/shopcart-num.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".submit").click(function () {
+                if ($("input[name=search2]").val() != "" && $("input[name=search2]").val() != $("input[name=search2]").attr("def")) {
+                    location = "/MemberCenter/StockOutInfo?key=" + encodeURI($("input[name=search2]").val()) + "&fTime=" + $("#filterTime").val();
+                }
+                else {
+                    alert("请输入要搜索的关键字!");
+                }
+            });
+            $(".zhengjia").click(function () {
+                var step = 1;                  
+                if(@Per.IsLookProduct_01.ToString().ToLower())
+                {
+                   step= parseInt($(this).parent().find(".numbers").attr("pcs"));
+                }                
+                if (isNaN($(this).parent().find(".numbers").val())) {                    
+                    $(this).parent().find(".numbers").val(step);
+                }
+                else {
+                    var v = parseInt($(this).parent().find(".numbers").val());
+                    $(this).parent().find(".numbers").val(v + step);
+                }
+            });
+            $(".jianshao").click(function () {
+                var step = 1;     
+                var minsell=parseInt($(this).parent().find(".numbers").attr("minsell"));                            
+                if (isNaN($(this).parent().find(".numbers").val())) {
+                    $(this).parent().find(".numbers").val(minsell);
+                }
+                var v = parseInt($(this).parent().find(".numbers").val());
+                if (v >minsell) {
+                    $(this).parent().find(".numbers").val(v - step);
+                }
+                else {
+                    $(this).parent().find(".numbers").val(minsell);
+                }
+            });
+            $(".numbers").focusout(function () {
+                var step = parseInt($(this).parent().find(".numbers").attr("minsell"));
+                if (isNaN($(this).val())||$(this).val()=="") {
+                    $(this).val(step);
+                }
+            });
+            $(".checkAll").change(function () {
+                $("input[type=checkbox]").each(function () {
+                    $(this).attr('checked', $(".checkAll").attr('checked'));
+                });
+            });
+            $(".cancelall").click(function () {
+                if (confirm("您确认清空所有缺货通知吗？")) {
+                    $.post("/MemberCenter/StockOutInfoAjax", "action=cancelall", function () {
+                        location.reload();
+                    });
+                }
+            });
+            $(".addcart").click(function () {
+                var val = "";
+                var count = "";
+                $(".Product_ID").each(function () {
+                    if ($(this).attr("checked")) {
+                        val += $(this).val() + ",";
+                        count += $(this).parent().parent().find(".numbers").val() + ",";
+                    }
+                });
+                if (val == "") {
+                    alert("请选择要添加至购物车的商品!");
+                    return;
+                }
+                $.post("/MemberCenter/StockOutInfoAjax", "action=addcart&id=" + val + "&count=" + count, function () {
+                    location = "/Shoppingcart/MyShoppingCart";
+                });
+            });
+        });
+        function cancel(id) {
+            if (confirm("您确认删除吗？")) {
+                $.post("/MemberCenter/StockOutInfoAjax", "action=del&id=" + id, function () {
+                    location.reload();
+                });
+            }
+        }
+        
+    </script>
+    <style type="text/css">
+        .zk_info_input_box
+        {
+            margin: 4px 0;
+            color: #666;
+            float: left;
+            font-weight: normal;
+        }
+        .zk_info_input
+        {
+            border: 1px solid #999;
+            height: 22px;
+            width: 75px;
+            position: relative;
+            float: left;
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-top: -3px;
+        }
+        .jianshao
+        {
+            position: static;
+            padding: 1px 2px;
+            width: 15px;
+            height: 15px;
+            float: left;
+            cursor: pointer;
+        }
+        .zhengjia
+        {
+            position: static;
+            float: right;
+            padding-top: 1px;
+            padding-right: 2px;
+            cursor: pointer;
+        }
+    </style>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>交易管理</span> &gt; <span>缺货到货通知</span></li>
+</ul>
+<div class="mc_left">
+    @{Html.RenderPartial("MemberCenter_LeftMenu");}
+</div>
+<div class="mc_right">
+    <div class="Remind">
+        <div style="width: 150px; float: left;">
+            我的求购产品</div>
+        <div class="search_01">
+            @Html.DropDownList("filterTime")
+            @Html.TextBox("search2", ViewData["search2"], new { def = "请输入商品名称", @class = "text def" })
+            <input type="button" value="查 询" class="bti submit" />
+            <input type="button" value="批量购买" class="bti_2 addcart" />
+            <input type="button" value="清空通知" class="bti_2 cancelall" />
+        </div>
+    </div>
+    <div class="qdh_tz">
+	<div style="font-weight:bold; margin-bottom: 4px;">温馨提示：</div>
+        <span>1、若订单已审核且商品状态显示<b>“</b>缺货到货通知<b>”</b>，你可以点击此按钮将该商品添加到<b>“</b>缺货到货通知<b>”</b>栏；</span>
+       
+       <span> <br />2、商品到货，系统会第一时间自动短信通知！同时在<b>“</b>会员中心 -> 交易管理 -> 缺货到货通知<b>”</b>栏可以查询通知历史和详情。</span>
+    </div>
+    <!---缺货到货通知描述---->
+    <div class="mc">
+        <dl>
+            <dd class="p-list">
+                <table cellpadding="0" cellspacing="0" width="828">
+                    <tbody>
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="checkAll" />
+                            </th>
+                            <th>
+                                商品信息
+                            </th>
+                            <th>
+                                库存数量
+                            </th>
+                            <th>
+                                求购时间
+                            </th>
+                            <th>
+                                单价
+                            </th>
+                            <th>
+                                数量
+                            </th>
+                            <th>
+                                操作
+                            </th>
+                        </tr>
+                        @foreach (System.Data.DataRow item in Model)
+                        {
+
+                            bool Stock = ((int)item["Stock"]) > ((int)item["num"]);
+                            <tr>
+                                <td>
+                                    <input type="checkbox"@* @(Stock ? "" : "disabled=\"disabled\"")*@ value="@item["Product_ID"]" class="Product_ID" />
+                                </td>
+                                <td>
+                                    <a target="_blank" href="/@{@item["Product_ID"]}.html">@item["Product_Name"]</a>
+                                    <br />
+                                    <a target="_blank" href="/@{@item["Product_ID"]}.html">生产企业：@item["DrugsBase_Manufacturer"]</a>
+                                    <br />
+                                    <a target="_blank" href="/@{@item["Product_ID"]}.html">规格：@Public.GetSpecificationAndS(item)</a>
+                                </td>
+                                <td>
+                                    @(Stock ? "现货" : "缺货")
+                                </td>
+                                <td>
+                                    @string.Format("{0:yyyy-MM-dd}", item["created"])
+                                </td>
+                                <td>
+                                    @Html.Raw(Convert.ToString(item["showPrice"]))
+                                </td>
+                                <td align="right">
+                                    <div class="zk_info_input">
+                                    @{
+                                        string minsell = string.Empty;
+                                        if (item["is_cl"].ToString() == "是")
+                                        {
+                                            minsell = item["minsell"].ToString();
+                                        }
+                                        else
+                                        {
+                                            minsell = "1";
+                                        }
+                                    }
+                                        <span class="jianshao">
+                                            <img style="padding: 2px 0;" src="/images/jianshao_bg.jpg" width="16px" height="16px">
+                                        </span>
+                                        <input type="text" pcs="@{@item["Goods_Pcs"]}" onblur="henum('@item["Product_ID"]')" minsell="@minsell" class="numbers" id="h-@{@item["Product_ID"]}" value="@item["Num"]" style="width:30px"/>
+                                        <span class="zhengjia">
+                                            <img style="padding: 2px 0;" src="/images/zhengjia_bg.jpg" width="16px" height="16px">
+                                        </span>
+                                    </div>
+                                        @if (ViewBag.is_cl == "是")
+                                        {
+                                            <span>@item["Goods_Unit"]</span>
+                                        }
+                                        else 
+                                        {
+                                            <span>件</span>
+                                        }
+                                </td>
+                                <td>
+                                    <a href="javascript:addShopCar(@item["Product_ID"])" class="bti_3">立刻购买</a>
+                                    <div style="height: 6px">
+                                    </div>
+                                    <a href="javascript:cancel(@item["Product_ID"])" style="color:#048205">取消通知</a>
+                                </td>
+                            </tr>   
+                        }
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })
+    </div>
+</div>
+<div class="oy_ct_cutover" style="margin-top: 100px; margin-left: 10px;">
+    <div id="NewsTop">
+        <div id="NewsTop_tit">
+            <!--<P class=topTit>新闻排行</P>-->
+            <p class="topC0 topC1">
+                最新推荐</p>
+        </div>
+        <div class="NewsTop_cnt">
+            <span></span>
+            <div class="d_01" style="display: block;">
+                <ul>
+                    @foreach (System.Data.DataRow item in ((System.Data.DataTable)ViewBag.最新推荐).Rows)
+                    {
+                        <li>
+                        @if (item["is_cl"].ToString() == "是")
+                        {
+                            <div style="position:relative">
+                                <a href="/@{@item["Product_ID"]}.html" target="_blank">
+                                    <div class="detail_img_ico"><span class="bkcl_ico">可拆零</span></div>
+                                    <img src="@Public.RawImage(item["Image"])" width="168px" height="168px" class="pImage" alt="@item["Product_Name"]规格：@Public.GetSpecificationAndS(item)@item["DrugsBase_Manufacturer"]"/>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a href="/@{@item["Product_ID"]}.html" target="_blank">
+                                    <img src="@Public.RawImage(item["Image"])" width="168px" height="168px" class="pImage" alt="@item["Product_Name"]规格：@Public.GetSpecificationAndS(item)@item["DrugsBase_Manufacturer"]"/>
+                                </a>
+                            </div>
+                        }
+                            <div class="shop_dsp" style="margin-top: 5px; width: 170px; text-align: center;">
+                                <a href="/@{@item["Product_ID"]}.html"  target="_blank"  title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]">@Library.Lang.Input.GetSubString(item["Product_Name"], 14,"...")</a></div>
+                            <div class="shop_price gg" style="margin-top: 5px; width: 170px;text-align: center;">
+                                <span>@Library.Lang.Input.GetSubString(Public.GetSpecificationAndS(item), 16, "...")</span></div>
+                            <div class="shop_price" style="margin-top: 5px; width: 170px; text-align: center;">
+                                @{@Price.GetPriceShowString()}: <strong><font class="price2">@Html.Raw(Convert.ToString(item["showPrice"]))</font></strong>
+                            </div>
+                        </li>                
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

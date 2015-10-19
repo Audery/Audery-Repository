@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = System.Configuration.ConfigurationManager.AppSettings["Signin_Title"];
+    ViewBag.description = System.Configuration.ConfigurationManager.AppSettings["Signin_Description"];
+    ViewBag.keywords = System.Configuration.ConfigurationManager.AppSettings["Signin_Key"];  
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101shopDetail.css" />    
+    <link rel="stylesheet" type="text/css" href="/Content/jfsc-qd.css" />
+    <link type="text/css" href="/Content/wee.css" />
+    <script type="text/javascript" src="/Scripts/weebox.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {           
+            $(".bsignin").click(function () {
+                $(".signin").submit();
+            });
+            if ("@ViewBag.js" == "1") {
+                wBox = $("#wbox1").wBox({
+                    title: "提示",
+                    html: "<div class='demo' style='width:440px;height:120px;padding-top:10px;margin-left:20px;font-size:14px'>签到成功，新增@((int)new SOSOshop.BLL.Integral.MemberIntegralTemplate().GetIntegral(SOSOshop.BLL.Integral.MemberIntegralTemplateEnum.每日签到))积分。<br><div style='margin-top:10px;'><a href='#' style='color:red;font-weight: bold;'>@ViewBag.info</a><span style='margin-top:10px;margin-left:15px;'><a href='/' style='color:red;font-weight: bold'>立即下单攒积分</a></span></div></div>"
+                });
+                wBox.showBox();
+            }
+        });
+    </script>}
+@{Html.RenderPartial("Nav");}
+<div class="qd-left">
+    <div class="qd-login">
+        <p>
+            欢迎您
+        </p>
+        <p class="qd-login-name showusername">
+        </p>
+        <div class="clear">
+        </div>
+        <div class="qd-jf">
+            <p>
+                你的积分<span class="jf-shows">@(new SOSOshop.BLL.Integral.MemberIntegral().GetRealityIntegral(_101shop.v3.Controllers.BaseController.GetUserId()))</span>
+            </p>
+            <a href="/MemberCenter/Integral">去兑换礼品></a>
+        </div>
+    </div>
+</div>
+<div class="qd-right">
+    <ul class="date-time">
+        <li class="day-1"><a href="#">今天</a></li>
+        <li><a href="#">明天</a></li>
+        <li><a href="#">@DateTime.Now.AddDays(2).Day</a></li>
+        <li><a href="#">@DateTime.Now.AddDays(3).Day</a></li>
+        <li><a href="#">@DateTime.Now.AddDays(4).Day</a></li>
+        <li><a href="#">@DateTime.Now.AddDays(5).Day</a></li>
+        <li class="day-end"><a href="#">...</a></li>
+    </ul>
+    <div class="clear">
+    </div>
+    <ul class="time-ql">
+        <li>@DateTime.Now.Month 月</li>
+        <li class="time-day">@DateTime.Now.Day </li>
+        <li>@Library.Date.Convert.GetChineseWeek(DateTime.Now)</li>
+    </ul>
+    <div class="qd-cont">
+        @if (!ViewBag.isAllow)
+        {
+            <p>
+                你今天已经签过到了哦，明天再来吧！
+            </p>
+        }
+        else
+        {
+            <p style=" height:24px;">
+                你今天尚未签到，今天签到可获<span style="color: #eb0000; padding: 0 5px; font-weight: bold; font-size: 16px;">@((int)new SOSOshop.BLL.Integral.MemberIntegralTemplate().GetIntegral(SOSOshop.BLL.Integral.MemberIntegralTemplateEnum.每日签到))</span>
+                积分 <span style="padding: 0px 5px;"></span>
+            </p>
+        }
+        你已连续签到<span style="color: #eb0000; padding: 0 5px; font-weight: bold; font-size: 12px;">@(new SOSOshop.BLL.Integral.MemberIntegralLock().GetContSignin(_101shop.v3.Controllers.BaseController.GetUserId()))</span>天
+        @if (ViewBag.isAllow)
+        {
+            <a class="qd-button bsignin" href="#">立即签到</a>
+        }
+    </div>
+    <form action="/signin" class="signin" method="post"></form>
+</div>

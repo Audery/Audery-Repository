@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+.containner{
+	width:1000px;
+	height:auto;
+	margin:0 auto;
+}
+.banner{
+	height:300px;
+	border:1px solid #ddd;
+}
+.lm{
+	/*border:1px solid #ddd;*/
+	margin:30px 0 0 0;
+	
+}
+.lm_tt{
+	/*height:40px;*/
+	/*background:#bd0000 repeat-x;*/
+	border-bottom:1px solid #bd0000;
+	height:28px;
+}
+.more{
+	float:right;
+}
+.more span{
+	padding-left: 4px;
+line-height: 24px;
+font-size: 13px;
+color: #777;
+}
+.more span a{
+	color:#bd0000;
+}
+.lm_tt .lm_tt_nm{
+	color:#fff;
+	font-weight:bold;
+	width:100px;
+height: 28px;
+font: 17px/28px "微软雅黑";
+padding: 0 33px 0 9px;
+background: #cf0006 url(/images/m_sub_tit.png) top right no-repeat;
+text-indent: 0;
+float:left;
+}
+.lm_tt .lm_tt_nm SPAN{
+	padding-right:6px;
+	font-weight:bold;
+	color: #fff;
+font-size: 16px;
+}
+.lm_sp{
+	margin-top:4px;
+}
+.lm_sp li{
+	float: left;
+width: 194px;
+border: 1px solid #ddd;
+margin: 0 0 0 5px;
+	
+}
+.lm_sp li.sp_frist{
+	margin: 0;
+	border:none;
+}
+.shop_dsp {
+
+height: 36px;
+width: 186px;
+_width: 186px;
+margin: 40px auto 0px;
+overflow: hidden;
+background: #f0f0f0;
+padding: 4px 4px 0px 4px;
+}
+.shop_dsp span{
+	padding-right:4px;
+}
+.shop_price{
+
+margin: 0px auto;
+overflow: hidden;
+padding: 12px 4px 8px;
+background:#f0f0f0;
+width: 186px;
+_width: 186px;
+
+}
+.shop_price span{
+	padding-right:4px;
+	color:#bd0000;
+	font-weight: bold;
+	font-size:14px;
+	}
+.shop_price	.price_jz{
+		color:#777;
+		font-weight:normal;
+		font-size:12px;
+	}
+	.shop_price	.price_fh{
+	
+		font-weight:bold;
+		font-size:12px;
+	}
+	.addtocart{
+		margin-left:14px;
+	}
+	.addtocart a{
+		background:url(/images/sum_zt_atc.jpg) no-repeat;
+		padding: 4px 38px;
+	}
+	.addtocart a:hover{
+		background:url(/images/sum_zt_atc.jpg) no-repeat 0 -26px;
+		padding: 4px 40px;
+	}

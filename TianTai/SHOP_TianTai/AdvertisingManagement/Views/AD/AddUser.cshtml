@@ -1,0 +1,18 @@
+﻿@using AdvertisingManagement.Models
+@{
+    ViewBag.Title = "添加站点信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User user = ViewBag.user;
+    var users = ViewBag.users;
+}
+
+<h2>添加站点信息</h2>
+<div>站点编号：<input name="NetNo" value="@user.NetNo" /></div>
+<div>站点名称：<input name="NetName" value="@user.NetName" /></div>
+
+@{
+    foreach(User a in users)
+    {
+        <div><span>@a.NetNo</span><span>@a.NetName</span><span>@a.NetKey</span></div>
+    }
+    }

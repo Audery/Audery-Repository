@@ -1,0 +1,184 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using System.Data
+@model PagedList<System.Data.DataRow>
+@{
+    ViewBag.Title = "下载药检报告";
+}
+@section head
+{
+        <link rel="Stylesheet" type="text/css" href="/Content/101Membercenter_InspectionReport.css" />
+        <script type="text/javascript" src="/Scripts/wbox/wbox.js"></script>
+        <link rel="stylesheet" type="text/css" href="/Scripts/wbox/wbox/wbox.css" />
+        <script type="text/javascript">
+        //选择框
+        var SelectedValsTable = "#protbl", SelectedValsAll = "input.checkAll", SelectedValsId = "input.checkId";
+        function GetSelectedVals() {
+            var tbl = jQuery(SelectedValsTable), chks = jQuery(SelectedValsId, tbl), vals = '';
+            chks.each(function () { var v = this.checked == true ? this.value : ''; if (v.length) { vals += v + ','; } });
+            return vals.length ? vals.substring(0, vals.length - 1) : '';
+        }
+        jQuery(function () {
+            var tbl = jQuery(SelectedValsTable), chks = jQuery(SelectedValsId, tbl), chkAll = jQuery(SelectedValsAll, tbl);
+            chks.click(function () { checkSelectedVals(this); }); chkAll.click(function () { checkAllSelectedVals(this); });
+        });
+        function checkAllSelectedVals(chk) {
+            var tbl = jQuery(SelectedValsTable), chks = jQuery(SelectedValsId, tbl);
+            if (chk.checked) { chks.each(function () { if (this.disabled == false) { jQuery(this).attr('checked', 'checked'); } }); } else { chks.removeAttr('checked'); }
+        }
+        function checkSelectedVals(chk) {
+            var tbl = jQuery(SelectedValsTable), chks = jQuery(SelectedValsId, tbl), chkAll = jQuery(SelectedValsAll, tbl);
+            if (chk.checked) { var b = 1; chks.each(function () { if (this.checked == false) { b = 0; } }); if (b) { chkAll.attr('checked', 'checked'); } } else { chkAll.removeAttr('checked'); }
+        }
+        </script>
+    }
+    @{Html.RenderPartial("Nav");}
+    <ul class="list_nav">
+        <li><a href="/MemberCenter/">会员中心</a> &gt; <span>下载药检报告</span> </li>
+    </ul>
+    <div class="mc_left">
+        @{Html.RenderPartial("MemberCenter_LeftMenu");}
+    </div>
+    <script type="text/javascript">
+        function search() {
+            var s = getSearch();
+            if (s == "") {
+                alert("请输入要查询的内容！");
+            }
+            else {
+                location = "?" + s;
+            }
+        }
+
+        function getSearch() {
+            var s1 = jQuery("#Product_Name").val();
+            var s2 = jQuery("#DrugsBase_Manufacturer").val();
+            var s3 = jQuery("#pihao").val();
+            if (s1 == "商品名称") s1 = "";
+            if (s2 == "厂家名称") s2 = "";
+            if (s3 == "批号") s3 = "";
+            if (s1 == "" && s2 == "" && s3 == "") {
+                return "";
+            }
+            else {
+                return "Product_Name=" + s1 + "&DrugsBase_Manufacturer=" + s2 + "&pihao=" + s3;
+            }
+        }
+
+        function download(a) {
+            var vals = GetSelectedVals(), f = jQuery('#downloadForm');
+            if (a == -1) { f.find('input[name="id"]').val(a + ""); f.attr("action", "/MemberCenter/InspectionReport_Download?Product_Name=&DrugsBase_Manufacturer=&pihao=").get(0).submit(); }
+            else if (a == 0) { f.find('input[name="id"]').val(a + ""); f.attr("action", "/MemberCenter/InspectionReport_Download").get(0).submit(); }
+            if (a == 1 && vals.length == 0) {
+                return alert("请选择完成后再进行操作");
+            }
+            if (a == 1) { f.find('input[name="id"]').val(vals); f.attr("action", "/MemberCenter/InspectionReport_Download").get(0).submit(); }
+        }
+
+        jQuery(function () {
+            var tr = jQuery(SelectedValsTable + ' tbody.tbody tr.tr'), chkid = SelectedValsId, vals = '';
+            tr.each(function () { var chk = jQuery(chkid, this), val = chk.val(); vals += val + ","; });
+            jQuery.post("/MemberCenter/InspectionReport_ExistsDownload", "id=" + vals, function (msg) {
+                var r = jQuery.trim(msg), s = r.split('$'), b = true, bb = false; vals = '';
+                for (var i = 0; i < tr.length && i < s.length && tr.eq(i).find('td').last().hasClass("yjbg") ; i++) {
+                    var chk = tr.eq(i).find(chkid), val = chk.val(), td = tr.eq(i).find('td').last();
+                    if (s[i] != "0" && s[i].toLowerCase().indexOf('.jpg') > 0) {
+                        var file = s[i]; val = file;
+                        chk.removeAttr("disabled").attr("checked", "checked").val(val); vals += val + ",";
+                        td.html('<span class="yjbg1">已上传</span>');
+                        bb = true;
+                    } else {
+                        chk.removeAttr("checked").attr("disabled", "disabled").val(""); vals += ",";
+                        td.html('<span class="yjbg0">未上传</span>');
+                        b = false;
+                    }
+                }
+                if (b) { jQuery(SelectedValsAll).removeAttr("disabled").attr("checked", "checked"); } else if (!bb) { jQuery(SelectedValsAll).attr("disabled", "disabled"); }
+                if (bb) {
+                    jQuery.post("/MemberCenter/InspectionReport_TimesDownload", "id=" + vals, function (msg) {
+                        var r = jQuery.trim(msg), s = r.split('$'), b = true;
+                        for (var i = 0; i < tr.length && i < s.length && tr.eq(i).find('td').last().hasClass("yjbg"); i++) {
+                            var td = tr.eq(i).find('td').last();
+                            if (td.html().indexOf("已上传") > 0) td.html('<span class="yjbgcs">下载' + s[i] + '次</span>');
+                        }
+                        if (b) { jQuery(SelectedValsAll).removeAttr("disabled").attr("checked", "checked"); }
+                    });
+                }
+            });
+        });
+    </script>
+    <div class="mc_right">
+        <div class="Remind">
+            <div style="width:195px; float:left;">
+                下载药检报告（按批号）<font style="display:block;font-size:12px;color:#808080;font-weight:normal;">完成后的订单才能下载</font>
+            </div>
+            <div class="search_01">
+                <form id="downloadForm" action="/MemberCenter/InspectionReport_Download" method="post" target="_blank">
+                    <input class="text def" name="Product_Name" id="Product_Name" type="text" def="商品名称" value="@ViewBag.Product_Name" />
+                    <input class="text def" name="DrugsBase_Manufacturer" id="DrugsBase_Manufacturer" type="text" def="厂家名称" value="@ViewBag.DrugsBase_Manufacturer" />
+                    <input class="text def" name="pihao" id="pihao" type="text" def="批号" value="@ViewBag.pihao" />
+                    <input type="hidden" name="id" /><input type="hidden" name="act" value="pihao" />
+                    <input type="button" value="查 询" class="bti" onclick="search()">
+                </form>
+            </div>
+        </div>
+
+        <table id="protbl" cellpadding="0" cellspacing="0" width="828" class="detailTable">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="checkAll" title="全选" /></th>
+                    <th style="width: 158px;">
+                        品名
+                    </th>
+                    <th style="width: 185px;">
+                        厂家
+                    </th>
+                    <th style="width: 160px;">
+                        规格
+                    </th>
+                    <th style="width: 77px;">
+                        件装
+                    </th>
+                    <th style="width: 65px;">
+                        批号
+                    </th>
+                    <th style="width: 65px;">
+                        下载次数
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                @foreach (DataRow item in Model)
+                {
+                    <tr class="tr">
+                        <td style="width:25px">
+                            <input type="checkbox" class="checkId" value="@(item["Product_ID"])-@(item["pihao"].ToString().Trim())" disabled="disabled" />
+                        </td>
+                        <td><a href="/@(item["Product_ID"]).html" target="_blank">@item["Product_Name"]</a></td>
+                        <td>@item["DrugsBase_Manufacturer"]</td>
+                        <td>@item["GuiGe"]</td>
+                        <td>@item["JianZhuang"]</td>
+                        <td>@item["pihao"]</td>
+                        <td class="yjbg"></td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td height="27px" title="选择完成后进行操作" style="background: url(/images/rh_ima12.jpg) no-repeat scroll 9px 7px;"></td>
+                    <td colspan="13">
+                        <span class="search_01" style="float:left;">
+                            <input type="button" value="下 载" onclick="download(1)" class="bti" style="color: #005ea7;" />(选择的)
+                            <input type="button" value="下 载" onclick="download(0)" class="bti" style="color: #005ea7; margin-left: 30px;" />(查询结果，共@(ViewBag.recordCount)条记录)
+                            <input type="button" value="下 载" onclick="download(-1)" class="bti" style="color: #005ea7; margin-left: 30px;" />(所有未下载过的药检报告)
+                        </span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div>
+            <br />
+            @Html.Pager(Model, new Webdiyer.WebControls.Mvc.PagerOptions() { ShowFirstLast = false, ContainerTagName = "span", PageIndexParameterName = "pageIndex", ShowGoButton = false, HorizontalAlign = "right", NumericPagerItemCount = 8, CssClass = "paginator paginator1" })
+        </div><br />
+
+    </div>

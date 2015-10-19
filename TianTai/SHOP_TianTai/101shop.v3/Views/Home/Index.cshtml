@@ -1,0 +1,977 @@
+﻿@using System.Data
+@using _101shop.v3.Controllers
+@using SOSOshop.BLL.Common;
+@{
+    Public.WebSiteInfo wsi = Public.GetNetSiteInfo();
+    ViewBag.Title = wsi.NetTitle;
+    ViewBag.keywords = wsi.Keys;
+    ViewBag.description = wsi.NetInfo;
+}
+@using SOSOshop.BLL.Common;
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/category.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+    <script type="text/javascript" src="/Scripts/jquery.lazyload.min.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/index_tab.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <script type="text/javascript" src="/Scripts/category.js?v=@_101shop.v3.MvcApplication.ModifiedNo()"></script>
+    <link href="/Content/slide.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_index.css?v=@_101shop.v3.MvcApplication.ModifiedNo()" />
+}
+<div class="content">
+    @{Html.RenderPartial("Nav");}
+    <div class="left_info">
+        @{Html.RenderPartial("Navigate");}
+        <div class="oy_ct_slide_itemwrap">
+            <div class="slide">
+                <div id="idContainer2" class="containerSlider">
+                    <table id="idSlider2" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td class="td_f" id="ad_1">
+                                </td>
+                                <td class="td_f" id="ad_2">
+                                </td>
+                                <td class="td_f" id="ad_3">
+                                </td>
+                                <td class="td_f" id="ad_4">
+                                </td>
+                                <td class="td_f" id="ad_5">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul id="idNum" class="num">
+                    </ul>
+                </div>
+            </div>
+            <div class="slide2" style="display: none;">
+                <ul>
+                    <li id="ad_8"><a href="7.html">
+                        <img alt="六神丸" src="/images/small_add1.jpg" width="176px" height="88px" />
+                    </a></li>
+                    <li id="ad_9"><a href="383.html">
+                        <img alt="乌鸡白凤片" src="/images/small_add2.jpg" width="176px" height="88px" />
+                    </a></li>
+                    <li id="ad_10" style="border: none;"><a href="12.html">
+                        <img alt="丙泊酚注射液" src="/images/small_add3.jpg" width="176px" height="88px" />
+                    </a></li>
+                </ul>
+            </div>
+            <!--slide2-----end---------->
+        </div>
+        <!---oy_ct_slide_itemwrap----end-------------------------->
+        <div class="oy_ct_cutover">
+            <div id="NewsTop">
+                <div id="NewsTop_tit">
+                    <!--<P class=topTit>新闻排行</P>-->
+                    <p style="border-left: none" class="topC0 topC1">
+                        @ViewBag.A1
+                    </p>
+                    <p class="topC0">
+                        @ViewBag.A2
+                    </p>
+                    <p class="topC0">
+                        最新上架
+                    </p>
+                    <p class="topC0">
+                        @ViewBag.A4
+                    </p>
+                </div>
+                <div class="NewsTop_cnt">
+                    <span title="Don't delete me"></span>
+                    <div class="d_01 s_1">
+                        <ul>
+                            @{
+                                DataTable 疯狂抢购 = ViewBag.疯狂抢购;
+                                if (疯狂抢购.Rows.Count > 0)
+                                {
+                                    foreach (DataRow item in 疯狂抢购.Rows)
+                                    {
+                                <li>
+                                    <div class='div_tag'>
+                                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                                            @Html.Raw(Public.Tag(item))
+                                            <img class="pImage" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="168px" height="168px" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dsp">
+                                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;<span class="prt_id_elp">@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")</span>
+                                        </a>
+                                    </div>
+                                    <div class="shop_price">
+                                        <span class="price_text">@ViewBag.PriceInfo:</span><strong>@Html.Raw((string)item["showPrice"])</strong>
+                                    </div>
+                                </li>
+                                    }
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="d_01">
+                        <ul>
+                            @{
+                                DataTable 热销商品 = ViewBag.热销商品;
+                                if (热销商品.Rows.Count > 0)
+                                {
+                                    foreach (DataRow item in 热销商品.Rows)
+                                    {
+                                <li>
+                                    <div class='div_tag'>
+                                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                                            @Html.Raw(Public.Tag(item))
+                                            <img class="pImage" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="168" height="168" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dsp">
+                                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")
+                                        </a>
+                                    </div>
+                                    <div class="shop_price">
+                                        <span class="price_text">@ViewBag.PriceInfo:</span><strong>@Html.Raw((string)item["showPrice"])</strong>
+                                    </div>
+                                </li>
+                                    }
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="d_01">
+                        <ul>
+                            @{
+                                DataTable 本周新品 = ViewBag.本周新品;
+                                if (本周新品.Rows.Count > 0)
+                                {
+                                    foreach (DataRow item in 本周新品.Rows)
+                                    {
+                                        //var dt = new SOSOshop.BLL.DrugsBase.Tag_PharmAttribute().GetList();
+                                        //object o = new SOSOshop.BLL.Db().ExecuteScalarForCache("SELECT Tag_PharmAttribute_id FROM dbo.Tag_PharmProduct WHERE Tag_PharmAttribute_id in (SELECT id FROM dbo.Tag_PharmAttribute WHERE 1=1) and product_id=" + item["DrugsBase_ID"]);
+                                        string url = HomeController.SearchUrl(0, 0) + "?new=1";
+                                        //string name = "";
+                                        //if (!Library.Lang.DataValidator.isNULL(o))
+                                        //{
+                                        //    int tagid = int.Parse(dt.AsEnumerable().Where(x => x.Field<int>("id") == (int)o).Select(x => x.Field<string>("fullPath")).First().Trim('/').Split('/')[0]);
+                                        //    System.Data.DataRow dr = dt.AsEnumerable().Where(x => x.Field<int>("id") == (int)tagid).ToArray()[0];
+                                        //    url = HomeController.SearchUrl((int)dr["id"], 1);
+                                        //    name = (string)dr["name"];
+                                        //}
+                                <li>
+                                    <div class='div_tag'>
+                                        <a href="@url" target="_blank">
+                                            @Html.Raw(Public.Tag(item))
+                                            <img class="pImage" alt="@item["Product_Name"]包装盒" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="168" height="168" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dsp">
+                                        <a href="@url" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")
+                                        </a>
+                                    </div>
+                                    <div class="shop_price">
+                                        <span class="price_text">@ViewBag.PriceInfo:</span><strong>@Html.Raw((string)item["showPrice"])</strong>
+                                    </div>
+                                </li>
+                                    }
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="d_01">
+                        <ul>
+                            @{
+                                DataTable 促销推荐 = ViewBag.促销推荐;
+                                if (促销推荐.Rows.Count > 0)
+                                {
+                                    foreach (DataRow item in 促销推荐.Rows)
+                                    {
+                                <li>
+                                    <div class='div_tag'>
+                                        <a href="@{@item["Product_ID"]}.html" target="_blank">
+                                            @Html.Raw(Public.Tag(item))
+                                            <img class="pImage" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" width="168" height="168" />
+                                        </a>
+                                    </div>
+                                    <div class="shop_dsp">
+                                        <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                                            <span>
+                                                @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                                                @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                                            </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")
+                                        </a>
+                                    </div>
+                                    <div class="shop_price">
+                                        <span class="price_text">@ViewBag.PriceInfo:</span><strong>@Html.Raw((string)item["showPrice"])</strong>
+                                    </div>
+                                </li>
+                                    }
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--oy_ct_cutover------end-------------->
+    </div>
+    <div class="right_info">
+        <div class="oy_ct_wk_spc">
+            <div class="radio_left">
+                <div class="radio_right">
+                    <h2>
+                        本周特供
+                    </h2>
+                </div>
+            </div>
+            <div class="spc_03" id="ad_52">
+            </div>
+        </div>
+        <div class="oy_ct_ifm">
+            <div class="radio_left">
+                <div class="radio_right">
+                    <h2>
+                        兰海快报@*<span><a href="#">更多资讯></a></span>*@
+                    </h2>
+                </div>
+            </div>
+            <div class="ifm_con">
+                <ul>
+                    @{
+                        var _101资讯 = (DataTable)ViewBag._101资讯;
+                        if (_101资讯.Rows.Count > 0)
+                        {
+                            foreach (DataRow item in _101资讯.Rows)
+                            {
+                                if (string.IsNullOrEmpty(item["LinkUrl"] as string))
+                                {
+                        <li><a href="/article/@{@item["id"]}.html" title="@item["Title"]">@item["Title"]</a></li>
+                                }
+                                else
+                                {
+                        <li><a href="@item["LinkUrl"]" title="@item["Title"]" target="_blank">@item["Title"]</a></li>
+                                }
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="ad" id="ad_11">
+            <a target="_blank" href="@System.Configuration.ConfigurationManager.AppSettings["CompanyDomainName"]/products/0-0-0-0-0-0-0-0-0-0-1.html?q=%E5%90%89%E6%9E%97%E7%B4%AB">
+                <img alt="火爆招商" src="/images/ad.jpg" width="212" height="282" />
+            </a>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="oy_ct_tf jydt_y2">
+        <div class="radio_left">
+            <div class="radio_right">
+                <h2>
+                    交易大厅
+                </h2>
+            </div>
+        </div>
+        <div class="ifo_border">
+            <ul class="oy_ct_tf_title">
+                <li style="width: 259px; border-left: none;">药品名称 </li>
+                <li style="width: 176px;">规格</li>
+                <li style="width: 247px;">生产企业</li>
+                <li style="width: 120px;">购买地市 </li>
+                <li style="width: 101px;">成交金额 </li>
+                <li style="width: 90px;">成交日期 </li>
+            </ul>
+            <ul class="jygd ul2" id="ul1">
+                @{
+                    DataTable transactionData = ViewBag.交易大厅;
+                    if (transactionData.Rows.Count > 0)
+                    {
+                        //for (int i = transactionData.Rows.Count; i >= 0;i--)
+                        //{
+                        //    var row = transactionData.Rows[i];
+                        foreach (DataRow row in transactionData.Rows)
+                        {
+                     
+                    <li class="jygd_info"><span class="jygd_info01"><a id="@row["Id"]|@row["OrderDate"]" title="@row["Product_Name"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["Product_Name"].ToString().TrimEnd(), 18, "...")</a></span>
+                        <span class="jygd_info02" title="@row["DrugsBase_Specification"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(row["DrugsBase_Specification"].ToString().TrimEnd(), 20, "...")</span>
+                        <span class="jygd_info03" title="@row["DrugsBase_Manufacturer"].ToString().TrimEnd()">@Library.Lang.Input.GetSubString(@row["DrugsBase_Manufacturer"].ToString().TrimEnd(), 17, "...")</span>
+                        <span class="jygd_info04">@row["ReceiveAddress"].ToString().TrimEnd()</span> <span
+                            class="jygd_info05">@string.Format("{0:C2}", row["cost"]) </span><span class="jygd_info06">@Convert.ToDateTime(row["OrderDate"]).ToShortDateString()</span>
+                    </li>
+                        }
+
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    @{
+        //最新上架
+        SOSOshop.BLL.Product.Product db = new SOSOshop.BLL.Product.Product();
+        DataTable dt = db.ExecuteTableForCache("SELECT id,name,ParentId,fullPath,ISNULL( b.Product_Count,0)count FROM dbo.[Tag_PharmAttribute] a LEFT JOIN Tag_PharmAttribute_Product_Count b ON a.id=b.Tag_PharmAttribute_id WHERE tag_id=71 AND name IN  ('清热解毒','抗微生物','泌尿系统','儿童用药','心脑血管','消化系统')");
+        int k = 0;
+        string css = "";
+        <div class="grid_c1 cate1">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg"></span><span class="title">最新上架</span> <span class="link1" style="margin-left: 640px;">
+                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(2, 8)" target="_blank">精品饮片</a>
+                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(1, 8)" target="_blank">常规饮片</a>
+                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(9, 1)" target="_blank">感冒发热</a>
+                        <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(0, 0)?new=1" target="_blank" style="border:none;">
+                            更多</a> </span>
+                </h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left" style="background: none;">
+                    <ul>
+                        @foreach (DataRow item in dt.AsEnumerable())
+                        {
+                            k++;
+                            css = k != 1 ? "" : "cate1-a-cur";
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl((int)item["id"], 1)" class="@css">
+                                @{@item["name"]}
+                                (@item["count"])</a></li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 0px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    @{k = 0;}
+                    @foreach (DataRow item in dt.Rows)
+                    {
+                        k++;
+                        css = k == 1 ? "block" : "none";
+                        <div class="s_1 d_02" style="display:@css">
+                            @ProductList(db.Get_New_HomeList(6, (int)item["id"]).GetSwitchPriceTable())
+                        </div>
+                    }
+                </div>
+                <div class="grid-c1-cont-right">
+                    <div class="info_Retrieval3 irf">
+                        <h3>
+                            热销榜
+                        </h3>
+                        <div class="Retrieval3_gghu">
+                            @ProductHotList(ViewBag.g热销榜)
+                        </div>
+                    </div>
+                </div>
+                <div class="Factory_logo">
+                    <ul>
+                        <li class="" id="ad_12"><a href="@HomeController.SearchUrl(0, 0)?q=广州白云山制药">
+                            <img alt="广州白云山制药" src="/images/101_cjlogo_gzbys.jpg" />
+                        </a></li>
+                        <li id="ad_13"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("济南利民")">
+                            <img alt="济南利民" src="/images/101_cjlogo_jnlm.jpg" />
+                        </a></li>
+                        <li id="ad_14"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("哈药集团")">
+                            <img alt="哈药集团" src="/images/101_cjlogo_hyjt.jpg" />
+                        </a></li>
+                        <li id="ad_15"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("广东嘉博")">
+                            <img alt="广东嘉博" src="/images/101_cjlogo_gdjb.jpg" />
+                        </a></li>
+                        <li id="ad_16"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("山西普德")">
+                            <img alt="山西普德" src="/images/101_cjlogo_pdyy.jpg" />
+                        </a></li>
+                        <li id="ad_17"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("三九药业")">
+                            <img alt="三九药业" src="/images/101_cjlogo_sjyy.jpg" />
+                        </a></li>
+                        <li id="ad_18"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("云南白药")">
+                            <img alt="云南白药" src="/images/101_cjlogo_ynby.jpg" />
+                        </a></li>
+                        <li id="ad_19"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("北京红林")">
+                            <img alt="北京红林" src="/images/101_cjlogo_bjhl.jpg" />
+                        </a></li>
+                        <li id="ad_20"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("陕西东泰")">
+                            <img alt="陕西东泰" src="/images/101_cjlogo_ahhq_sxdt.jpg" />
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+    @{
+        //进口药品
+        SOSOshop.BLL.Category.Menu menu = new SOSOshop.BLL.Category.Menu();
+        var m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.进口药品).Where(x => x.parentId != "0").Take(10);
+        <div class="grid_c1 cate3">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg color2">1F</span><a class="new-title" href="@_101shop.v3.Controllers.HomeController.SearchUrl(11, 5)">进口药品</a></h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left cl-02">
+                    <ul class="left2">
+                        @foreach (var item in m)
+                        {
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 9)" target="_blank">
+                                @{@item.Title}
+                            </a></li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 -236px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    <div class="s_1 d_02">
+                        @ProductList(db.Get_HomeJinKouList(6).GetSwitchPriceTable())
+                    </div>
+                </div>
+                <div class="grid-c1-cont-right" id="ad_53">
+                    
+                </div>
+                <div class="Factory_logo">
+                    <ul>
+                        <li class="" id="ad_21"><a href="@HomeController.SearchUrl(0, 0)?q=广州白云山制药">
+                            <img alt="广州白云山制药" src="/images/101_cjlogo_gzbys.jpg" />
+                        </a></li>
+                        <li id="ad_22"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("济南利民")">
+                            <img alt="济南利民" src="/images/101_cjlogo_jnlm.jpg" />
+                        </a></li>
+                        <li id="ad_23"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("哈药集团")">
+                            <img alt="哈药集团" src="/images/101_cjlogo_hyjt.jpg" />
+                        </a></li>
+                        <li id="ad_24"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("广东嘉博")">
+                            <img alt="广东嘉博" src="/images/101_cjlogo_gdjb.jpg" />
+                        </a></li>
+                        <li id="ad_25"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("山西普德")">
+                            <img alt="山西普德" src="/images/101_cjlogo_pdyy.jpg" />
+                        </a></li>
+                        <li id="ad_26"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("三九药业")">
+                            <img alt="三九药业" src="/images/101_cjlogo_sjyy.jpg" />
+                        </a></li>
+                        <li id="ad_27"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("云南白药")">
+                            <img alt="云南白药" src="/images/101_cjlogo_ynby.jpg" />
+                        </a></li>
+                        <li id="ad_28"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("北京红林")">
+                            <img alt="北京红林" src="/images/101_cjlogo_bjhl.jpg" />
+                        </a></li>
+                        <li id="ad_29"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("陕西东泰")">
+                            <img alt="陕西东泰" src="/images/101_cjlogo_ahhq_sxdt.jpg" />
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+    @{
+        //中药饮片
+        m = menu.GetList_Zyyp("2973").Take(7);
+        k = 0;
+        <div class="grid_c1 cate4">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg color3">2F</span><a class="new-title" href="@_101shop.v3.Controllers.HomeController.SearchUrl(1, 8)">中药饮片</a></h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left cl-03">
+                    <ul>
+                        @foreach (var item in m)
+                        {
+                            k++;
+                            css = k == 1 ? "cate4-a-cur" : "";
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)" class="@css">
+                                @{@item.Title}
+                                (@item.Count)</a> </li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 -358px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    @{k = 0;}
+                    @foreach (var item in m)
+                    {
+                        k++;
+                        css = k == 1 ? "block" : "none";
+                        <div class="s_1 d_02" style="display:@css">
+                            @ProductList(db.Get_HomeZYYPList(6, item.Pharm_ID).GetSwitchPriceTable())
+                        </div>
+                    }
+                </div>
+                <div class="grid-c1-cont-right">
+                    <div class="info_Retrieval3 irf">
+                        <h3>
+                            热销榜
+                        </h3>
+                        <div class="Retrieval3_gghu">
+                            @ProductHotList(ViewBag.热销榜3f)
+                        </div>
+                    </div>
+                </div>
+                <div class="Factory_logo">
+                    <ul>
+                        <li class="" id="ad_30"><a href="@HomeController.SearchUrl(0, 0)?q=广州白云山制药">
+                            <img alt="广州白云山制药" src="/images/101_cjlogo_gzbys.jpg" />
+                        </a></li>
+                        <li id="ad_31"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("济南利民")">
+                            <img alt="济南利民" src="/images/101_cjlogo_jnlm.jpg" />
+                        </a></li>
+                        <li id="ad_32"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("哈药集团")">
+                            <img alt="哈药集团" src="/images/101_cjlogo_hyjt.jpg" />
+                        </a></li>
+                        <li id="ad_33"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("广东嘉博")">
+                            <img alt="广东嘉博" src="/images/101_cjlogo_gdjb.jpg" />
+                        </a></li>
+                        <li id="ad_34"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("山西普德")">
+                            <img alt="山西普德" src="/images/101_cjlogo_pdyy.jpg" />
+                        </a></li>
+                        <li id="ad_35"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("三九药业")">
+                            <img alt="三九药业" src="/images/101_cjlogo_sjyy.jpg" />
+                        </a></li>
+                        <li id="ad_36"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("云南白药")">
+                            <img alt="云南白药" src="/images/101_cjlogo_ynby.jpg" />
+                        </a></li>
+                        <li id="ad_37"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("北京红林")">
+                            <img alt="北京红林" src="/images/101_cjlogo_bjhl.jpg" />
+                        </a></li>
+                        <li id="ad_38"><a href="@HomeController.SearchUrl(0, 0)?q=@Server.UrlEncode("陕西东泰")">
+                            <img alt="陕西东泰" src="/images/101_cjlogo_ahhq_sxdt.jpg" />
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+    @{
+        //医疗器械
+        m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.医疗器械).Where(x => x.parentId == "0").Take(6);
+        k = 0;
+        <div class="grid_c1 cate5">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg color4">3F</span><a class="new-title" href="@_101shop.v3.Controllers.HomeController.SearchUrl(2968, 0)">医疗器械</a></h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left cl-04">
+                    <ul>
+                        @foreach (var item in m)
+                        {
+                            k++;
+                            css = k == 1 ? "cate5-a-cur" : "";
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)" class="@css">
+                                @{@item.Title}
+                                (@item.Count)</a> </li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 -480px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    @{k = 0;}
+                    @foreach (var item in m)
+                    {
+                        k++;
+                        css = k == 1 ? "block" : "none";
+                        <div class="s_1 d_02" style="display:@css">
+                            @ProductList(db.Get_HomeYLYXList(6, item.Pharm_ID).GetSwitchPriceTable())
+                        </div>
+                    }
+                </div>
+                <div class="grid-c1-cont-right">
+                    <div class="info_Retrieval3 irf">
+                        <h3>
+                            热销榜
+                        </h3>
+                        <div class="Retrieval3_gghu">
+                            @ProductHotList(ViewBag.热销榜4f)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+    @{
+        //保健品
+        m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.保健品).Where(x => x.Pharm_ID == 3074 || x.Pharm_ID == 3070 || x.Pharm_ID == 3071 || x.Pharm_ID == 3066 || x.Pharm_ID == 3057 || x.Pharm_ID == 3053);
+        k = 0;
+        <div class="grid_c1 cate6">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg color5">4F</span><a class="new-title-bjp" href="@_101shop.v3.Controllers.HomeController.SearchUrl(3051, 0)">保健品</a>
+                    <span class="link1" style="margin-left: 635px;"><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3061, 0)" target="_blank">
+                        改善胃肠</a> <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3064, 0)" target="_blank">
+                            清咽润喉</a> <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3065, 0)" target="_blank">
+                                孕产妇用</a> <a href="@_101shop.v3.Controllers.HomeController.SearchUrl(3051, 0)" target="_blank" style="border:none;">
+                                    更多</a> </span>
+                </h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left cl-05">
+                    <ul>
+                        @foreach (var item in m)
+                        {
+                            k++;
+                            css = k == 1 ? "cate6-a-cur" : "";
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)" class="@css">
+                                @{@item.Title}
+                                (@item.Count)</a> </li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 -606px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    @{k = 0;}
+                    @foreach (var item in m)
+                    {
+                        k++;
+                        css = k == 1 ? "block" : "none";
+                        <div class="s_1 d_02" style="display:@css">
+                            @ProductList(db.Get_HomeYLYXList(6, item.Pharm_ID).GetSwitchPriceTable())
+                        </div>
+                    }
+                </div>
+                <div class="grid-c1-cont-right">
+                    <div class="info_Retrieval3 irf">
+                        <h3>
+                            热销榜
+                        </h3>
+                        <div class="Retrieval3_gghu">
+                            @ProductHotList(ViewBag.热销榜5f)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+    <div class="clear">
+    </div>
+    @{
+        //计生用品
+        m = menu.GetList(SOSOshop.BLL.Category.MenuEnum.计生用品).Take(6);
+        k = 0;
+        <div class="grid_c1 cate7">
+            <div class="grid-c1-title">
+                <h2>
+                    <span class="new-bg color6">5F</span><a class="new-title"  href="@_101shop.v3.Controllers.HomeController.SearchUrl(3075, 0)">计生用品</a></h2>
+            </div>
+            <div class="grid-c1-cont">
+                <div class="grid-c1-cont-left cl-06">
+                    <ul class="left2">
+                        @foreach (var item in m)
+                        {
+                            k++;
+                            css = k == 1 ? "cate6-7-cur" : "";
+                            <li><a href="@_101shop.v3.Controllers.HomeController.SearchUrl(item.Pharm_ID, 0)">
+                                @{@item.Title}
+                            </a></li>
+                        }
+                    </ul>
+                    <div style="background-position: 0 -730px;" class="grid-c1-cont-left-bg">
+                    </div>
+                </div>
+                <div class="grid-c1-cont-center">
+                    <div class="s_1 d_02">
+                        @ProductList(db.Get_HomeYLYXList(6, 3075).GetSwitchPriceTable())
+                    </div>
+                </div>
+                <div class="grid-c1-cont-right">
+                    <div class="info_Retrieval3 irf">
+                        <h3>
+                            热销榜
+                        </h3>
+                        <div class="Retrieval3_gghu">
+                            @ProductHotList(ViewBag.热销榜6f)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    }
+</div>
+@helper ProductList(DataTable dt)
+    {
+    <ul>
+        @foreach (DataRow item in dt.Rows)
+        {
+            <li>
+                <div class="shop_img div_tag">
+                    <a href="@{@item["Product_ID"]}.html" target="_blank">
+                        <div class="detail_img_ico">
+                            @Html.Raw(Public.Tag(item))</div>
+                        <img class="pImage pImage_index" alt="@item["Product_Name"]包装盒" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" data-original="@Public.RawImage(item["Image"])" src="/images/grey.gif" width="120" height="120" />
+                    </a>
+                </div>
+                <div class="shop_dsp1">
+                    <a href="@{@item["Product_ID"]}.html" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" target="_blank">
+                        <span>
+                            @Public.DealAddvertismentString(item["Product_Advertisement"].ToString())
+                            @Library.Lang.Input.GetSubString(item["DrugsBase_Manufacturer"].ToString(), 12)
+                        </span>&nbsp;&nbsp;@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 7, "...")
+                    </a>
+                </div>
+                <div class="shop_price1">
+                    <span class="price_text">@ViewBag.PriceInfo:</span><strong>@Html.Raw((string)item["showPrice"])</strong>
+                </div>
+            </li>
+        }
+    </ul>
+}
+@helper ProductHotList(DataTable dt)
+    {
+        int j = 0;
+    <ul class="ProductHotList">
+        @foreach (DataRow item in dt.Rows)
+        {
+            j++;
+            string display = "none";
+            if (j == 1) { display = "block"; }
+            <li>
+                <div class="gght-list-title">
+                    <span style="background-position: -8px -309px;">@j</span><a href="@{@item["Product_ID"]}.html" target="_blank" title="@item["Product_Name"]">@Library.Lang.Input.GetSubString(item["Product_Name"].ToString(), 8, "...")</a>
+                </div>
+                <div style="display: @display;" class="gght-list-2">
+                    <div class="pic">
+                        <a href="@{@item["Product_ID"]}.html">
+                            <img alt="" title="@item["Product_Name"]  规格：@Public.GetSpecificationAndS(item)  @item["DrugsBase_Manufacturer"]" src="@Public.RawImage(item["Image"])" class="pImage" alt="@item["Product_Name"]包装盒" width="50" height="50" />
+                        </a>
+                    </div>
+                    <div class="title">
+                        <div class="guige2">
+                            规格：@Public.GetSpecificationAndS(item)
+                        </div>
+                        <div class="price">
+                            @{@Price.GetPriceShowString()}
+                            <span>@Html.Raw((string)item["showPrice"])</span>
+                        </div>
+                        <div class="guige">
+                            <span class="guige">已售<span>
+                                @{@item["Product_SaleNum"]}
+                            </span>@item["Goods_Unit"]
+                            </span>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+@helper HotManufacturer(string[] Manufacturers, string[] ids)
+    {
+        int xid = 0;
+    <div class="Factory_logo">
+        <ul>
+            @foreach (var item in Manufacturers)
+            {
+                string ad_id = string.Format("ad_{0}", ids[xid++]);
+                <li class="" id="@ad_id"><a href="@HomeController.SearchUrl(0, 0)?q=@Html.Encode(item)" target="_blank">
+                    <img alt="@item" src="/AdImage/Manufacturer/@{@Html.Encode(item)}.jpg" />
+                </a></li>
+            }
+        </ul>
+    </div>
+}
+<script language="javascript" type="text/javascript">
+    //配置广告位编号，注意层的广告位格式为"xx_yyy",例如：ad_1,ad_10等，数字部分由广告系统提供
+    getAdContent("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,48,55,57,53");
+</script>
+<script type="text/javascript" src="/Scripts/slide.js"></script>
+<script type="text/javascript">
+    //交易平台滑动效果
+    var t = setInterval(function () {
+        createDom();
+    }, 10000);
+
+    //获取浏览器类型
+    var browserType = getBrowserType();
+
+    function startMove(obj, attr, iTarget, fnMoveEnd) {
+        if (obj.timer) {
+            clearInterval(obj.timer);
+        }
+        obj.timer = setInterval(function () {
+            doMove(obj, attr, iTarget, fnMoveEnd);
+        }, 30)
+    };
+
+    function getAttr(obj, attr) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[attr];
+        }
+        else {
+            return document.defaultView.getComputedStyle(obj, false)[attr];
+        }
+    }
+
+    function doMove(obj, attr, iTarget, fnMoveEnd) {
+        var iSpeed = 0;
+        var position = 0;
+        if (attr == "opacity") {
+            position = parseFloat(getAttr(obj, "opacity"));
+        }
+        else {
+            position = parseFloat(getAttr(obj, attr));
+        }
+        if (Math.abs(iTarget - position) < 1 / 100) {
+            clearInterval(obj.timer);
+            obj.timer = null;
+            if (fnMoveEnd) {
+                fnMoveEnd();
+            }
+        }
+        else {
+            switch (browserType) {
+                case "IE":
+                    iSpeed = (iTarget - position) / 8;
+                    break;
+                case "Firefox":
+                case "Chrome":
+                default:
+                    iSpeed = (iTarget - position) / 16;
+                    break;
+            }
+            if (attr == "opacity") {
+                switch (browserType) {
+                    case "IE":
+                        obj.style.filter = "alpha(opacity:" + (position + iSpeed) * 100 + ")";
+                        obj.style.opacity = position + iSpeed;
+                        break;
+                    case "Firefox":
+                    case "Chrome":
+                    default:
+                        obj.style.opacity = position + iSpeed;
+                        break;
+                }
+            }
+            else {
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                obj.style[attr] = position + iSpeed + "px";
+            }
+        }
+    };
+
+    function createDom() {
+        var oUl = document.getElementById("ul1");
+        var aLi = oUl.getElementsByTagName("li");
+        var childUl = $("#ul1 li:last a");
+        var childUlId = childUl[0].id;
+        var id = 0;
+        if ((childUlId.split("|")[0] != undefined) && (childUlId.split("|")[0] != "")) {
+            id = childUlId.split("|")[0];
+        }
+        var time = "";
+        if ((childUlId.split("|")[1] != undefined) && (childUlId.split("|")[1] != "")) {
+            time = childUlId.split("|")[1];
+        }
+        var oLi = document.createElement("li");
+
+        oLi.innerHTML = getTransactionRecord(id, time);
+        oLi.setAttribute("class", "jygd_info");
+        oLi.style.color = "red";
+
+        var drugName = oLi.getElementsByTagName("a");
+        drugName[0].style.color = "red";
+
+        var iHeight = 0;
+        switch (browserType) {
+            case "IE":
+                oLi.style.filter = "alpha(opacity:0)";
+                oLi.style.opacity = 0;
+                break;
+            case "Firefox":
+            case "Chrome":
+            default:
+                oLi.style.opacity = 0;
+                break;
+        }
+        aLi[aLi.length - 1].style.color = "black";
+        var drugNameOld = aLi[aLi.length - 1].getElementsByTagName("a");
+        drugNameOld[0].style.color = "black";
+
+        oUl.appendChild(oLi);
+
+        //开始运动
+        iHeight = oLi.offsetHeight;
+        switch (browserType) {
+            case "IE":
+                oLi.style.height = "0px";
+                oLi.style.overflow = 'hidden';
+                break;
+            case "Firefox":
+            case "Chrome":
+            default:
+                break;
+        }
+        startMove(oLi, "height", iHeight, function () {
+            startMove(oLi, "opacity", 1);
+        });
+        if (aLi.length > 6) {
+            oUl.removeChild(aLi[0]);
+        }
+    };
+
+    function getTransactionRecord(id, time) {
+        var data = "id=" + id + "&time=" + time;
+
+        return $.ajax({
+            url: "/Home/TransactionPlatformData",
+            data: data,
+            async: false
+        }).responseText;
+    }
+
+    //获取浏览器类型
+    function getBrowserType() {
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        window.ActiveXObject ? Sys.ie = ua.match(/msie ([\d.]+)/)[1] :
+            document.getBoxObjectFor ? Sys.firefox = ua.match(/firefox\/([\d.]+)/)[1] :
+            window.MessageEvent && !document.getBoxObjectFor ? Sys.chrome = ua.match(/chrome\/([\d.]+)/)[1] :
+            window.opera ? Sys.opera = ua.match(/opera.([\d.]+)/)[1] :
+            window.openDatabase ? Sys.safari = ua.match(/version\/([\d.]+)/)[1] : 0;
+
+        if (Sys.ie != undefined) {
+            return "IE";
+        }
+        else if (Sys.firefox != undefined) {
+            return "FireFox";
+        }
+        else if (Sys.chrome != undefined) {
+            return "Chrome";
+        }
+        else {
+            return "Other";
+        }
+    }
+
+</script>

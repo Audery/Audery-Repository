@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://192.168.1.75:8083/Api/DrugsBase.asmx?wsdl" docRef="http://192.168.1.75:8083/Api/DrugsBase.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://192.168.1.75:8083/Api/DrugsBase.asmx" xmlns:q1="http://tempuri.org/" binding="q1:DrugsBaseSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://192.168.1.75:8083/Api/DrugsBase.asmx" xmlns:q2="http://tempuri.org/" binding="q2:DrugsBaseSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

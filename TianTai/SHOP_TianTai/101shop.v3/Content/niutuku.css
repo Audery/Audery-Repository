@@ -1,0 +1,152 @@
+/* CSS Document */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}
+ul,ol,li{list-style:none;}
+input,button{margin:0;font-size:12px;vertical-align:middle;}
+body{font-size:12px;font-family:Arial, Helvetica, sans-serif;  text-align:center; margin:0 auto; }
+
+em{ font-style:normal;}
+H3 {FONT-SIZE: 14px}
+a{
+	text-decoration:none;
+}
+
+.box{width:288px; margin:20px auto; text-align:left;}
+.oy_categorys {
+	Z-INDEX: 11;  FLOAT: left;  MARGIN-RIGHT: 4px; POSITION: relative; background:#F00; color:#fff;
+}
+.oy_categorys .mt {
+	PADDING-RIGHT: 12px; PADDING-LEFT: 16px; PADDING-BOTTOM: 12px; CURSOR: pointer; LINE-HEIGHT: 24px; PADDING-TOP: 14px; HEIGHT: 24px; color:#fff;
+}
+.oy_categorys .mt STRONG {
+	FONT-SIZE: 14px; FLOAT: left; COLOR:#fff;
+}
+.oy_categorys .mt STRONG a {
+	FONT-SIZE: 14px; FLOAT: left; COLOR:#fff; text-decoration:none;
+}
+.oy_categorys .mt STRONG a:hover {
+	FONT-SIZE: 14px; FLOAT: left; COLOR:#fff; text-decoration:underline;
+}
+#o-search .oy_categorys .mt A {
+	COLOR: #fff;
+}
+.oy_categorys .mt .extra {
+	DISPLAY: none
+}
+.oy_categorys .mc {
+	BORDER-RIGHT: #bd0000 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #bd0000 0px solid; PADDING-LEFT: 3px; BACKGROUND: #fff; PADDING-BOTTOM: 0px; OVERFLOW: visible; BORDER-LEFT: #bd0000 1px solid; WIDTH: 203px; PADDING-TOP: 0px; BORDER-BOTTOM: #bd0000 1px solid; POSITION: absolute; TOP: 45px; -moz-border-radius: 0 0 5px 5px; -webkit-border-radius: 0 0 5px 5px
+}
+.oy_categorys .item {
+	BORDER-TOP: #ddd 1px solid; WIDTH: 203px; HEIGHT: 32px
+}
+.oy_categorys .fore {
+	BORDER-TOP-STYLE: none
+}
+.oy_categorys SPAN {
+	DISPLAY: block; Z-INDEX: 1; WIDTH: 203px; POSITION: relative
+}
+.oy_categorys H3 {
+	BORDER-RIGHT: #000 0px solid; PADDING-LEFT: 20px; FONT-WEIGHT: normal; BACKGROUND: url(http://misc.360buyimg.com/201007/skin/df/i/bg_nav_0715.jpg) no-repeat -318px -240px; BORDER-LEFT: #fff 1px solid; WIDTH: 140px;  HEIGHT: 30px; text-decoration:none;
+}
+.oy_categorys H3 A:link {
+	DISPLAY: block; COLOR: #333; LINE-HEIGHT: 30px; HEIGHT: 30px
+}
+.oy_categorys H3 A:visited {
+	DISPLAY: block; COLOR: #333; LINE-HEIGHT: 30px; HEIGHT: 30px
+}
+.oy_categorys H3 A:hover {
+	COLOR: #bd0000;
+}
+.oy_categorys H3 A:active {
+	COLOR: #bd0000
+}
+.oy_categorys S {
+	DISPLAY: block; BACKGROUND: url(../images/niutukuBg.jpg) no-repeat -274px -216px; LEFT: 182px; WIDTH: 13px; POSITION: absolute; TOP: 10px; HEIGHT: 13px
+}
+.oy_categorys .item .i-mc {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; DISPLAY: none; BACKGROUND: #fff; LEFT: 163px; OVERFLOW: hidden; BORDER-LEFT: #ddd 1px solid; WIDTH: 506px; BORDER-BOTTOM: #ddd 1px solid; POSITION: absolute; TOP: 0px
+}
+.oy_categorys .item DT {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; PADDING-TOP: 3px
+}
+.oy_categorys .item DD {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; OVERFLOW: hidden; PADDING-TOP: 3px; ZOOM: 1
+}
+.oy_categorys .subitem {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 8px; MIN-HEIGHT: 340px; FLOAT: left; PADDING-BOTTOM: 0px; WIDTH: 484px; PADDING-TOP: 0px
+}
+.oy_categorys .subitem DL {
+	PADDING-RIGHT: 0px; BORDER-TOP: #f0f0f0 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; OVERFLOW: hidden; PADDING-TOP: 6px; ZOOM: 1
+}
+.oy_categorys .subitem .fore {
+	BORDER-TOP-STYLE: none
+}
+.oy_categorys .subitem DT {
+	FLOAT: left; WIDTH: 54px; TEXT-ALIGN: right
+}
+.oy_categorys .subitem DT A{COLOR:#bd0000;}
+.oy_categorys .subitem DD {
+	FLOAT: left; WIDTH: 420px
+}
+.oy_categorys .subitem DD A { color:#666; BORDER-LEFT: #ddd 1px solid; padding:0 8px; margin-bottom:5PX; TEXT-DECORATION: none;display:inline-block;
+}
+.oy_categorys .subitem DD A:hover { color:#f00; BORDER-LEFT: #ddd 1px solid; padding:0 8px; margin-bottom:5PX; TEXT-DECORATION: underline;display:inline-block;
+}
+
+.oy_categorys .fr {
+	BACKGROUND: #fff; MARGIN-BOTTOM: -2000px; PADDING-BOTTOM: 2010px; WIDTH: 176px
+}
+.oy_categorys .fr DL {
+	PADDING-BOTTOM: 0px
+}
+#o-search .oy_categorys .fr A {
+	COLOR: #666
+}
+.oy_categorys .brands {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 6px; WIDTH: 160px; PADDING-TOP: 6px
+}
+.oy_categorys .brands EM {
+	FLOAT: left; WIDTH: 80px
+}
+.oy_categorys .brands DD {
+	LINE-HEIGHT: 20px; PADDING-TOP: 6px
+}
+.oy_categorys .promotion {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 6px; WIDTH: 160px; PADDING-TOP: 6px
+}
+.oy_categorys .promotion DD {
+	LINE-HEIGHT: 20px; PADDING-TOP: 6px
+}
+.oy_categorys .mc .extra {
+	PADDING-RIGHT: 8px; BORDER-TOP: #fde6d2 1px solid; PADDING-LEFT: 8px; BACKGROUND: #fdf1de; PADDING-BOTTOM: 7px; PADDING-TOP: 7px
+}
+.extra a{
+	color:#333;
+	text-decoration:none;
+}
+#o-search .oy_categorys .mc .extra A {
+	COLOR: #333;
+}
+.oy_categoryshover {
+	BACKGROUND-POSITION: 0px -166px
+}
+.oy_categoryshover .mt .extra {
+	BACKGROUND-POSITION: -274px -190px
+}
+.oy_categoryshover .mc {
+	DISPLAY: block
+}
+.oy_categorys .hover SPAN {
+	Z-INDEX: 13; WIDTH: 160px
+}
+.oy_categorys .hover H3 {
+	BORDER-RIGHT: #ddd 0px solid;  FONT-WEIGHT: bold; BACKGROUND: url(../images/niutukuBg.jpg) #fff no-repeat -318px -172px; OVERFLOW: hidden; BORDER-LEFT: #ddd 1px solid; padding-bottom:2px;
+}
+.oy_categorys .hover S {
+	DISPLAY: none
+}
+.oy_categorys .hover .i-mc {
+	DISPLAY: block; Z-INDEX: 12
+}
+* HTML .oy_categorys .item DD {
+	PADDING-BOTTOM: 6px
+}

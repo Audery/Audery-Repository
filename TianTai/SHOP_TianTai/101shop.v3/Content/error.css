@@ -1,0 +1,102 @@
+
+.progress{
+	float:right;
+	width:528px;
+	height:57px;
+	display:block;
+	padding-right:20px;
+	background: url(/images/step-1.jpg) no-repeat;
+	margin-top:40px;
+
+}
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+.order_submit{
+	position:relative;
+	width:998px;
+	border:1px solid #ddd;
+	margin-top:20px;
+	margin-bottom:20px;
+	/*height:196px;*/
+}
+.o_s_left{
+	background:url(/images/101_error.jpg) no-repeat;
+	display:block;
+	width:48px;
+	height:48px;
+	float:left;
+}
+.o_s_right{
+	float:left;
+	padding-left:20px;
+}
+.o_s_right h2{
+	color:#bd0000;
+}
+.o_s_right .order_nuber{
+	padding:0 12px 0 6px;
+	border-right:1px solid #ddd;
+	font-weight:bold;
+}
+.o_s_right .order_money{
+	color:#bd0000;
+	font-weight:bold;
+	padding-left:10px;
+		padding-right:10px;
+}
+.o_s_con{
+	width:700px;
+	margin:0 auto;
+	text-align:center;
+	padding:30px 0 30px 0;
+}
+.view_order{
+	padding:10px 0 16px;
+	height:30px;
+	background:#f0f0f0;
+	margin-top:30px;
+}
+.now_pay_s{
+	padding-top:20px;
+}
+.pay_now_ad{
+	background: url(../images/pay_now.jpg) no-repeat;
+	display:block;
+	height:38px;
+	width:97px;
+	float:right;
+	margin-right:212px;
+	cursor:pointer;
+}
+.fl{
+	float:left;
+}
+.v_o_1{
+	padding:10px 20px;
+	font-size:14px;
+	margin-left: 180px;
+}
+.v_o_2{
+	padding:10px 20px;
+	font-size:14px;
+}
+.Precautions{
+	margin-top:20px;
+	margin-bottom:40px;
+	display:none;
+}
+.Precautions li{
+	padding:5px 0;
+}

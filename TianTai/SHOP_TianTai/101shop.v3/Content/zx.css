@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* time:2014/12/02
+   author:liqs
+   update:2014/12/02
+
+ */
+ .content{ width:1000px; margin:0 auto;}
+ .left-con{ float:left; width:200px; }
+ .left-con .title{ background:#00a539;padding:10px;}
+ .left-con .title span{ color:#fff; font:microsoft yahei; font-size:14px;}
+ .left-con ul{ border-color:#ddd; border-width:0 1px 1px 1px; border-style:solid; width:198px;}
+ .left-con ul li{ border-bottom:1px dashed #eee; }
+ .left-con ul li a{padding:10px; display:block;}
+ .left-con ul li a:hover{padding:10px; display:block;}
+  .a-click{padding:10px; display:block; color:#00a539 !important;}
+  .clear-border-bottom{ border-bottom:none !important;}
+ 
+ .right-con{ float:left; margin-left:10px; width:770px; }
+ .right-con .title{ background:#eee;padding:10px;}
+ .right-con .title span{ color:#333; font:microsoft yahei; font-size:14px;}
+ .right-con .zx-list{ border-bottom:1px dashed #eee;padding:10px}
+ .right-con .zx-list .zx-list-con{ float:left; cursor:pointer;}
+ .right-con .zx-list .zx-list-con:hover{ color:#00a539;}
+ .right-con .zx-list .zx-list-con:link{ color:#00a539;}
+ .right-con .zx-list .zx-list-con:visited{ color:#00a539;}
+ .right-con .zx-list .zx-list-con:active{ color:#00a539;}
+ .right-con .zx-list .zx-list-time{ float:right;}
+
+ .page{  margin-top:60px; padding:10px}
+

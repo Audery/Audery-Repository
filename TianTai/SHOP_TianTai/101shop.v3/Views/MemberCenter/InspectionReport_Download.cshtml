@@ -1,0 +1,51 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using System.Data
+@model PagedList<System.Data.DataRow>
+@{
+    ViewBag.Title = "下载药检报告";
+}
+@section head
+{
+        <link rel="Stylesheet" type="text/css" href="/Content/101Membercenter_InspectionReport.css" />
+    }
+    @{Html.RenderPartial("Nav");}
+    <ul class="list_nav">
+        <li><a href="/MemberCenter/">会员中心</a> &gt; <span>下载药检报告</span> </li>
+    </ul>
+    <div class="mc_left">
+        @{Html.RenderPartial("MemberCenter_LeftMenu");}
+    </div>
+    <div class="mc_right">
+        <div class="Remind" style="padding:30px 0 0 60px;height:100px;border-bottom:none;">
+            <div style="float:left;">
+                下载药检报告    
+                <font id="tip" style="display:block;font-size:13px;color:#808080;font-weight:normal;">请稍等, 正在生成下载的文件...</font>
+            </div>
+            <div class="search_01">
+                <form id="downloadForm" action="/resource/package/" method="post" target="_blank">
+                    <input type="hidden" id="file" name="file" value="@(ViewBag.files)" />
+                </form>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function download() {
+                i = i - 1;
+                var vals = jQuery('#file').val(), f = jQuery('#downloadForm');
+                if (jQuery.trim(vals) == "") {
+                    jQuery('#tip').css('color', 'red').html('抱歉, 没有找到需要下载的文件');
+                    if (il) clearInterval(il);
+                    return false;
+                }
+                if (i <= 0) {
+                    jQuery('#tip').html('提示: 如果未下载成功, 请<a href="javascript:;" onclick="document.getElementById(\'downloadForm\').submit()" style="color:#f41314;">点击这里下载</a>');
+                    if (il) clearInterval(il);
+                    f.get(0).submit();
+                } else {
+                    jQuery('#tip').html('请稍等, 正在生成下载的文件（' + i + '秒）');
+                }
+                return true;
+            }
+            var i = 1, il = setInterval(download, 1000);
+        </script>
+    </div>

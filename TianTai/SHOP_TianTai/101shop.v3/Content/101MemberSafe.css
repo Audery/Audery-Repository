@@ -1,0 +1,220 @@
+.list_nav{
+	padding-left:15px;
+	background:url(/images/home.png) no-repeat left center;
+	height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+	width: auto;
+	border-bottom: 1px solid #ddd;
+}
+.list_nav li{
+	float:left;
+	padding:10px;
+	background: url(/images/list_left.jpg) no-repeat left center;
+}
+
+.mc_left{
+	float:left;
+	margin-top:14px;
+	width:158px;
+}
+.mc_right{
+	
+    float: left;
+	width:828px;
+    margin-left: 10px;
+	margin-top:14px;
+}
+.w{width:980px;margin:0 auto;zoom:1;}
+
+#my .mt{height:32px;padding:0 12px;background: url(/images/mc_mt.png) #9E0000 no-repeat 0 0;line-height:32px;color:#fff;}
+#my .mt h2{float:left;background:none;height:auto;line-height:32px; padding:6px 0; font-size:14px;}
+#my .mt a{color:#fff;}
+#my .mt .extra{cursor:pointer;color:#ffcccc;float: right;padding: 7px 0;}
+#my .mc{border:solid #E6E6E6;border-width:0 1px 1px;}
+#my dl dt{position:relative;margin-bottom:-1px;height:27px;padding:0 12px;border:solid #E6E6E6;border-width:1px 0; background:url(/images/mc_bg_left.jpg) repeat-x 0 -30px;font-weight:bold;line-height:27px;cursor:pointer;}
+#my dl dt b{display:block;position:absolute;top:0;right:5px;width:19px;height:27px;background:url(/images/mc_bg_left.jpg) no-repeat 0 -150px;}
+#my dl dt:hover{background-position:0 0;}
+#my dl dt:hover b{background-position:0 -90px;}
+#my dl.close dt b{background-position:0 -120px;}
+#my dl.close dt:hover b{background-position:0 -60px;}
+#my dl.close dd{display:none;}
+#my dd{padding:4px 0 5px;}
+#my dd .item{padding:4px 0 4px 13px;}
+#my dd .curr{font-weight:bold;}
+
+.Remind{	
+padding:4px 0 4px 4px;
+background: #fff;
+margin-bottom:10px;
+font-size:16px;
+font-weight:bold;
+color:#00a539;
+border-bottom:1px solid #ddd;
+}
+.cj_title{
+	color:#00a539;
+	padding:0 6px;
+}
+.userinfo{
+	border-radius: 2px;
+padding: 10px 0px 10px 30px;
+border: 1px solid #EDD28B;
+background: #FFFDEE;
+height:20px;
+margin-bottom:10px;
+}
+.Remind2{
+	font-size:14px;
+	font-weight:bold;
+	padding:1px 0;
+}
+.cj_remind{
+	font-size:12px;
+	font-weight:normal;
+	padding-left:50px;
+	color:#777;
+}
+.userinfo2{
+padding: 10px 10px 10px 5px;
+border: 1px solid #ddd;
+background: #FFF;
+height:60px;
+}
+.userinfo3{
+padding: 10px 10px 10px 5px;
+border: 1px solid #ddd;
+border-top: none;
+background: #FFF;
+height:60px;
+}
+.safe{
+	border:1px solid #ddd;
+	border-bottom:none;
+}
+.s_mc{
+	border-bottom: 1px solid #ddd;
+padding: 30px 0;
+height: 40px;
+}
+.icon-01 {
+display: inline-block;
+width: 32px;
+height: 33px;
+background: url(/images/icon-msg.png) no-repeat -64px 0;
+vertical-align: middle;
+margin-right: 10px;
+margin-left: 30px;
+}
+.icon-01_at{
+	display: inline-block;
+width: 32px;
+height: 33px;
+background: url(/images/icon-msg.png) no-repeat ;
+vertical-align: middle;
+margin-right: 10px;
+margin-left: 30px;
+}
+.icon_02{
+	font-size:14px;
+	font-weight:bold;
+	padding:6px 0px 6px 0;
+}
+.icon_03{
+	font-size:12px;
+	color:#888;
+	display: inline;
+	width:500px;
+	padding-left:10px;
+}
+.icnn{
+	color:#00a539;
+}
+.icon_modify {
+	color:#00a539;
+	float:right;
+	padding-right:100px;
+	padding-top:6px;
+	padding-bottom:6px;
+}
+.icon_modify a{
+	color:#00a539;
+}
+.icon_modify2 {
+	color:#00a539;
+	float:right;
+	padding-right:70px;
+	padding-top:6px;
+	padding-bottom:6px;
+}
+.icon_modify2 a{
+	color:#00a539;
+	background:url(/images/modify_bg.jpg) no-repeat;
+	padding:2px 13px;
+}
+
+.icon-id02d{
+	background: url(/images/icon-id20120723.png) no-repeat -14px -15px;
+display: inline-block;
+width: 13px;
+height: 14px;
+line-height: 100px;
+font-size: 0;
+overflow: hidden;
+}
+.icon-id02c{
+	background: url(/images/icon-id20120723.png) no-repeat;
+display: inline-block;
+width: 13px;
+height: 14px;
+line-height: 100px;
+font-size: 0;
+overflow: hidden;
+}
+.fore1{
+	float: left;
+height: 32px;
+line-height: 32px;
+text-align: left;
+font-size: 18px;
+width:155px;
+}
+.fore2{
+	float: left;
+
+line-height: 32px;
+border-left: 1px solid #E6E6E6;
+width: 450px;
+padding:6px 0;
+margin-left:10px;
+}
+.m7{
+	position: relative;
+overflow: visible;
+top: 10px;
+margin-bottom: 20px;
+margin-top: 20px;
+	}
+	.m7 .mt{
+	position: absolute;
+left: 12px;
+top: -12px;
+width:94px;
+	}
+	.m7 .mc {
+border: 1px solid #ddd;
+padding: 20px 5px;
+	}
+	.m7 .mc a {
+		color:#00a539;
+		padding:0 2px;
+	}
+	
+.m7 .mt h3 {
+color: #00a539;
+background: #ffffff;
+line-height: 25px;
+padding: 0 8px;
+font-size: 12px;
+width:94px;
+}

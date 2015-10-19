@@ -1,0 +1,100 @@
+﻿@model SOSOshop.Model.EnterpriseLocation
+@{
+    ViewBag.Title = "地图定位";
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=gWidGG0T57UG97NVpsSQ9iFw"></script>
+    <style type="text/css">
+        body, html
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+        #allmap
+        {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top: 10px">
+        &nbsp;&nbsp;<span>地点&nbsp;<input id="txtName" type="text" value="@Model.Name" />&nbsp;<input id="Button1"
+            type="button" value="搜索" />&nbsp;
+        </span><span>&nbsp;经度&nbsp;<input id="txtLon" type="text" value="@Model.Lon" />
+            &nbsp;纬度&nbsp;<input id="txtLat" type="text" value="@Model.Lat" />
+        </span>
+    </div>
+    <div id="allmap" style="margin-top: 15px">
+    </div>
+    <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("allmap");
+        map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+        map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+        var lon = $("#txtLon").val();
+        var lat = $("#txtLat").val();
+        if (lon == 0 && lat == 0) {
+            map.centerAndZoom("云南", 12);
+        }
+        else {
+            var point = new BMap.Point(lon, lat);
+            map.centerAndZoom(point, 20);
+            var marker = new BMap.Marker(point);  // 创建标注
+            map.addOverlay(marker);               // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        }
+
+        var geoc = new BMap.Geocoder();
+        map.addEventListener("click", function (e) {
+            var pt = e.point;
+            geoc.getLocation(pt, function (rs) {
+                if (confirm("您确认选中此位置为该公司的地理位置?")) {
+                    $("#txtLon").val(pt.lng);
+                    $("#txtLat").val(pt.lat);
+
+                    parent.$('#lon').val(pt.lng);
+                    parent.$('#lat').val(pt.lat);
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+            });
+        });
+
+        var local = new BMap.LocalSearch(map, {
+            renderOptions: { map: map }
+        });
+
+        //        if (lon == 0 && lat == 0) {
+        //            var wz = $("#txtName").val();
+        //            if (wz != "") {
+        //                local.search(wz);
+        //                $("#txtName").val(wz);
+        //            }
+        //        }
+
+        $("#Button1").click(function () {
+            local.search($("#txtName").val());
+        });
+
+        map.setZoom(20);
+        var top_left_control = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_TOP_LEFT }); // 左上角，添加比例尺
+        var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+        var top_right_navigation = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }); //右上角，仅包含平移和缩放按钮
+        /*缩放控件type有四种类型:
+        BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮*/
+        map.addControl(top_left_control);
+        map.addControl(top_left_navigation);
+        map.addControl(top_right_navigation);    
+    </script>
+</body>
+</html>

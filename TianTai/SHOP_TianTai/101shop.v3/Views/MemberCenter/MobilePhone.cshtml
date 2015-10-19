@@ -1,0 +1,210 @@
+﻿@using System.Data;
+@using System.Collections.Specialized;
+@using SOSOshop.Model;
+@{
+    ViewBag.Title = (string.IsNullOrEmpty(ViewBag.TrueName) ? ViewBag.MobilePhone : ViewBag.TrueName) + "的会员中心";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@section head
+{
+  <link rel="stylesheet" type="text/css" href="/Content/101MemberSafe_phone.css" />
+  <style type="text/css">.code{width:auto;}</style>
+    <script type="text/javascript" src="/Scripts/tab.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".topC0").click(function () {
+                $(".topC0").removeClass("topC1");
+                $(this).addClass("topC1");
+                $(".NewsTop_cnt .d_01").hide();
+                $(".NewsTop_cnt .d_01").eq($(this).index()).show();
+            });
+        });
+
+        function CheckForm(f) {
+            if ($('#Step1Table').length == 1) {
+                f.action = "/MemberCenter/MobilePhoneUpdate1";
+                var MobilePhone = $.trim($('#MobilePhone').val());
+                var Captcha = $.trim($('#Captcha').val());
+                if (MobilePhone == '') {
+                    alert('请填写手机号！');
+                    return false;
+                }
+                if (Captcha == '') {
+                    alert('请填写验证码！');
+                    return false;
+                }
+            }
+            else if ($('#Step2Table').length == 1) {
+                f.action = "/MemberCenter/MobilePhoneUpdate2";
+                var MobilePhone = $.trim($('#MobilePhone').val());
+                var Captcha = $.trim($('#Captcha').val());
+                if (MobilePhone == '') {
+                    alert('请填写手机号！');
+                    return false;
+                }
+                if (Captcha == '') {
+                    alert('请填写验证码！');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+}
+@{Html.RenderPartial("Nav");}
+<ul class="list_nav">
+    <li><a href="/MemberCenter/">会员中心</a> &gt; <span>账户管理</span> &gt; <span>验证手机</span></li>
+</ul>
+@{Html.RenderPartial("MemberCenter_LeftMenu");}
+<form action="" method="post" onsubmit="return CheckForm(this)">
+    <div class="mc_right">
+    <div class="Remind">验证手机</div>
+    <div id="step@(ViewBag.Step)" class="step step01">
+		<ul>
+			<li class="fore1">1.验证身份<b></b></li><li class="fore2">2.@(Request["Check"] != null ? "验证" : "修改")手机<b></b></li><li class="fore3">3.完成</li>
+		</ul>
+	</div>
+      <div class="safe-sevi m1">
+          <span style="display: block; height: 22px; padding-left: 225px; font-weight: bold; color: red; font-size: 15px;">@Html.ValidationSummary()</span>
+        @if (ViewBag.Step == 1)
+        {
+            if (ViewBag.StepOk == false)
+            {
+            <div id="Step1Table" class="mc mc_pw">
+                <div class="reg_nub">
+                <span class="rg_info">手机号：</span>
+                                    @if (string.IsNullOrEmpty(ViewBag.MobilePhone))
+                                    {
+                                        <input id="MobilePhone" name="MobilePhone" type="text" maxlength="30" placeholder="请输入11位手机号" />
+                                    }
+                                    else
+                                    {
+                                        <span style="font-weight: bold; line-height: 33px; height: 33px;">@ViewBag.MobilePhone</span>
+                                        <input id="MobilePhone" name="MobilePhone" type="hidden" value="@ViewBag.MobilePhone" />
+                                    }
+                                    <input id="StepOk" name="StepOk" type="hidden" value="@ViewBag.StepOk" />
+                      <label style="color:Red"> *</label>
+                </div>
+              <div class="code" style="display:none;"> 
+              <span class="rg_info">验证码：</span>
+                <input id="Captcha" name="Captcha" type="text" maxlength="6" value="XXXX" />
+                <span class="codeimg">
+                    <img border="0" id="imgCode" src="/include/captcha.ashx?r=7682689" alt="看不清，单击换一张"
+                        onclick="this.src='/include/captcha.ashx?r='+Math.random()" title="点击可刷新验证码"
+                        style="width: 103px; height: 30px;" /></span><label id="yzm"></label>
+                      <span class="codets">看不清？
+                      <a href="#" onclick="document.getElementById('imgCode').src='/include/captcha.ashx?r='+Math.random();return false;">
+                      换一张</a></span>
+              </div>
+              <div class="btn"><input class="but_yzm" type="submit" value="获取短信校验码" /></div>
+            </div>
+            }
+            else
+            {
+              <div id="Step1Table" class="mc mc_pw">
+                <div class="reg_nub">
+                <span class="rg_info">已发送验证码至：</span>
+                            <span style="font-weight: bold; line-height: 33px; height: 33px;">@ViewBag.MobilePhone</span>
+                            <input id="MobilePhone" name="MobilePhone" type="hidden" value="@ViewBag.MobilePhone" />
+                        <input id="StepOk" name="StepOk" type="hidden" value="@ViewBag.StepOk" />
+                      <label style="color:Red"> *</label>
+                </div>
+              <div class="reg_nub"> 
+              <span class="rg_info">请输入手机校验码：</span>
+                <input id="Captcha" name="Captcha" type="text" maxlength="6" style="width:50px;" />
+                <span class="codeimg"></span><label id="yzm"></label>
+                      <span id="fp_btn_sms" class="codets" style="display:none">未收到短信？
+                      <a href="#" onclick="window.location='/MemberCenter/MobilePhone';return false;">
+                      重试</a></span>
+                      <span id="ss1" class="codets"></span>
+              </div>
+              <div class="btn"><input class="but_sure" type="submit" value="验证" /></div>
+              <div class="sz_mrphone"><span>将该手机号设置成我的验证手机号</span></div>
+              </div>
+                <script type="text/javascript" src="/Scripts/check.js"></script><script type="text/javascript">setTimeout(timers,1000)</script>
+            }
+        }
+        else if (ViewBag.Step == 2)
+        {
+            if (ViewBag.StepOk == false)
+            {
+            <div id="Step2Table" class="mc mc_pw">
+                <div class="reg_nub">
+                <span class="rg_info">手机号：</span>
+                                    @if (string.IsNullOrEmpty(ViewBag.MobilePhone))
+                                    {
+                                        <input id="MobilePhone" name="MobilePhone" type="text" maxlength="30" placeholder="请输入11位手机号" />
+                                    }
+                                    else
+                                    {
+                                        <span style="font-weight: bold; line-height: 33px; height: 33px;">@ViewBag.MobilePhone</span>
+                                        <input id="MobilePhone" name="MobilePhone" type="hidden" value="@ViewBag.MobilePhone" />
+                                    }
+                                    <input id="StepOk" name="StepOk" type="hidden" value="@ViewBag.StepOk" />
+                      <label style="color:Red"> *</label>
+                </div>
+              <div class="code" style="display:none;"> 
+              <span class="rg_info">验证码：</span>
+                <input id="Captcha" name="Captcha" type="text" maxlength="6" value="XXXX" />
+                <span class="codeimg">
+                    <img border="0" id="imgCode" src="/include/captcha.ashx?r=7682689" alt="看不清，单击换一张"
+                        onclick="this.src='/include/captcha.ashx?r='+Math.random()" title="点击可刷新验证码"
+                        style="width: 103px; height: 30px;" /></span><label id="yzm"></label>
+                      <span class="codets">看不清？
+                      <a href="#" onclick="document.getElementById('imgCode').src='/include/captcha.ashx?r='+Math.random();return false;">
+                      换一张</a></span>
+              </div>
+              <div class="btn"><input class="but_yzm" type="submit" value="获取短信校验码" /></div>
+            </div>
+            }
+            else
+            {
+              <div id="Step2Table" class="mc mc_pw">
+                <div class="reg_nub">
+                <span class="rg_info">已发送验证码至：</span>
+                            <span style="font-weight: bold; line-height: 33px; height: 33px;">@ViewBag.MobilePhone</span>
+                            <input id="MobilePhone" name="MobilePhone" type="hidden" value="@ViewBag.MobilePhone" />
+                        <input id="StepOk" name="StepOk" type="hidden" value="@ViewBag.StepOk" />
+                      <label style="color:Red"> *</label>
+                </div>
+              <div class="reg_nub"> 
+              <span class="rg_info">请输入手机校验码：</span>
+                <input id="Captcha" name="Captcha" type="text" maxlength="6" style="width:50px;" />
+                <span class="codeimg"></span><label id="yzm"></label>
+                      <span id="fp_btn_sms" class="codets" style="display:none">未收到短信？
+                      <a href="#" onclick="window.location='/MemberCenter/MobilePhone';return false;">
+                      重试</a></span>
+                      <span id="ss1" class="codets"></span>
+              </div>
+              <div class="btn"><input class="but_sure" type="submit" value="验证" /></div>
+              <div class="sz_mrphone"><span>将该手机号设置成我的验证手机号</span></div>
+              </div>
+                <script type="text/javascript" src="/Scripts/check.js"></script><script type="text/javascript">setTimeout(timers,1000)</script>
+            }
+        }
+        else
+        {
+              <div id="Step3Table" class="mc mc_pw">
+                <div class="reg_nub">
+                <span class="rg_info">已成功验证手机：</span>
+                            <span style="font-weight: bold; line-height: 33px; height: 33px;">@ViewBag.MobilePhone</span>
+                            <input id="MobilePhone" name="MobilePhone" type="hidden" value="@ViewBag.MobilePhone" />
+                            <span id="ss1" style="color:Red; line-height: 33px; height: 33px;">10秒后返回会员中心</span>
+                </div>
+              <div class="sz_mrphone"><span>该手机号已设置成我的验证手机号</span></div>
+              <div class="code">
+              </div>
+              <div class="btn">
+              </div>
+              </div>
+            <script type="text/javascript"> var s = 10; setInterval(function () { s = s - 1;if (s == 0) {window.location = '/MemberCenter';} else {document.getElementById('ss1').innerHTML = s + '秒后返回会员中心';}}, 1000);</script>
+        }
+      </div>
+    <div class="m7">
+        <div class="mt"><h3>为什么要验证邮箱</h3></div>
+        <div class="mc"><p>1.验证邮箱可加强账户安全，你可以使用已验证邮箱快速找回密码及支付密码。</p>2.已验证邮箱可用于账户余额变动提醒。</div>
+    </div>
+<!---------------------------------------------------->
+    </div><!---------mc_right------------>
+</form>

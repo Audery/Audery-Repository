@@ -1,0 +1,52 @@
+﻿@using System.Data
+@model DataRowCollection
+@{
+    ViewBag.Title = Model.Count > 0 ? Model[0]["Title"] : "";
+    ViewBag.keywords = Model[0]["KeyWord"];
+}
+@section head
+{
+    <link rel="stylesheet" type="text/css" href="/Content/101yy_index.css" />
+}
+@{Html.RenderPartial("Nav");}
+<style>
+p{ line-height:2.4em;}
+</style>
+<div style="padding-left: 8px">
+    <a href="/">首页</a> > 资讯中心 > @(Model.Count > 0 ? Model[0]["Title"] : "")
+</div>
+<div class="oy_ct_ifm" style="height: auto; width: 220px; float: left;">
+    <div class="radio_left">
+        <div class="radio_right">
+            <h2>
+                相关资讯</h2>
+        </div>
+    </div>
+    <div class="ifm_con">
+        <ul>
+            @{
+                var _101资讯 = (DataTable)ViewBag._101资讯;
+                if (_101资讯.Rows.Count > 0)
+                {
+                    foreach (DataRow item in _101资讯.Rows)
+                    {
+                <li><a href="/article/@{@item["id"]}.html" title="@item["Title"]">@item["Title"]</a></li>           
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+<div style="float: left; width: 716px; padding: 5px 5px 5px; border:1px solid #dedede; margin:20px;">
+    @if (Model.Count > 0)
+    {
+        <div style=" padding:20px;">
+        <center><h1 style=" font-size:22px;">@Model[0]["title"]</h1></center>
+        
+        @Model[0]["CopyFrom"]  @Model[0]["updateTime"]
+        <br /> <br />
+        @Html.Raw((string)Model[0]["Content"])
+       
+        </div>
+    }
+</div>
