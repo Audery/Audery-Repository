@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using BrnMall.Framework.Pager.Base;
 using BrnMall.Core;
-using BrnMall.Web.Framework;
+
 
 namespace BrnMall.Web.Models
 {

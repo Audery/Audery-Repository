@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
+using BrnMall.Framework.Controllers;
 using BrnMall.Web.Models;
 
 namespace BrnMall.Web.Controllers

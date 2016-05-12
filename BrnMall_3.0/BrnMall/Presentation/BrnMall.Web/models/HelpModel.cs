@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
 
 namespace BrnMall.Web.Models
 {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
+using BrnMall.Framework.Pager.Base;
 
 namespace BrnMall.Web.Models
 {

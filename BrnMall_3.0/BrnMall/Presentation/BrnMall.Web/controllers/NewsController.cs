@@ -3,8 +3,9 @@ using System.Web.Mvc;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
+using BrnMall.Framework.Controllers;
 using BrnMall.Web.Models;
+using BrnMall.Framework.Pager.Base;
 
 namespace BrnMall.Web.Controllers
 {

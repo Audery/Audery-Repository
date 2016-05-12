@@ -4,7 +4,7 @@ using System.Web.Routing;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
+using BrnMall.Framework.Controllers;
 
 namespace BrnMall.Web.Controllers
 {

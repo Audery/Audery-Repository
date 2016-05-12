@@ -26,6 +26,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -343,9 +344,9 @@
       <Project>{f0648a58-1818-4760-a26c-010a7e6b6e75}</Project>
       <Name>BrnMall.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BrnMall.Web.Framework\BrnMall.Web.Framework.csproj">
-      <Project>{d28523f3-3c46-429f-8dd4-6bbf2a2d57c8}</Project>
-      <Name>BrnMall.Web.Framework</Name>
+    <ProjectReference Include="..\BrnMall.Framework\BrnMall.Framework.csproj">
+      <Project>{2996df4c-bee2-4eef-ab26-95cad2708912}</Project>
+      <Name>BrnMall.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

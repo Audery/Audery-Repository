@@ -5,8 +5,10 @@ using System.Collections.Generic;
 
 using BrnMall.Core;
 using BrnMall.Services;
-using BrnMall.Web.Framework;
+using BrnMall.Framework.Controllers;
 using BrnMall.Web.Models;
+using BrnMall.Framework.Pager.Base;
+using BrnMall.Framework;
 
 namespace BrnMall.Web.Controllers
 {
